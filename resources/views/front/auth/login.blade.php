@@ -3,26 +3,26 @@
 @section('title', 'Login · NEXO.GLOBAL')
 
 @section('content')
-<div class="min-h-[80vh] flex items-center justify-center px-6 py-16">
+<div class="min-h-[70vh] md:min-h-[80vh] flex items-center justify-center px-4 md:px-6 py-12 md:py-16">
 
-    <div class="bg-white rounded-[3rem] shadow-2xl w-full max-w-md p-12 space-y-8 relative z-10">
+    <div class="bg-white rounded-2xl md:rounded-[3rem] shadow-xl md:shadow-2xl w-full max-w-md p-6 sm:p-8 md:p-12 space-y-6 md:space-y-8 relative z-10">
 
-        <h2 class="text-3xl font-serif font-bold italic text-center">Welcome Back</h2>
+        <h2 class="text-2xl md:text-3xl font-serif font-bold italic text-center">Welcome Back</h2>
 
-        <form action="{{ route('login') }}" method="POST" class="space-y-6" onsubmit="return startLoginSequence(this)">
+        <form action="{{ route('login') }}" method="POST" class="space-y-5 md:space-y-6" onsubmit="return startLoginSequence(this)">
             @csrf
 
             <div>
-                <label class="text-xs uppercase tracking-widest opacity-60">Email</label>
+                <label class="text-[10px] md:text-xs uppercase tracking-wider md:tracking-widest opacity-60">Email</label>
                 <input type="email" name="email" value="{{ old('email') }}"
-                       class="w-full mt-2 bg-[#f5f2eb] rounded-2xl px-6 py-4 font-semibold focus:ring-1 focus:ring-[#c4b5fd] border-none">
+                       class="w-full mt-2 bg-amber-50 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-semibold focus:ring-1 focus:ring-amber-600 border-none text-sm md:text-base">
                 @error('email')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
             </div>
 
             <div>
-                <label class="text-xs uppercase tracking-widest opacity-60">Password</label>
+                <label class="text-[10px] md:text-xs uppercase tracking-wider md:tracking-widest opacity-60">Password</label>
                 <input type="password" name="password"
-                       class="w-full mt-2 bg-[#f5f2eb] rounded-2xl px-6 py-4 font-semibold focus:ring-1 focus:ring-[#c4b5fd] border-none">
+                       class="w-full mt-2 bg-amber-50 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-semibold focus:ring-1 focus:ring-amber-600 border-none text-sm md:text-base">
                 @error('password')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
             </div>
 
@@ -30,20 +30,20 @@
                 <label class="flex items-center gap-1">
                     <input type="checkbox" name="remember"> Remember Me
                 </label>
-                <a href="{{ route('password.request') }}" class="text-[#c4b5fd] font-semibold hover:underline">
+                <a href="{{ route('password.request') }}" class="text-amber-600 font-semibold hover:underline">
                     Forgot Password?
                 </a>
             </div>
 
             <button type="submit"
-                    class="w-full bg-[#2a1b18] text-white py-5 rounded-2xl uppercase tracking-widest text-xs font-semibold hover:bg-[#3d2b26] transition">
+                    class="w-full bg-amber-900 text-white py-4 md:py-5 rounded-xl md:rounded-2xl uppercase tracking-wider md:tracking-widest text-[10px] md:text-xs font-semibold hover:bg-amber-800 transition">
                 Login
             </button>
         </form>
 
-        <p class="text-center text-sm text-[#4a4a4a]">
+        <p class="text-center text-sm text-amber-700">
             Don't have an account?
-            <a href="{{ route('register') }}" class="text-[#c4b5fd] font-semibold hover:underline">
+            <a href="{{ route('register') }}" class="text-amber-600 font-semibold hover:underline">
                 Register
             </a>
         </p>
@@ -71,7 +71,7 @@
                 <circle id="progressCircle"
                         cx="50" cy="50" r="45"
                         fill="none"
-                        stroke="#f97316"
+                        stroke="rgb(180, 83, 9)"
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-dasharray="283"
@@ -83,7 +83,7 @@
                       class="text-5xl font-serif italic font-bold transition-all">
                     0%
                 </span>
-                <span class="text-xs tracking-[0.35em] text-orange-600 mt-2">
+                <span class="text-xs tracking-[0.35em] text-amber-600 mt-2">
                     CALIBRATING NODE
                 </span>
             </div>

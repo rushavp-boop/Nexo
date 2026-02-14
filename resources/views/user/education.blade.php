@@ -4,40 +4,40 @@
 
 @section('content')
 
-    <div x-data="eduSyncApp()" class="max-w-7xl mx-auto space-y-16 pb-40 text-amber-900 w-full animate-reveal">
+    <div x-data="eduSyncApp()" class="max-w-7xl mx-auto space-y-8 md:space-y-16 pb-20 md:pb-40 text-amber-900 w-full animate-reveal">
 
         <!-- HEADER -->
-        <section class="flex justify-between items-end border-b pb-10">
-            <h2 class="text-7xl font-bold italic tracking-tight text-amber-900">
+        <section class="flex flex-col md:flex-row justify-between items-start md:items-end border-b pb-6 md:pb-10 gap-4">
+            <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold italic tracking-tight text-amber-900">
                 Edu<span class="text-amber-700">.Sync</span>
                 <span class="text-amber-700">by Nexo</span>
             </h2>
 
             <nav
-                class="flex bg-amber-100 p-1.5 rounded-[1.5rem] border border-black/5 w-fit shadow-inner overflow-x-auto no-scrollbar">
+                class="flex bg-amber-100 p-1.5 rounded-xl md:rounded-[1.5rem] border border-black/5 w-full md:w-fit shadow-inner overflow-x-auto no-scrollbar">
                 <template x-for="m in ['Hub','Library','AI Lab']" :key="m">
                     <button @click="setMode(m)" :class="mode === m ? 'bg-amber-800 text-white' : 'bg-amber-50'"
-                        class="px-6 py-3 rounded-full text-xs font-bold uppercase" x-text="m"></button>
+                        class="px-4 sm:px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[10px] md:text-xs font-bold uppercase whitespace-nowrap" x-text="m"></button>
                 </template>
             </nav>
         </section>
 
         <!-- HUB -->
         <div x-show="mode === 'Hub'" x-transition.opacity.duration.300ms>
-            <div x-data="hubAI()" class="max-w-7xl mx-auto space-y-16">
+            <div x-data="hubAI()" class="max-w-7xl mx-auto space-y-8 md:space-y-16">
 
                 <!-- Hero Header -->
                 <div
-                    class="relative overflow-hidden bg-gradient-to-br from-black via-stone-950 to-black text-white p-16 rounded-[3rem] shadow-2xl">
+                    class="relative overflow-hidden bg-gradient-to-br from-black via-stone-950 to-black text-white p-8 sm:p-12 md:p-16 rounded-2xl md:rounded-[3rem] shadow-xl md:shadow-2xl">
                     <div
                         class="absolute top-0 right-0 w-96 h-96 bg-amber-600/30 rounded-full blur-3xl animate-[pulse_8s_ease-in-out_infinite]">
                     </div>
                     <div class="absolute bottom-0 left-0 w-96 h-96 bg-amber-700/20 rounded-full blur-3xl animate-[pulse_10s_ease-in-out_infinite]"
                         style="animation-delay: 2s;"></div>
 
-                    <div class="relative z-10 text-center space-y-6">
+                    <div class="relative z-10 text-center space-y-4 md:space-y-6">
                         <div
-                            class="inline-flex items-center gap-2 px-4 py-2 bg-amber-600/20 rounded-full border border-amber-600/30 backdrop-blur-sm mb-4">
+                            class="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-amber-600/20 rounded-full border border-amber-600/30 backdrop-blur-sm mb-3 md:mb-4">
                             <span class="relative flex h-2 w-2">
                                 <span
                                     class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
@@ -48,11 +48,11 @@
                         </div>
 
                         <h2
-                            class="text-7xl font-serif italic font-black bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent">
+                            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif italic font-black bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent">
                             Edu<span class="text-amber-500">.AI</span> Hub
                         </h2>
 
-                        <p class="text-xl text-white/70 max-w-2xl mx-auto font-medium">
+                        <p class="text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto font-medium">
                             Generate intelligent quizzes and flashcards powered by advanced AI technology
                         </p>
                     </div>
@@ -147,17 +147,17 @@
                                 </div>
                                 <div class="relative bg-white rounded-3xl shadow-2xl p-10 space-y-8">
                                     <template x-for="(q, i) in quiz" :key="i">
-                                        <div x-show="i === currentQuestion" x-transition class="space-y-8">
-                                            <div class="flex items-start gap-4">
+                                        <div x-show="i === currentQuestion" x-transition class="space-y-6 md:space-y-8">
+                                            <div class="flex items-start gap-3 md:gap-4">
                                                 <div
-                                                    class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                                                    class="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-base md:text-lg flex-shrink-0">
                                                     <span x-text="i + 1"></span>
                                                 </div>
-                                                <p class="text-2xl font-bold text-stone-900 leading-relaxed"
+                                                <p class="text-lg sm:text-xl md:text-2xl font-bold text-stone-900 leading-relaxed"
                                                     x-text="q.question"></p>
                                             </div>
 
-                                            <div class="grid gap-4">
+                                            <div class="grid gap-3 md:gap-4">
                                                 <template x-for="(option, idx) in q.options" :key="idx">
                                                     <button @click="selectAnswer(i, idx, option)"
                                                         :disabled="userAnswers[i] !== undefined"
@@ -170,10 +170,10 @@
                                                             'border-amber-200 hover:border-amber-300 hover:bg-amber-50/50': userAnswers[
                                                                 i] === undefined
                                                         }"
-                                                        class="group text-left px-6 py-5 rounded-2xl border-2 transition-all duration-300 disabled:cursor-not-allowed">
+                                                        class="group text-left px-4 sm:px-5 md:px-6 py-4 md:py-5 rounded-xl md:rounded-2xl border-2 transition-all duration-300 disabled:cursor-not-allowed">
                                                         <div class="flex items-center justify-between">
-                                                            <div class="flex items-center gap-4">
-                                                                <div class="w-10 h-10 rounded-xl border-2 flex items-center justify-center font-bold text-sm transition-all"
+                                                            <div class="flex items-center gap-3 md:gap-4">
+                                                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl border-2 flex items-center justify-center font-bold text-xs md:text-sm transition-all"
                                                                     :class="{
                                                                         'border-green-500 bg-green-500 text-white': userAnswers[
                                                                             i] !== undefined && option === q.answer,
@@ -186,7 +186,7 @@
                                                                     }">
                                                                     <span x-text="String.fromCharCode(65 + idx)"></span>
                                                                 </div>
-                                                                <span class="text-lg font-semibold text-amber-800"
+                                                                <span class="text-base md:text-lg font-semibold text-amber-800"
                                                                     x-text="option"></span>
                                                             </div>
                                                             <div x-show="userAnswers[i] !== undefined">
@@ -200,22 +200,22 @@
                                                 </template>
                                             </div>
 
-                                            <div class="flex items-center justify-between pt-6 border-t border-amber-100">
+                                            <div class="flex items-center justify-between pt-4 md:pt-6 border-t border-amber-100">
                                                 <button @click="previousQuestion()" x-show="currentQuestion > 0"
-                                                    class="px-6 py-3 rounded-xl border-2 border-amber-200 text-amber-700 font-bold hover:border-amber-300 hover:bg-amber-50 transition-all">
-                                                    <i class="fa-solid fa-arrow-left mr-2"></i> Previous
+                                                    class="px-4 md:px-6 py-2.5 md:py-3 rounded-lg md:rounded-xl border-2 border-amber-200 text-amber-700 font-bold text-sm md:text-base hover:border-amber-300 hover:bg-amber-50 transition-all">
+                                                    <i class="fa-solid fa-arrow-left mr-1 md:mr-2"></i> <span class="hidden sm:inline">Previous</span><span class="sm:hidden">Prev</span>
                                                 </button>
                                                 <div></div>
                                                 <button @click="nextQuestion()" x-show="currentQuestion < quiz.length - 1"
                                                     :disabled="userAnswers[currentQuestion] === undefined"
-                                                    class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-700 to-amber-600 text-white font-bold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                                                    Next <i class="fa-solid fa-arrow-right ml-2"></i>
+                                                    class="px-4 md:px-6 py-2.5 md:py-3 rounded-lg md:rounded-xl bg-gradient-to-r from-amber-700 to-amber-600 text-white font-bold text-sm md:text-base hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                                                    Next <i class="fa-solid fa-arrow-right ml-1 md:ml-2"></i>
                                                 </button>
                                                 <button @click="completeQuiz()"
                                                     x-show="currentQuestion === quiz.length - 1"
                                                     :disabled="userAnswers[currentQuestion] === undefined"
-                                                    class="px-8 py-3 rounded-xl bg-gradient-to-r from-green-600 to-green-500 text-white font-bold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                                                    Complete Quiz <i class="fa-solid fa-check ml-2"></i>
+                                                    class="px-4 sm:px-6 md:px-8 py-2.5 md:py-3 rounded-lg md:rounded-xl bg-gradient-to-r from-green-600 to-green-500 text-white font-bold text-sm md:text-base hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                                                    <span class="hidden sm:inline">Complete Quiz</span><span class="sm:hidden">Complete</span> <i class="fa-solid fa-check ml-1 md:ml-2"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -243,21 +243,21 @@
                                     </div>
 
                                     <div
-                                        class="inline-flex items-center gap-8 px-12 py-8 bg-gradient-to-br from-amber-50 to-white rounded-3xl border-2 border-amber-100 shadow-lg">
+                                        class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-8 px-6 sm:px-8 md:px-12 py-6 sm:py-7 md:py-8 bg-gradient-to-br from-amber-50 to-white rounded-2xl md:rounded-3xl border-2 border-amber-100 shadow-lg">
                                         <div class="text-center">
-                                            <p class="text-sm text-amber-700 font-black uppercase tracking-wider mb-2">Your
+                                            <p class="text-xs sm:text-sm text-amber-700 font-black uppercase tracking-wider mb-2">Your
                                                 Score</p>
                                             <p
-                                                class="text-7xl font-black font-serif bg-gradient-to-br from-green-600 to-green-500 bg-clip-text text-transparent">
+                                                class="text-4xl sm:text-5xl md:text-7xl font-black font-serif bg-gradient-to-br from-green-600 to-green-500 bg-clip-text text-transparent">
                                                 <span x-text="calculateScore()"></span>/<span x-text="quiz.length"></span>
                                             </p>
                                         </div>
-                                        <div class="h-20 w-px bg-amber-200"></div>
+                                        <div class="h-px w-20 sm:h-20 sm:w-px bg-amber-200"></div>
                                         <div class="text-center">
-                                            <p class="text-sm text-amber-700 font-black uppercase tracking-wider mb-2">
+                                            <p class="text-xs sm:text-sm text-amber-700 font-black uppercase tracking-wider mb-2">
                                                 Percentage</p>
                                             <p
-                                                class="text-7xl font-black font-serif bg-gradient-to-br from-amber-700 to-amber-600 bg-clip-text text-transparent">
+                                                class="text-4xl sm:text-5xl md:text-7xl font-black font-serif bg-gradient-to-br from-amber-700 to-amber-600 bg-clip-text text-transparent">
                                                 <span x-text="Math.round((calculateScore() / quiz.length) * 100)"></span>%
                                             </p>
                                         </div>
@@ -275,13 +275,13 @@
                                         </p>
                                     </div>
 
-                                    <div class="flex gap-4 justify-center pt-4">
+                                    <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center pt-4">
                                         <button @click="resetQuiz()"
-                                            class="px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-700 to-amber-600 text-white font-bold text-lg hover:shadow-lg transition-all hover:scale-105">
+                                            class="px-6 sm:px-7 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl bg-gradient-to-r from-amber-700 to-amber-600 text-white font-bold text-base md:text-lg hover:shadow-lg transition-all hover:scale-105">
                                             <i class="fa-solid fa-rotate-right mr-2"></i> Retake Quiz
                                         </button>
                                         <button @click="quiz = []; quizCompleted = false;"
-                                            class="px-8 py-4 rounded-2xl border-2 border-amber-200 text-amber-700 font-bold text-lg hover:border-amber-300 hover:bg-amber-50 transition-all">
+                                            class="px-6 sm:px-7 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl border-2 border-amber-200 text-amber-700 font-bold text-base md:text-lg hover:border-amber-300 hover:bg-amber-50 transition-all">
                                             <i class="fa-solid fa-arrow-left mr-2"></i> New Quiz
                                         </button>
                                     </div>
@@ -312,10 +312,10 @@
                             </button>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                             <template x-for="(card, index) in cards" :key="index">
                                 <div @click="flipCard(index)" class="group cursor-pointer"
-                                    style="perspective: 1000px; min-height: 280px;">
+                                    style="perspective: 1000px; min-height: 240px;">
                                     <div class="relative w-full h-full transition-transform duration-700"
                                         :class="flippedCards[index] ? 'rotate-y-180' : ''"
                                         style="transform-style: preserve-3d;">
@@ -327,16 +327,16 @@
                                                     class="absolute -inset-0.5 bg-gradient-to-r from-orange-600 to-orange-400 rounded-3xl blur opacity-30 group-hover:opacity-50 transition-opacity">
                                                 </div>
                                                 <div
-                                                    class="relative h-full bg-white rounded-3xl shadow-xl p-8 flex flex-col justify-between hover:shadow-2xl transition-all">
-                                                    <div class="space-y-4">
+                                                    class="relative h-full bg-white rounded-2xl md:rounded-3xl shadow-xl p-5 sm:p-6 md:p-8 flex flex-col justify-between hover:shadow-2xl transition-all">
+                                                    <div class="space-y-3 md:space-y-4">
                                                         <div class="flex items-center justify-between">
                                                             <div
-                                                                class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold">
+                                                                class="px-2.5 md:px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-[10px] md:text-xs font-bold">
                                                                 Question</div>
-                                                            <span class="text-sm font-bold text-stone-400">#<span
+                                                            <span class="text-xs md:text-sm font-bold text-stone-400">#<span
                                                                     x-text="index + 1"></span></span>
                                                         </div>
-                                                        <p class="text-xl font-bold text-stone-900 leading-relaxed"
+                                                        <p class="text-base sm:text-lg md:text-xl font-bold text-stone-900 leading-relaxed"
                                                             x-text="card.front"></p>
                                                     </div>
                                                     <div
@@ -356,15 +356,15 @@
                                                     class="absolute -inset-0.5 bg-gradient-to-r from-green-600 to-green-400 rounded-3xl blur opacity-30">
                                                 </div>
                                                 <div
-                                                    class="relative h-full bg-gradient-to-br from-green-600 to-green-500 rounded-3xl shadow-xl p-8 flex flex-col justify-between text-white">
-                                                    <div class="space-y-4">
+                                                    class="relative h-full bg-gradient-to-br from-green-600 to-green-500 rounded-2xl md:rounded-3xl shadow-xl p-5 sm:p-6 md:p-8 flex flex-col justify-between text-white">
+                                                    <div class="space-y-3 md:space-y-4">
                                                         <div class="flex items-center justify-between">
                                                             <div
-                                                                class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold">
+                                                                class="px-2.5 md:px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-[10px] md:text-xs font-bold">
                                                                 Answer</div>
-                                                            <i class="fa-solid fa-check-circle text-2xl"></i>
+                                                            <i class="fa-solid fa-check-circle text-xl md:text-2xl"></i>
                                                         </div>
-                                                        <p class="text-lg font-semibold leading-relaxed"
+                                                        <p class="text-base md:text-lg font-semibold leading-relaxed"
                                                             x-text="card.back"></p>
                                                     </div>
                                                     <div
@@ -399,7 +399,7 @@
                 <section class="space-y-6">
 
                     <!-- Grade Header -->
-                    <h3 class="text-4xl font-bold italic tracking-tight text-white">
+                    <h3 class="text-4xl font-bold italic tracking-tight text-amber-900">
                         Grade <span x-text="grade"></span>
                     </h3>
 

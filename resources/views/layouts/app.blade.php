@@ -137,21 +137,25 @@
     {{-- Font Awesome CDN is already included above --}}
 
 </head>
-<body class="bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100">
+<body class="bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100" x-data="{ mobileMenuOpen: false }">
 
     {{-- Sidebar (fixed) --}}
     @include('partials.sidebar')
 
     {{-- Header (fixed) --}}
-    @include('partials.header')
+    <div :class="mobileMenuOpen ? 'blur-sm' : ''" class="transition-all duration-300">
+        @include('partials.header')
+    </div>
 
     {{-- Main content --}}
-    <main class="ml-72 pt-32 pb-24 px-8">
+    <main class="ml-0 md:ml-72 pt-20 md:pt-32 pb-20 md:pb-24 px-4 md:px-8 transition-all duration-300" :class="mobileMenuOpen ? 'blur-sm' : ''">
         @yield('content')
     </main>
 
     {{-- Footer (fixed) --}}
-    @include('partials.footer')
+    <div :class="mobileMenuOpen ? 'blur-sm' : ''" class="transition-all duration-300">
+        @include('partials.footer')
+    </div>
 
 </body>
 </html>

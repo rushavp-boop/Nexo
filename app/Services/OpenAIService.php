@@ -22,10 +22,10 @@ class OpenAIService
     public static function generateItinerary(string $destination, string $budget, int $days)
     {
         // Professional prompt
-        $prompt = "You are a professional travel planner. Create a detailed $days-day travel itinerary for $destination for a $budget budget.
+        $prompt = "You are a professional travel planner. Create a detailed and long $days-day travel itinerary for $destination for a $budget budget.
     Each day should start with arrival or breakfast depending on the day, and divide the activities into: morning, afternoon, evening, and night.
-    Each activity should be realistic and suitable for the destination and use longer descriptions not shorter ones(at least 15 words per activity).
-    Include realistic daily budget in Nepali Rupees (Rs).
+    Each activity should be real and actually doable and suitable for the destination and use longer descriptions not shorter ones(at least 50 words per activity).
+    Include real daily budget from various sources in Nepali Rupees (Rs).
     Output the itinerary in the following strict JSON format:
 
     {
@@ -61,7 +61,7 @@ class OpenAIService
 
     public static function searchHotels(string $destination)
     {
-        $prompt = "List 5 luxury/mid-range hotels in $destination with realistic details. Return as JSON array with objects containing: name (hotel name), rating (4.0-5.0), location (area in city), amenities (array of 3-5 amenities), pricePerNight (realistic daily rate in Nepali Rupees, typically 2000-15000 range). Make prices realistic for Nepal tourism.";
+        $prompt = "List 5 luxury/mid-range hotels from google maps in $destination with details. Return as JSON array with objects containing: name (hotel name), rating (4.0-5.0), location (area in city), amenities (array of 3-5 amenities), pricePerNight (real daily rate in Nepali Rupees of hotels from various REAL sources). Make prices real for Nepal tourism.";
 
         $client = self::getClient();
         $response = $client->chat()->create([
@@ -132,7 +132,7 @@ class OpenAIService
 
     public static function analyzeAgriLocation(string $location, string $crop): array
     {
-        $prompt = "Analyze the location '$location' for growing '$crop' in Nepal. Provide JSON with: suitability (Excellent/Good/Fair/Poor), bestVariety (recommended crop variety), soilTips (soil preparation advice), climateRisk (climate-related risks and mitigation).";
+        $prompt = "Analyze the location '$location' for growing '$crop' in Nepal. Provide JSON with: suitability (Excellent/Good/Fair/Poor), bestVariety (recommended crop variety), soilTips (soil preparation advice) in simple words so that a average nepali farmer would understand, climateRisk (climate-related risks and mitigation).";
 
         $client = self::getClient();
         $response = $client->chat()->create([
@@ -187,7 +187,7 @@ class OpenAIService
 
     public static function generateTravelHealthTips(string $destination): array
     {
-        $prompt = "Generate 3 specific, practical health and safety tips for traveling to $destination. Return as JSON array with objects containing: tip (the advice), icon (emoji), and category (Altitude/Water/Food/Disease/Weather/Safety). Make them relevant and actionable.";
+        $prompt = "Generate 3 specific, practical health and safety tips for traveling to $destination. Return as JSON array with objects containing: tip (the advice), icon (emoji), and category (Altitude/Water/Food/Disease/Weather/Safety). Make them actually fruitful for travel and like 30 words at least to 60 words max if going to risky destinations.";
 
         $client = self::getClient();
         $response = $client->chat()->create([

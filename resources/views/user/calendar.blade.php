@@ -3,68 +3,68 @@
 @section('title', 'EduSync Calendar')
 
 @section('content')
-    <div x-data="calendarApp()" class="space-y-12 pb-20">
+    <div x-data="calendarApp()" class="space-y-8 md:space-y-12 pb-10 md:pb-20">
 
         <!-- Header Section -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div class="space-y-2">
-                <h2 class="text-4xl font-bold text-stone-900 font-serif tracking-tighter uppercase italic">
-                    EduSync<span class="text-orange-600">.Calendar</span>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
+            <div class="space-y-1.5 md:space-y-2">
+                <h2 class="text-3xl sm:text-4xl font-bold text-amber-900 font-serif tracking-tighter uppercase italic">
+                    EduSync<span class="text-amber-600">.Calendar</span>
                 </h2>
-                <p class="text-sm text-stone-500 font-medium font-serif">Nepali Calendar System - BS <span x-text="currentYear"></span></p>
+                <p class="text-xs md:text-sm text-amber-700 font-medium font-serif">Nepali Calendar System - BS <span x-text="currentYear"></span></p>
             </div>
 
             <!-- Today's Quick Info -->
-            <div class="bg-stone-900 text-white px-8 py-4 rounded-2xl shadow-xl">
+            <div class="bg-amber-900 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl shadow-lg md:shadow-xl">
                 <p class="text-[9px] font-black uppercase tracking-widest opacity-70 mb-2 font-serif">Today</p>
                 <p x-text="todayDateText" class="text-sm font-bold font-serif"></p>
             </div>
         </div>
 
         <!-- Main Calendar Card -->
-        <div class="bg-white border border-black/5 rounded-[3rem] shadow-2xl overflow-hidden">
+        <div class="bg-white border border-black/5 rounded-2xl md:rounded-[3rem] shadow-xl md:shadow-2xl overflow-hidden">
             <!-- Calendar Header -->
-            <div class="bg-gradient-to-r from-orange-600 to-orange-500 px-10 py-8">
+            <div class="bg-gradient-to-r from-amber-600 to-amber-500 px-6 md:px-10 py-6 md:py-8">
                 <div class="flex items-center justify-between">
                     <button @click="prevMonth()"
-                            class="h-12 w-12 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white flex items-center justify-center transition-all hover:scale-110 shadow-lg">
+                            class="h-10 w-10 md:h-12 md:w-12 rounded-lg md:rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white flex items-center justify-center transition-all hover:scale-110 shadow-lg">
                         <i class="fa-solid fa-chevron-left"></i>
                     </button>
 
                     <div class="text-center">
-                        <h3 class="text-3xl font-bold text-white font-serif italic" x-text="currentMonthName"></h3>
-                        <p class="text-white/80 text-sm font-semibold mt-1 font-serif" x-text="'BS ' + currentYear"></p>
+                        <h3 class="text-2xl sm:text-3xl font-bold text-white font-serif italic" x-text="currentMonthName"></h3>
+                        <p class="text-white/80 text-xs md:text-sm font-semibold mt-1 font-serif" x-text="'BS ' + currentYear"></p>
                     </div>
 
                     <button @click="nextMonth()"
-                            class="h-12 w-12 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white flex items-center justify-center transition-all hover:scale-110 shadow-lg">
+                            class="h-10 w-10 md:h-12 md:w-12 rounded-lg md:rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white flex items-center justify-center transition-all hover:scale-110 shadow-lg">
                         <i class="fa-solid fa-chevron-right"></i>
                     </button>
                 </div>
             </div>
 
             <!-- Calendar Grid -->
-            <div class="p-8 md:p-12">
+            <div class="p-4 sm:p-6 md:p-8 lg:p-12">
                 <!-- Days of Week -->
-                <div class="grid grid-cols-7 gap-4 mb-6">
+                <div class="grid grid-cols-7 gap-2 md:gap-4 mb-4 md:mb-6">
                     <template x-for="day in daysOfWeek" :key="day">
-                        <div class="text-center text-[10px] font-black text-stone-400 uppercase tracking-widest font-serif" x-text="day"></div>
+                        <div class="text-center text-[10px] font-black text-amber-600 uppercase tracking-widest font-serif" x-text="day"></div>
                     </template>
                 </div>
 
                 <!-- Calendar Days -->
-                <div class="grid grid-cols-7 gap-4">
+                <div class="grid grid-cols-7 gap-2 md:gap-4">
                     <template x-for="(cell, index) in getCalendarGrid()" :key="index">
                         <div class="aspect-square">
                             <div x-show="cell.day"
-                                 :class="isToday(cell.day) ? 'bg-orange-600 text-white shadow-xl ring-4 ring-orange-200' : 'bg-stone-50 hover:bg-stone-100 text-stone-900'"
+                                 :class="isToday(cell.day) ? 'bg-amber-600 text-white shadow-xl ring-4 ring-amber-200' : 'bg-amber-50 hover:bg-amber-100 text-amber-900'"
                                  class="h-full rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer hover:scale-105 hover:shadow-lg group relative">
                                 <span class="text-2xl font-bold font-serif" x-text="cell.day?.date"></span>
                                 <span class="text-[8px] font-black uppercase tracking-widest mt-1 font-serif"
-                                      :class="isToday(cell.day) ? 'text-white/80' : 'text-stone-400 group-hover:text-stone-600'"
+                                      :class="isToday(cell.day) ? 'text-white/80' : 'text-amber-600 group-hover:text-amber-700'"
                                       x-text="cell.day?.day"></span>
                                 <!-- Today Badge -->
-                                <div x-show="isToday(cell.day)" class="absolute -top-2 -right-2 bg-white text-orange-600 text-[7px] font-black px-2 py-0.5 rounded-full shadow-lg uppercase tracking-wider">
+                                <div x-show="isToday(cell.day)" class="absolute -top-2 -right-2 bg-white text-amber-600 text-[7px] font-black px-2 py-0.5 rounded-full shadow-lg uppercase tracking-wider">
                                     Today
                                 </div>
                             </div>
@@ -80,43 +80,43 @@
             <!-- BS to AD Conversion -->
             <div class="bg-white border border-black/5 rounded-[2.5rem] p-10 shadow-xl hover:shadow-2xl transition-all">
                 <div class="flex items-center gap-4 mb-8">
-                    <div class="h-14 w-14 bg-orange-50 rounded-2xl flex items-center justify-center">
-                        <i class="fa-solid fa-calendar-days text-orange-600 text-xl"></i>
+                    <div class="h-14 w-14 bg-amber-50 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-calendar-days text-amber-600 text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold font-serif italic text-stone-900">BS → AD</h3>
-                        <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest font-serif">Convert Bikram Sambat</p>
+                        <h3 class="text-2xl font-bold font-serif italic text-amber-900">BS → AD</h3>
+                        <p class="text-[10px] font-bold text-amber-600 uppercase tracking-widest font-serif">Convert Bikram Sambat</p>
                     </div>
                 </div>
 
                 <div class="space-y-6">
                     <div class="grid grid-cols-3 gap-4">
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Year</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Year</label>
                             <input type="number" x-model.number="bsYear" placeholder="2081"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Month</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Month</label>
                             <input type="number" x-model.number="bsMonth" placeholder="1-12" min="1" max="12"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Day</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Day</label>
                             <input type="number" x-model.number="bsDay" placeholder="1-32" min="1" max="32"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                     </div>
 
                     <button @click="convertBsToAd()"
-                            class="w-full bg-stone-900 hover:bg-orange-600 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg hover:shadow-xl font-serif">
+                            class="w-full bg-amber-900 hover:bg-amber-600 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg hover:shadow-xl font-serif">
                         Convert to AD
                     </button>
 
                     <div x-show="bsToAdResult"
-                         class="bg-orange-50 border border-orange-100 rounded-2xl p-6 text-center animate-fadeIn">
-                        <p class="text-[9px] font-black text-orange-600 uppercase tracking-widest mb-2 font-serif">Result</p>
-                        <p class="text-2xl font-bold text-stone-900 font-serif" x-text="bsToAdResult"></p>
+                         class="bg-amber-50 border border-amber-100 rounded-2xl p-6 text-center animate-fadeIn">
+                        <p class="text-[9px] font-black text-amber-600 uppercase tracking-widest mb-2 font-serif">Result</p>
+                        <p class="text-2xl font-bold text-amber-900 font-serif" x-text="bsToAdResult"></p>
                     </div>
                 </div>
             </div>
@@ -124,43 +124,43 @@
             <!-- AD to BS Conversion -->
             <div class="bg-white border border-black/5 rounded-[2.5rem] p-10 shadow-xl hover:shadow-2xl transition-all">
                 <div class="flex items-center gap-4 mb-8">
-                    <div class="h-14 w-14 bg-orange-50 rounded-2xl flex items-center justify-center">
-                        <i class="fa-solid fa-calendar text-orange-600 text-xl"></i>
+                    <div class="h-14 w-14 bg-amber-50 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-calendar text-amber-600 text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold font-serif italic text-stone-900">AD → BS</h3>
-                        <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest font-serif">Convert Gregorian</p>
+                        <h3 class="text-2xl font-bold font-serif italic text-amber-900">AD → BS</h3>
+                        <p class="text-[10px] font-bold text-amber-600 uppercase tracking-widest font-serif">Convert Gregorian</p>
                     </div>
                 </div>
 
                 <div class="space-y-6">
                     <div class="grid grid-cols-3 gap-4">
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Year</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Year</label>
                             <input type="number" x-model.number="adYear" placeholder="2024"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Month</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Month</label>
                             <input type="number" x-model.number="adMonth" placeholder="1-12" min="1" max="12"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Day</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Day</label>
                             <input type="number" x-model.number="adDay" placeholder="1-31" min="1" max="31"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                     </div>
 
                     <button @click="convertAdToBs()"
-                            class="w-full bg-stone-900 hover:bg-orange-600 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg hover:shadow-xl font-serif">
+                            class="w-full bg-amber-900 hover:bg-amber-600 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg hover:shadow-xl font-serif">
                         Convert to BS
                     </button>
 
                     <div x-show="adToBsResult"
-                         class="bg-orange-50 border border-orange-100 rounded-2xl p-6 text-center animate-fadeIn">
-                        <p class="text-[9px] font-black text-orange-600 uppercase tracking-widest mb-2 font-serif">Result</p>
-                        <p class="text-2xl font-bold text-stone-900 font-serif" x-text="adToBsResult"></p>
+                         class="bg-amber-50 border border-amber-100 rounded-2xl p-6 text-center animate-fadeIn">
+                        <p class="text-[9px] font-black text-amber-600 uppercase tracking-widest mb-2 font-serif">Result</p>
+                        <p class="text-2xl font-bold text-amber-900 font-serif" x-text="adToBsResult"></p>
                     </div>
                 </div>
             </div>
@@ -173,43 +173,43 @@
             <!-- Age from BS -->
             <div class="bg-white border border-black/5 rounded-[2.5rem] p-10 shadow-xl hover:shadow-2xl transition-all">
                 <div class="flex items-center gap-4 mb-8">
-                    <div class="h-14 w-14 bg-stone-50 rounded-2xl flex items-center justify-center">
-                        <i class="fa-solid fa-cake-candles text-stone-900 text-xl"></i>
+                    <div class="h-14 w-14 bg-amber-50 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-cake-candles text-amber-900 text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold font-serif italic text-stone-900">Age Calculator</h3>
-                        <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest font-serif">From BS Date</p>
+                        <h3 class="text-2xl font-bold font-serif italic text-amber-900">Age Calculator</h3>
+                        <p class="text-[10px] font-bold text-amber-600 uppercase tracking-widest font-serif">From BS Date</p>
                     </div>
                 </div>
 
                 <div class="space-y-6">
                     <div class="grid grid-cols-3 gap-4">
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Year</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Year</label>
                             <input type="number" x-model.number="ageBsYear" placeholder="2050"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Month</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Month</label>
                             <input type="number" x-model.number="ageBsMonth" placeholder="1-12" min="1" max="12"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Day</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Day</label>
                             <input type="number" x-model.number="ageBsDay" placeholder="1-32" min="1" max="32"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                     </div>
 
                     <button @click="calculateAgeBs()"
-                            class="w-full bg-stone-900 hover:bg-orange-600 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg hover:shadow-xl font-serif">
+                            class="w-full bg-amber-900 hover:bg-amber-600 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg hover:shadow-xl font-serif">
                         Calculate Age
                     </button>
 
                     <div x-show="ageBsResult"
-                         class="bg-stone-50 border border-stone-200 rounded-2xl p-6 text-center animate-fadeIn">
-                        <p class="text-[9px] font-black text-stone-400 uppercase tracking-widest mb-2 font-serif">Your Age</p>
-                        <p class="text-xl font-bold text-stone-900 font-serif" x-text="ageBsResult"></p>
+                         class="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center animate-fadeIn">
+                        <p class="text-[9px] font-black text-amber-600 uppercase tracking-widest mb-2 font-serif">Your Age</p>
+                        <p class="text-xl font-bold text-amber-900 font-serif" x-text="ageBsResult"></p>
                     </div>
                 </div>
             </div>
@@ -217,43 +217,43 @@
             <!-- Age from AD -->
             <div class="bg-white border border-black/5 rounded-[2.5rem] p-10 shadow-xl hover:shadow-2xl transition-all">
                 <div class="flex items-center gap-4 mb-8">
-                    <div class="h-14 w-14 bg-stone-50 rounded-2xl flex items-center justify-center">
-                        <i class="fa-solid fa-cake-candles text-stone-900 text-xl"></i>
+                    <div class="h-14 w-14 bg-amber-50 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-cake-candles text-amber-900 text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold font-serif italic text-stone-900">Age Calculator</h3>
-                        <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest font-serif">From AD Date</p>
+                        <h3 class="text-2xl font-bold font-serif italic text-amber-900">Age Calculator</h3>
+                        <p class="text-[10px] font-bold text-amber-600 uppercase tracking-widest font-serif">From AD Date</p>
                     </div>
                 </div>
 
                 <div class="space-y-6">
                     <div class="grid grid-cols-3 gap-4">
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Year</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Year</label>
                             <input type="number" x-model.number="ageAdYear" placeholder="1990"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Month</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Month</label>
                             <input type="number" x-model.number="ageAdMonth" placeholder="1-12" min="1" max="12"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[9px] font-black text-stone-400 uppercase tracking-widest ml-2 font-serif">Day</label>
+                            <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Day</label>
                             <input type="number" x-model.number="ageAdDay" placeholder="1-31" min="1" max="31"
-                                   class="w-full bg-stone-50 border border-stone-100 text-stone-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-600 focus:border-transparent font-bold text-center font-serif">
+                                   class="w-full bg-amber-50 border border-amber-100 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold text-center font-serif">
                         </div>
                     </div>
 
                     <button @click="calculateAgeAd()"
-                            class="w-full bg-stone-900 hover:bg-orange-600 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg hover:shadow-xl font-serif">
+                            class="w-full bg-amber-900 hover:bg-amber-600 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg hover:shadow-xl font-serif">
                         Calculate Age
                     </button>
 
                     <div x-show="ageAdResult"
-                         class="bg-stone-50 border border-stone-200 rounded-2xl p-6 text-center animate-fadeIn">
-                        <p class="text-[9px] font-black text-stone-400 uppercase tracking-widest mb-2 font-serif">Your Age</p>
-                        <p class="text-xl font-bold text-stone-900 font-serif" x-text="ageAdResult"></p>
+                         class="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center animate-fadeIn">
+                        <p class="text-[9px] font-black text-amber-600 uppercase tracking-widest mb-2 font-serif">Your Age</p>
+                        <p class="text-xl font-bold text-amber-900 font-serif" x-text="ageAdResult"></p>
                     </div>
                 </div>
             </div>

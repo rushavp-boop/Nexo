@@ -1,25 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-    <div x-data="carBooking()" class="flex flex-col items-center justify-center py-20 space-y-12">
+    <div x-data="carBooking()" class="flex flex-col items-center justify-center py-10 md:py-20 space-y-8 md:space-y-12">
 
-        <h2 class="text-4xl font-bold italic text-stone-900 uppercase tracking-tight">Car Booking</h2>
+        <h2 class="text-3xl sm:text-4xl font-bold italic text-stone-900 uppercase tracking-tight">Car Booking</h2>
 
         <!-- Car Info Card -->
         <div
-            class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-[3rem] shadow-2xl w-full max-w-4xl p-10 flex flex-col md:flex-row gap-10">
+            class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-2xl md:rounded-[3rem] shadow-xl md:shadow-2xl w-full max-w-4xl p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10">
 
             <!-- Car Image -->
-            <div class="md:w-1/2 rounded-[2rem] overflow-hidden shadow-lg">
+            <div class="md:w-1/2 rounded-xl md:rounded-[2rem] overflow-hidden shadow-lg">
                 <img :src="`/${car.image_url}` ?? 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=800'"
                     class="w-full h-full object-cover" :alt="car.name">
             </div>
 
             <!-- Car Details -->
-            <div class="md:w-1/2 space-y-4">
-                <h3 class="text-3xl font-bold italic text-stone-900" x-text="car.name"></h3>
+            <div class="md:w-1/2 space-y-3 md:space-y-4">
+                <h3 class="text-2xl sm:text-3xl font-bold italic text-stone-900" x-text="car.name"></h3>
 
-                <div class="grid grid-cols-2 gap-4 mt-4 text-stone-700">
+                <div class="grid grid-cols-2 gap-3 md:gap-4 mt-3 md:mt-4 text-stone-700">
                     <div class="space-y-1">
                         <p class="text-sm font-bold italic uppercase tracking-widest">Type</p>
                         <p class="text-base italic" x-text="car.type"></p>
@@ -43,13 +43,13 @@
                 </div>
 
                 <!-- Input & Pay Button -->
-                <div class="mt-6" x-show="!receipt">
-                    <label class="block text-amber-700 font-bold italic text-sm mb-2">Number of Days</label>
+                <div class="mt-4 md:mt-6" x-show="!receipt">
+                    <label class="block text-amber-700 font-bold italic text-xs md:text-sm mb-2">Number of Days</label>
                     <input type="number" x-model.number="days" min="1"
-                        class="w-full border border-amber-200 bg-amber-50 rounded-xl px-4 py-2 mb-4 focus:ring-2 focus:ring-amber-700">
+                        class="w-full border border-amber-200 bg-amber-50 rounded-lg md:rounded-xl px-3 md:px-4 py-2 mb-3 md:mb-4 focus:ring-2 focus:ring-amber-700">
 
                     <button @click="confirmBooking()"
-                        class="w-full bg-stone-900 text-white px-6 py-3 rounded-xl font-bold italic text-[12px] uppercase tracking-widest hover:bg-amber-700 transition-all shadow-md">
+                        class="w-full bg-stone-900 text-white px-4 md:px-6 py-2.5 md:py-3 rounded-lg md:rounded-xl font-bold italic text-[11px] md:text-[12px] uppercase tracking-widest hover:bg-amber-700 transition-all shadow-md">
                         Pay Now
                     </button>
                 </div>

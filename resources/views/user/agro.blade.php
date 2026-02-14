@@ -1,55 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-<div x-data="agroApp()" x-init="init()" class="space-y-16 pb-32 text-stone-900 w-full">
+<div x-data="agroApp()" x-init="init()" class="space-y-8 md:space-y-16 pb-20 md:pb-32 text-stone-900 w-full">
 
     <!-- Navigation Tabs -->
-    <nav class="flex bg-white/80 backdrop-blur-2xl p-2 rounded-[2.5rem] border border-stone-200 w-fit shadow-2xl mx-auto sticky top-6 z-40">
+    <nav class="flex bg-white/80 backdrop-blur-2xl p-1.5 md:p-2 rounded-[2rem] md:rounded-[2.5rem] border border-stone-200 w-full md:w-fit shadow-xl md:shadow-2xl mx-auto sticky top-20 md:top-6 z-40 overflow-x-auto">
         <template x-for="(tab, idx) in tabs" :key="idx">
             <button
                 @click="currentTab = tab.id"
                 :class="currentTab === tab.id ? 'bg-stone-900 text-white shadow-xl' : 'text-stone-500 hover:text-stone-900'"
-                class="px-8 md:px-12 py-3.5 rounded-[2rem] text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-all">
+                class="px-4 sm:px-6 md:px-12 py-2.5 md:py-3.5 rounded-[1.5rem] md:rounded-[2rem] text-[9px] sm:text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] transition-all whitespace-nowrap flex-shrink-0">
                 <span x-text="tab.label"></span>
             </button>
         </template>
     </nav>
 
     <!-- Header -->
-    <header class="border-b border-stone-200 pb-12 flex flex-col md:flex-row justify-between items-end gap-10">
-        <div class="space-y-4">
-            <div class="flex items-center gap-4">
-                <span class="h-[2px] w-16 bg-orange-600"></span>
-                <span class="text-[11px] font-black uppercase tracking-[0.6em] text-orange-600">Himalayan Genetic Ledger</span>
+    <header class="border-b border-stone-200 pb-6 md:pb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-10">
+        <div class="space-y-3 md:space-y-4 w-full md:w-auto">
+            <div class="flex items-center gap-3 md:gap-4">
+                <span class="h-[2px] w-8 md:w-16 bg-orange-600"></span>
+                <span class="text-[9px] md:text-[11px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] text-orange-600">Himalayan Genetic Ledger</span>
             </div>
-            <h2 class="text-7xl md:text-9xl font-serif italic font-bold tracking-tighter text-stone-900 leading-[0.85]">
+            <h2 class="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-serif italic font-bold tracking-tighter text-stone-900 leading-[0.85]">
                 Nexo<span class="text-orange-600">.Agro</span>
             </h2>
         </div>
-        <div class="flex flex-col items-end gap-4">
-            <p class="max-w-md text-base text-stone-500 font-medium italic leading-relaxed text-right opacity-80">
+        <div class="flex flex-col items-start md:items-end gap-3 md:gap-4 w-full md:w-auto">
+            <p class="max-w-md text-sm md:text-base text-stone-500 font-medium italic leading-relaxed text-left md:text-right opacity-80">
                 Verifying molecular botanical elements for Himalayan growth.
             </p>
-            <div x-show="currentTab === 'seeds'" class="relative w-full max-w-sm">
-                <i class="fa-solid fa-magnifying-glass absolute left-6 top-1/2 -translate-y-1/2 text-stone-300"></i>
+            <div x-show="currentTab === 'seeds'" class="relative w-full md:max-w-sm">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 md:left-6 top-1/2 -translate-y-1/2 text-stone-300 text-sm"></i>
                 <input
                     type="text"
                     x-model="searchQuery"
                     placeholder="Search Registry..."
-                    class="w-full pl-14 pr-6 py-4 bg-stone-50 border border-stone-200 rounded-2xl text-[12px] font-bold uppercase tracking-widest focus:border-orange-600 outline-none transition-all placeholder:text-stone-300"
+                    class="w-full pl-10 md:pl-14 pr-4 md:pr-6 py-3 md:py-4 bg-stone-50 border border-stone-200 rounded-xl md:rounded-2xl text-[10px] md:text-[12px] font-bold uppercase tracking-wide md:tracking-widest focus:border-orange-600 outline-none transition-all placeholder:text-stone-300"
                 />
             </div>
         </div>
     </header>
 
     <!-- Seeds Tab -->
-    <div x-show="currentTab === 'seeds'" class="space-y-16">
-        <div x-show="loading" class="py-48 text-center space-y-8">
-            <div class="h-24 w-24 border-[4px] border-orange-600 border-t-transparent rounded-full animate-spin mx-auto shadow-2xl"></div>
-            <p class="text-[12px] font-black uppercase tracking-[0.8em] text-stone-400 italic">Accessing Genetic Archive...</p>
+    <div x-show="currentTab === 'seeds'" class="space-y-8 md:space-y-16">
+        <div x-show="loading" class="py-24 md:py-48 text-center space-y-6 md:space-y-8">
+            <div class="h-16 w-16 md:h-24 md:w-24 border-[3px] md:border-[4px] border-orange-600 border-t-transparent rounded-full animate-spin mx-auto shadow-xl md:shadow-2xl"></div>
+            <p class="text-[10px] md:text-[12px] font-black uppercase tracking-[0.4em] md:tracking-[0.8em] text-stone-400 italic">Accessing Genetic Archive...</p>
         </div>
 
-        <div x-show="!loading" class="periodic-grid animate-reveal px-2">
+        <div x-show="!loading" class="periodic-grid animate-reveal px-0 md:px-2">
             <template x-for="(plant, idx) in filteredPlants" :key="idx">
                 <button
                     x-show="plant"
@@ -74,40 +74,40 @@
     </div>
 
     <!-- Analysis Tab -->
-    <div x-show="currentTab === 'analysis'" class="grid grid-cols-1 lg:grid-cols-2 gap-12 animate-reveal">
+    <div x-show="currentTab === 'analysis'" class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 animate-reveal">
         <!-- Input Form -->
-        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 p-12 md:p-20 rounded-[4rem] shadow-lg space-y-12">
-            <header class="space-y-4">
-                <span class="text-[10px] font-black uppercase tracking-[0.5em] text-amber-700 italic">Cognitive Scanning</span>
-                <h3 class="text-4xl md:text-6xl italic font-bold tracking-tighter text-stone-900 leading-tight">
+        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 p-6 sm:p-10 md:p-12 lg:p-20 rounded-[2.5rem] md:rounded-[4rem] shadow-lg space-y-6 md:space-y-12">
+            <header class="space-y-3 md:space-y-4">
+                <span class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-amber-700 italic">Cognitive Scanning</span>
+                <h3 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl italic font-bold tracking-tighter text-stone-900 leading-tight">
                     Field<br/>Intelligence.
                 </h3>
-                <p class="text-base text-stone-500 font-medium italic">Analyze crop performance based on location and climate.</p>
+                <p class="text-sm md:text-base text-stone-500 font-medium italic">Analyze crop performance based on location and climate.</p>
             </header>
 
-            <div class="space-y-8">
-                <div class="space-y-3">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-amber-900 ml-2 italic">Location</label>
+            <div class="space-y-6 md:space-y-8">
+                <div class="space-y-2 md:space-y-3">
+                    <label class="text-[9px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest text-amber-900 ml-1 md:ml-2 italic">Location</label>
                     <input
                         type="text"
                         x-model="analysisLocation"
                         placeholder="e.g. Dhulikhel"
-                        class="w-full bg-amber-50 border-2 border-amber-200 p-6 rounded-[2rem] font-bold text-xl italic outline-none focus:border-amber-700 focus:ring-2 focus:ring-amber-700/20 transition-all"
+                        class="w-full bg-amber-50 border-2 border-amber-200 p-4 md:p-6 rounded-xl md:rounded-[2rem] font-bold text-base md:text-xl italic outline-none focus:border-amber-700 focus:ring-2 focus:ring-amber-700/20 transition-all"
                     />
                 </div>
-                <div class="space-y-3">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-amber-900 ml-2 italic">Crop</label>
+                <div class="space-y-2 md:space-y-3">
+                    <label class="text-[9px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest text-amber-900 ml-1 md:ml-2 italic">Crop</label>
                     <input
                         type="text"
                         x-model="analysisCrop"
                         placeholder="e.g. Wheat"
-                        class="w-full bg-amber-50 border-2 border-amber-200 p-6 rounded-[2rem] font-bold text-xl italic outline-none focus:border-amber-700 focus:ring-2 focus:ring-amber-700/20 transition-all"
+                        class="w-full bg-amber-50 border-2 border-amber-200 p-4 md:p-6 rounded-xl md:rounded-[2rem] font-bold text-base md:text-xl italic outline-none focus:border-amber-700 focus:ring-2 focus:ring-amber-700/20 transition-all"
                     />
                 </div>
                 <button
                     @click="runAnalysis()"
                     :disabled="analyzing"
-                    class="w-full py-8 bg-stone-900 text-white rounded-[2rem] font-black uppercase tracking-[0.3em] text-[11px] italic hover:bg-amber-700 hover:shadow-lg hover:shadow-amber-700/20 disabled:bg-stone-400 transition-all shadow-2xl flex items-center justify-center gap-6">
+                    class="w-full py-5 md:py-8 bg-stone-900 text-white rounded-xl md:rounded-[2rem] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-[11px] italic hover:bg-amber-700 hover:shadow-lg hover:shadow-amber-700/20 disabled:bg-stone-400 transition-all shadow-xl md:shadow-2xl flex items-center justify-center gap-4 md:gap-6">
                     <span x-show="!analyzing"><i class="fa-solid fa-radar"></i> RUN SCAN</span>
                     <span x-show="analyzing"><i class="fa-solid fa-dna fa-spin"></i></span>
                 </button>
@@ -116,18 +116,18 @@
 
         <!-- Results -->
         <div class="relative">
-            <div x-show="analysisResult" class="bg-stone-900 text-white p-12 md:p-20 rounded-[4rem] shadow-2xl space-y-12 animate-slideUp">
-                <div class="flex justify-between items-start">
-                    <div class="space-y-2">
-                        <span class="text-[10px] font-black uppercase tracking-[0.5em] text-orange-600">Scan Results</span>
-                        <h4 class="text-4xl font-serif italic font-bold text-white uppercase tracking-tighter" x-text="analysisCrop + ' @ ' + analysisLocation"></h4>
+            <div x-show="analysisResult" class="bg-stone-900 text-white p-6 sm:p-10 md:p-12 lg:p-20 rounded-[2.5rem] md:rounded-[4rem] shadow-xl md:shadow-2xl space-y-6 md:space-y-12 animate-slideUp">
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0">
+                    <div class="space-y-1.5 md:space-y-2">
+                        <span class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-orange-600">Scan Results</span>
+                        <h4 class="text-2xl sm:text-3xl md:text-4xl font-serif italic font-bold text-white uppercase tracking-tighter break-words" x-text="analysisCrop + ' @ ' + analysisLocation"></h4>
                     </div>
-                    <div class="h-16 w-16 rounded-2xl bg-white/10 flex items-center justify-center text-orange-600 text-2xl shadow-xl">
+                    <div class="h-12 w-12 md:h-16 md:w-16 rounded-xl md:rounded-2xl bg-white/10 flex items-center justify-center text-orange-600 text-xl md:text-2xl shadow-lg md:shadow-xl flex-shrink-0">
                         <i class="fa-solid fa-bolt"></i>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
                     <div class="bg-white/5 p-8 rounded-[2rem] border border-white/10">
                         <p class="text-[9px] font-black text-white/30 uppercase tracking-widest mb-3">Suitability</p>
                         <p class="text-xl font-serif italic font-bold" x-text="analysisResult?.suitability || 'Analyzing...'"></p>
@@ -150,7 +150,7 @@
                 </div>
             </div>
 
-            <div x-show="!analysisResult" class="h-full min-h-[500px] border-2 border-dashed border-stone-200 rounded-[4rem] flex flex-col items-center justify-center text-center p-12 space-y-6 opacity-30 grayscale">
+            <div x-show="!analysisResult" class="h-full min-h-[300px] md:min-h-[500px] border-2 border-dashed border-stone-200 rounded-[2.5rem] md:rounded-[4rem] flex flex-col items-center justify-center text-center p-6 md:p-12 space-y-4 md:space-y-6 opacity-30 grayscale">
                 <i class="fa-solid fa-microchip text-7xl text-stone-200"></i>
                 <p class="text-xs font-black uppercase tracking-[0.3em] font-serif italic">Waiting for field parameters...</p>
             </div>
@@ -158,8 +158,8 @@
     </div>
 
     <!-- Diseases Tab -->
-    <div x-show="currentTab === 'diseases'" class="space-y-16 animate-reveal">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+    <div x-show="currentTab === 'diseases'" class="space-y-8 md:space-y-16 animate-reveal">
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
             <div x-show="diseases.length === 0" class="col-span-full py-32 text-center opacity-40">
                 <i class="fa-solid fa-shield-virus text-6xl mb-6"></i>
                 <p class="text-xs font-black uppercase tracking-widest">No diseases available.</p>
@@ -195,19 +195,19 @@
     </div>
 
     <!-- Plant Detail Overlay -->
-    <div x-show="selectedPlant || detailLoading" class="fixed inset-0 z-[100] bg-black backdrop-blur-3xl overflow-y-auto" @click.self="selectedPlant = null">
+    <div x-show="selectedPlant || detailLoading" class="fixed inset-0 z-[100] bg-black/95 md:bg-black backdrop-blur-3xl overflow-y-auto" @click.self="selectedPlant = null">
         <!-- Loading Bar -->
         <div x-show="detailLoading" class="fixed top-0 left-0 right-0 z-[120] h-1 bg-gradient-to-r from-orange-600 via-orange-400 to-orange-600 animate-pulse" style="animation: slideIn 0.6s ease-in-out infinite;"></div>
 
-        <button @click="selectedPlant = null" class="fixed top-10 right-10 h-16 w-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-orange-600 transition-all z-[110] shadow-2xl">
-            <i class="fa-solid fa-xmark text-2xl"></i>
+        <button @click="selectedPlant = null" class="fixed top-4 md:top-10 right-4 md:right-10 h-12 w-12 md:h-16 md:w-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-orange-600 transition-all z-[110] shadow-xl md:shadow-2xl">
+            <i class="fa-solid fa-xmark text-xl md:text-2xl"></i>
         </button>
 
-        <div x-show="!detailLoading" class="w-full max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-20 px-6 py-24 items-start lg:items-center animate-slideUp">
+        <div x-show="!detailLoading" class="w-full max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-20 px-4 md:px-6 py-12 md:py-24 items-start lg:items-center animate-slideUp">
             <div class="lg:col-span-5 flex justify-center">
-                <div class="relative h-72 w-72 md:h-[32rem] md:w-[32rem]">
+                <div class="relative h-60 w-60 sm:h-72 sm:w-72 md:h-[28rem] md:w-[28rem] lg:h-[32rem] lg:w-[32rem]">
                     <div class="absolute inset-0 border border-white/10 rounded-full animate-[spin_25s_linear_infinite]"></div>
-                    <div class="absolute inset-28 bg-white rounded-full overflow-hidden border-[15px] border-white/5 shadow-[0_0_120px_rgba(255,255,255,0.15)] group">
+                    <div class="absolute inset-16 sm:inset-20 md:inset-28 bg-white rounded-full overflow-hidden border-[8px] sm:border-[12px] md:border-[15px] border-white/5 shadow-[0_0_80px_rgba(255,255,255,0.15)] md:shadow-[0_0_120px_rgba(255,255,255,0.15)] group">
                         <template x-if="selectedPlant && selectedPlant.default_image">
                             <img :src="selectedPlant.default_image.original_url" class="w-full h-full object-cover group-hover:scale-125 transition-transform duration-[6s]" :alt="selectedPlant.common_name">
                         </template>
@@ -218,13 +218,13 @@
                 </div>
             </div>
 
-            <div class="lg:col-span-7 space-y-12 text-white text-left">
-                <header class="space-y-6">
-                    <div class="flex items-center gap-6">
-                        <span class="px-6 py-2 bg-orange-600 rounded-full text-[11px] font-black uppercase tracking-widest shadow-xl">Molecular ID: <span x-text="selectedPlant?.id"></span></span>
-                        <span class="text-white/70 text-sm italic border-l border-white/30 pl-6 uppercase tracking-widest font-bold" x-text="selectedPlant?.cycle + ' Protocol'"></span>
+            <div class="lg:col-span-7 space-y-6 md:space-y-12 text-white text-left">
+                <header class="space-y-4 md:space-y-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-6">
+                        <span class="px-4 md:px-6 py-1.5 md:py-2 bg-orange-600 rounded-full text-[9px] md:text-[11px] font-black uppercase tracking-wide md:tracking-widest shadow-lg md:shadow-xl">Molecular ID: <span x-text="selectedPlant?.id"></span></span>
+                        <span class="text-white/70 text-xs md:text-sm italic border-l border-white/30 pl-4 md:pl-6 uppercase tracking-wide md:tracking-widest font-bold" x-text="selectedPlant?.cycle + ' Protocol'"></span>
                     </div>
-                    <div class="space-y-6">
+                    <div class="space-y-4 md:space-y-6">
                         <h3 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif italic font-bold tracking-tighter leading-tight text-white break-words" x-text="selectedPlant?.common_name || ''"></h3>
                         <p x-show="nepaliInfo && nepaliInfo.nepaliName" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-orange-500 font-bold font-serif opacity-90 break-words" x-text="nepaliInfo?.nepaliName || ''"></p>
                     </div>
@@ -234,37 +234,37 @@
                     </div>
                 </header>
 
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-                    <div class="bg-white/5 p-10 rounded-[3rem] border border-white/10 hover:bg-white/20 hover:shadow-[0_20px_40px_rgba(234,179,8,0.2)] hover:-translate-y-2 transition-all duration-300 cursor-default group">
-                        <i class="fa-solid fa-droplet text-orange-600 mb-4 block text-lg group-hover:scale-110 transition-transform"></i>
-                        <p class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] mb-2">Watering Protocol</p>
-                        <p class="text-2xl font-bold italic font-serif capitalize text-white" x-text="selectedPlant?.watering || 'Standard'"></p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-8">
+                    <div class="bg-white/5 p-4 sm:p-6 md:p-10 rounded-2xl sm:rounded-3xl md:rounded-[3rem] border border-white/10 hover:bg-white/20 hover:shadow-[0_20px_40px_rgba(234,179,8,0.2)] hover:-translate-y-2 transition-all duration-300 cursor-default group">
+                        <i class="fa-solid fa-droplet text-orange-600 mb-3 md:mb-4 block text-base md:text-lg group-hover:scale-110 transition-transform"></i>
+                        <p class="text-[9px] md:text-[10px] font-black text-white/60 uppercase tracking-[0.15em] md:tracking-[0.2em] mb-2">Watering Protocol</p>
+                        <p class="text-base sm:text-lg md:text-2xl font-bold italic font-serif capitalize text-white" x-text="selectedPlant?.watering || 'Standard'"></p>
                     </div>
-                    <div class="bg-white/5 p-10 rounded-[3rem] border border-white/10 hover:bg-white/20 hover:shadow-[0_20px_40px_rgba(234,179,8,0.2)] hover:-translate-y-2 transition-all duration-300 cursor-default group">
-                        <i class="fa-solid fa-sun text-orange-600 mb-4 block text-lg group-hover:scale-110 transition-transform"></i>
-                        <p class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] mb-2">Luminance Needs</p>
-                        <p class="text-2xl font-bold italic font-serif capitalize text-white" x-text="(selectedPlant?.sunlight && Array.isArray(selectedPlant.sunlight) ? selectedPlant.sunlight[0] : (selectedPlant?.sunlight || 'Standard'))"></p>
+                    <div class="bg-white/5 p-4 sm:p-6 md:p-10 rounded-2xl sm:rounded-3xl md:rounded-[3rem] border border-white/10 hover:bg-white/20 hover:shadow-[0_20px_40px_rgba(234,179,8,0.2)] hover:-translate-y-2 transition-all duration-300 cursor-default group">
+                        <i class="fa-solid fa-sun text-orange-600 mb-3 md:mb-4 block text-base md:text-lg group-hover:scale-110 transition-transform"></i>
+                        <p class="text-[9px] md:text-[10px] font-black text-white/60 uppercase tracking-[0.15em] md:tracking-[0.2em] mb-2">Luminance Needs</p>
+                        <p class="text-base sm:text-lg md:text-2xl font-bold italic font-serif capitalize text-white" x-text="(selectedPlant?.sunlight && Array.isArray(selectedPlant.sunlight) ? selectedPlant.sunlight[0] : (selectedPlant?.sunlight || 'Standard'))"></p>
                     </div>
-                    <div class="bg-white/5 p-10 rounded-[3rem] border border-white/10 hover:bg-white/20 hover:shadow-[0_20px_40px_rgba(234,179,8,0.2)] hover:-translate-y-2 transition-all duration-300 cursor-default group">
-                        <i class="fa-solid fa-wrench text-orange-600 mb-4 block text-lg group-hover:scale-110 transition-transform"></i>
-                        <p class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] mb-2">Maintenance Level</p>
-                        <p class="text-2xl font-bold italic font-serif capitalize text-white" x-text="selectedPlant?.maintenance || 'Standard'"></p>
+                    <div class="bg-white/5 p-4 sm:p-6 md:p-10 rounded-2xl sm:rounded-3xl md:rounded-[3rem] border border-white/10 hover:bg-white/20 hover:shadow-[0_20px_40px_rgba(234,179,8,0.2)] hover:-translate-y-2 transition-all duration-300 cursor-default group col-span-2 md:col-span-1">
+                        <i class="fa-solid fa-wrench text-orange-600 mb-3 md:mb-4 block text-base md:text-lg group-hover:scale-110 transition-transform"></i>
+                        <p class="text-[9px] md:text-[10px] font-black text-white/60 uppercase tracking-[0.15em] md:tracking-[0.2em] mb-2">Maintenance Level</p>
+                        <p class="text-base sm:text-lg md:text-2xl font-bold italic font-serif capitalize text-white" x-text="selectedPlant?.maintenance || 'Standard'"></p>
                     </div>
                 </div>
 
-                <div class="bg-white/5 p-14 rounded-[4rem] border border-white/10 space-y-10 relative overflow-hidden group">
-                    <div class="flex items-center gap-6 relative z-10">
-                        <div class="h-10 w-10 rounded-xl bg-orange-600 flex items-center justify-center shadow-lg">
-                            <i class="fa-solid fa-map-location-dot text-white"></i>
+                <div class="bg-white/5 p-6 sm:p-10 md:p-14 rounded-2xl sm:rounded-3xl md:rounded-[4rem] border border-white/10 space-y-6 sm:space-y-8 md:space-y-10 relative overflow-hidden group">
+                    <div class="flex items-center gap-3 sm:gap-4 md:gap-6 relative z-10">
+                        <div class="h-8 w-8 md:h-10 md:w-10 rounded-lg md:rounded-xl bg-orange-600 flex items-center justify-center shadow-lg">
+                            <i class="fa-solid fa-map-location-dot text-white text-sm md:text-base"></i>
                         </div>
-                        <h5 class="text-[12px] font-black uppercase tracking-[0.5em] text-white/80">Himalayan Adaptability</h5>
+                        <h5 class="text-[10px] sm:text-[11px] md:text-[12px] font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] md:tracking-[0.5em] text-white/80">Himalayan Adaptability</h5>
                     </div>
-                    <div class="space-y-10 relative z-10">
-                        <p class="text-2xl md:text-4xl text-white font-serif italic leading-relaxed border-l-4 border-orange-600 pl-10" x-text="nepaliInfo?.guide || 'No localized guide available.'"></p>
-                        <div class="flex flex-wrap gap-12 pt-8 border-t border-white/10">
+                    <div class="space-y-6 sm:space-y-8 md:space-y-10 relative z-10">
+                        <p class="text-base sm:text-xl md:text-2xl lg:text-4xl text-white font-serif italic leading-relaxed border-l-2 sm:border-l-3 md:border-l-4 border-orange-600 pl-4 sm:pl-6 md:pl-10" x-text="nepaliInfo?.guide || 'No localized guide available.'"></p>
+                        <div class="flex flex-wrap gap-6 sm:gap-8 md:gap-12 pt-4 sm:pt-6 md:pt-8 border-t border-white/10">
                             <div>
-                               <p class="text-[11px] font-black text-orange-600 uppercase tracking-widest mb-2">Target Altitude</p>
-                               <p class="text-5xl font-serif font-black italic text-white" x-text="nepaliInfo?.altitude || 'Varies'"></p>
+                               <p class="text-[10px] md:text-[11px] font-black text-orange-600 uppercase tracking-widest mb-2">Target Altitude</p>
+                               <p class="text-3xl sm:text-4xl md:text-5xl font-serif font-black italic text-white" x-text="nepaliInfo?.altitude || 'Varies'"></p>
                             </div>
                         </div>
                     </div>
@@ -279,12 +279,12 @@
     </div>
 
     <!-- Disease Detail Overlay - High Contrast -->
-    <div x-show="selectedDisease" class="fixed inset-0 z-[100] bg-black backdrop-blur-3xl overflow-y-auto" @click.self="selectedDisease = null">
-       <button @click="selectedDisease = null" class="fixed top-10 right-10 h-16 w-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-rose-600 transition-all z-[110] shadow-2xl">
-          <i class="fa-solid fa-xmark text-2xl"></i>
+    <div x-show="selectedDisease" class="fixed inset-0 z-[100] bg-black/95 md:bg-black backdrop-blur-3xl overflow-y-auto" @click.self="selectedDisease = null">
+       <button @click="selectedDisease = null" class="fixed top-4 md:top-10 right-4 md:right-10 h-12 w-12 md:h-16 md:w-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-rose-600 transition-all z-[110] shadow-xl md:shadow-2xl">
+          <i class="fa-solid fa-xmark text-xl md:text-2xl"></i>
        </button>
 
-       <div class="w-full max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 px-6 py-24 items-start animate-slideUp">
+       <div class="w-full max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-20 px-4 md:px-6 py-12 md:py-24 items-start animate-slideUp">
           <div class="space-y-10">
              <div class="relative aspect-square rounded-[4rem] overflow-hidden border border-white/10 shadow-3xl group bg-rose-950/20 flex items-center justify-center">
                 <template x-if="selectedDisease && selectedDisease.images && selectedDisease.images.length">
@@ -300,35 +300,35 @@
                 </div>
              </div>
 
-                <div class="bg-white/5 p-12 rounded-[3.5rem] border border-white/10 space-y-6">
-                    <h5 class="text-[10px] font-black uppercase tracking-widest text-white/70">Biological Ledger</h5>
-                    <div class="space-y-4">
-                       <div class="flex justify-between border-b border-white/10 pb-4">
-                          <span class="text-[10px] font-black uppercase tracking-widest text-white/60">Genetic Spec</span>
-                          <span class="italic text-lg text-white/90 font-bold" x-text="selectedDisease?.scientific_name || 'Unknown'"></span>
+                <div class="bg-white/5 p-6 sm:p-8 md:p-12 rounded-2xl sm:rounded-3xl md:rounded-[3.5rem] border border-white/10 space-y-4 md:space-y-6">
+                    <h5 class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-white/70">Biological Ledger</h5>
+                    <div class="space-y-3 md:space-y-4">
+                       <div class="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-0 border-b border-white/10 pb-3 md:pb-4">
+                          <span class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-white/60">Genetic Spec</span>
+                          <span class="italic text-base md:text-lg text-white/90 font-bold break-words" x-text="selectedDisease?.scientific_name || 'Unknown'"></span>
                        </div>
-                       <div class="flex justify-between border-b border-white/10 pb-4">
-                          <span class="text-[10px] font-black uppercase tracking-widest text-white/60">Family Node</span>
-                          <span class="italic text-lg text-white/90 font-bold" x-text="selectedDisease?.family || 'Undefined'"></span>
+                       <div class="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-0 border-b border-white/10 pb-3 md:pb-4">
+                          <span class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-white/60">Family Node</span>
+                          <span class="italic text-base md:text-lg text-white/90 font-bold break-words" x-text="selectedDisease?.family || 'Undefined'"></span>
                        </div>
                     </div>
                  </div>
           </div>
 
-          <div class="space-y-12">
-             <header class="space-y-6">
-                <span class="px-6 py-2 bg-rose-600 rounded-full text-[11px] font-black uppercase tracking-widest text-white">Target Pathology</span>
-                <h3 class="text-4xl sm:text-5xl md:text-6xl italic font-bold tracking-tighter leading-tight break-words text-white">Neutralization <br /><span class="text-rose-400">&amp; Countermeasures.</span></h3>
+          <div class="space-y-8 md:space-y-12">
+             <header class="space-y-4 md:space-y-6">
+                <span class="px-4 md:px-6 py-1.5 md:py-2 bg-rose-600 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-widest text-white">Target Pathology</span>
+                <h3 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl italic font-bold tracking-tighter leading-tight break-words text-white">Neutralization <br /><span class="text-rose-400">&amp; Countermeasures.</span></h3>
              </header>
 
-             <div class="space-y-10">
+             <div class="space-y-6 md:space-y-10">
                 <template x-for="(desc, i) in (selectedDisease?.description || [])" :key="i">
-                   <div class="space-y-4 border-l-2 border-rose-500 pl-10 group">
-                      <h6 class="text-[11px] font-black uppercase tracking-[0.3em] text-rose-500" x-text="desc.subtitle"></h6>
-                      <p class="text-xl font-serif italic text-white/80 leading-relaxed" x-text="desc.description"></p>
+                   <div class="space-y-3 md:space-y-4 border-l-2 border-rose-500 pl-4 sm:pl-6 md:pl-10 group">
+                      <h6 class="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-rose-500" x-text="desc.subtitle"></h6>
+                      <p class="text-base sm:text-lg md:text-xl font-serif italic text-white/80 leading-relaxed" x-text="desc.description"></p>
                    </div>
                 </template>
-                <div x-show="!(selectedDisease?.description && selectedDisease.description.length)" class="bg-white/5 p-10 rounded-[2.5rem] border border-white/10 italic text-white/40 font-serif">
+                <div x-show="!(selectedDisease?.description && selectedDisease.description.length)" class="bg-white/5 p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl md:rounded-[2.5rem] border border-white/10 italic text-white/40 font-serif text-sm md:text-base">
                    Searching global pathogen registry for specific countermeasures...
                 </div>
              </div>
@@ -496,8 +496,15 @@ function agroApp() {
 <style>
     .periodic-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 0.75rem;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 0.5rem;
+    }
+
+    @media (min-width: 640px) {
+        .periodic-grid {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.75rem;
+        }
     }
 
     .periodic-cell {

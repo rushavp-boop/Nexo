@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="space-y-8 pb-20">
+    <div class="space-y-6 md:space-y-8 pb-10 md:pb-20">
         <!-- Header -->
         <div class="animate-slide-up">
-            <h2 class="text-4xl font-bold italic text-stone-900 tracking-tighter uppercase">
+            <h2 class="text-3xl sm:text-4xl font-bold italic text-stone-900 tracking-tighter uppercase">
                 My Profile
             </h2>
             <p class="text-amber-700 mt-2 font-medium italic">Manage your account and view your bookings</p>
         </div>
 
         <!-- User Information Card -->
-        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-[3rem] shadow-lg p-10 animate-fade-in hover:shadow-xl hover:shadow-amber-700/10 transition-all">
-            <h3 class="text-2xl font-bold italic text-stone-900 mb-6">Personal Information</h3>
+        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-2xl md:rounded-[3rem] shadow-lg p-6 sm:p-8 md:p-10 animate-fade-in hover:shadow-xl hover:shadow-amber-700/10 transition-all">
+            <h3 class="text-xl md:text-2xl font-bold italic text-stone-900 mb-4 md:mb-6">Personal Information</h3>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div class="animate-fade-in">
                     <label class="text-[10px] font-bold italic text-amber-900 uppercase tracking-widest mb-2 block">Name</label>
                     <p class="text-lg font-bold italic text-stone-900">{{ $user->name }}</p>
@@ -40,10 +40,10 @@
 
         <!-- Nexo Paisa Card -->
         <div
-            class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-[3rem] shadow-lg p-10 animate-fade-in hover:shadow-xl hover:shadow-amber-700/10 transition-all">
-            <h3 class="text-2xl font-bold italic text-stone-900 mb-6">Nexo Paisa</h3>
+            class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-2xl md:rounded-[3rem] shadow-lg p-6 sm:p-8 md:p-10 animate-fade-in hover:shadow-xl hover:shadow-amber-700/10 transition-all">
+            <h3 class="text-xl md:text-2xl font-bold italic text-stone-900 mb-4 md:mb-6">Nexo Paisa</h3>
 
-            <div class="flex items-center justify-between">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
                 <div>
                     <label class="text-[10px] font-bold italic text-amber-900 uppercase tracking-widest mb-2 block">Current
                         Balance</label>

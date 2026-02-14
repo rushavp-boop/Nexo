@@ -6,20 +6,20 @@
         $status = 'User Node';
     @endphp
 
-    <div class="space-y-20 pb-10">
+    <div class="space-y-10 md:space-y-20 pb-10">
 
         {{-- Hero Greeting Section --}}
         <section class="relative overflow-hidden">
             <div
-                class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-amber-400/5 rounded-[3rem] transform -skew-y-1">
+                class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-amber-400/5 rounded-2xl md:rounded-[3rem] transform -skew-y-1">
             </div>
             <div
-                class="relative bg-amber-100/70 backdrop-blur-xl rounded-[3rem] border border-amber-200/60 shadow-2xl p-10 md:p-14 animate-slide-up">
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
-                    <div class="space-y-6 flex-1">
+                class="relative bg-amber-100/70 backdrop-blur-xl rounded-2xl md:rounded-[3rem] border-2 md:border-4 border-amber-700/40 shadow-xl md:shadow-2xl p-6 sm:p-8 md:p-10 lg:p-14 animate-slide-up hover:border-amber-800/60 transition-all duration-500">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 md:gap-10">
+                    <div class="space-y-4 md:space-y-6 flex-1">
                         <!-- Status Badge -->
                         <div
-                            class="inline-flex items-center gap-3 px-5 py-2.5 bg-gradient-to-r from-amber-700 to-amber-800 text-white rounded-full text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-amber-700/30 hover:shadow-2xl hover:shadow-amber-700/40 transition-all duration-500 cursor-default group">
+                            class="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 md:py-2.5 bg-gradient-to-r from-amber-700 to-amber-800 text-white rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.15em] md:tracking-[0.2em] shadow-lg md:shadow-xl shadow-amber-700/30 hover:shadow-2xl hover:shadow-amber-700/40 transition-all duration-500 cursor-default group">
                             <span class="relative flex h-2 w-2">
                                 <span
                                     class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
@@ -32,10 +32,10 @@
                         </div>
 
                         <!-- Main Greeting -->
-                        <div class="space-y-5">
-                            <div class="flex flex-col md:flex-row md:items-end gap-5">
+                        <div class="space-y-3 md:space-y-5">
+                            <div class="flex flex-col md:flex-row md:items-end gap-3 md:gap-5">
                                 <h1
-                                    class="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 bg-clip-text text-transparent leading-none hover:scale-105 transition-transform duration-700 cursor-default font-serif italic origin-left">
+                                    class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 bg-clip-text text-transparent leading-none hover:scale-105 transition-transform duration-700 cursor-default font-serif italic origin-left">
                                     Namaste<span class="text-amber-700">.</span>
                                 </h1>
                                 {{-- <div class="inline-flex items-center gap-3 px-6 py-3 bg-stone-900 text-white rounded-2xl shadow-2xl mb-2 hover:shadow-3xl hover:-translate-y-1 transition-all duration-500 group cursor-default">
@@ -44,7 +44,7 @@
                                 <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                             </div> --}}
                             </div>
-                            <p class="text-xl md:text-2xl text-amber-700 font-medium max-w-3xl leading-relaxed">
+                            <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-amber-700 font-medium max-w-3xl leading-relaxed">
                                 Welcome to your integrated <span class="font-bold text-amber-900">Himalayan
                                     dashboard</span>. Your Nexo node is fully synchronized.
                             </p>
@@ -214,8 +214,14 @@
 
                 @foreach ($modules as $index => $mod)
                     <a href="{{ route($mod['route'] ?? '#') }}"
-                        class="group relative bg-amber-50 rounded-[2rem] p-10 shadow-xl border border-amber-200 hover:bg-amber-800 hover:text-white hover:shadow-3xl hover:border-transparent transition-all duration-700 hover:-translate-y-3 overflow-hidden flex flex-col justify-between aspect-square"
-                        style="animation-delay: {{ $index * 100 }}ms">
+                        class="group relative rounded-[2rem] p-10 shadow-xl border border-amber-200 hover:border-transparent transition-all duration-700 hover:-translate-y-3 overflow-hidden flex flex-col justify-between aspect-square"
+                        style="animation-delay: {{ $index * 100 }}ms; background-image: url('/old-paper-texture.jpg'); background-size: cover; background-position: center;"
+                        onmouseover="this.style.backgroundImage=''"
+                        onmouseout="this.style.backgroundImage='url(/old-paper-texture.jpg)'">
+
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-amber-800 to-amber-900 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                        </div>
 
                         <div
                             class="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
@@ -223,8 +229,8 @@
 
                         <div class="relative z-10">
                             <div
-                                class="h-16 w-16 bg-amber-100 rounded-2xl flex items-center justify-center group-hover:bg-white group-hover:text-amber-800 shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-700">
-                                <i class="fa-solid {{ $mod['icon'] }} text-3xl"></i>
+                                class="h-16 w-16 bg-white/30 rounded-2xl flex items-center justify-center group-hover:bg-white group-hover:text-amber-800 shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-700">
+                                <i class="fa-solid {{ $mod['icon'] }} text-3xl text-amber-900 group-hover:text-amber-800"></i>
                             </div>
                         </div>
 
@@ -234,11 +240,11 @@
                                 {{ $mod['title'] }}
                             </h4>
                             <p
-                                class="text-sm text-amber-700 group-hover:text-white/80 font-medium transition-colors duration-500">
+                                class="text-sm text-amber-800 group-hover:text-white/90 font-medium transition-colors duration-500">
                                 {{ $mod['desc'] }}
                             </p>
                             <div
-                                class="w-10 h-1 bg-amber-200 group-hover:bg-white group-hover:w-16 rounded-full transition-all duration-700">
+                                class="w-10 h-1 bg-amber-400 group-hover:bg-white group-hover:w-16 rounded-full transition-all duration-700">
                             </div>
                         </div>
                     </a>
@@ -364,7 +370,12 @@
 
                 } catch (e) {
                     console.error(e);
-                    this.desc = 'Unavailable';
+                    this.desc = 'Unable to load';
+                }
+            }
+        }
+    }
+</script>                    this.desc = 'Unavailable';
                 }
             }
         }

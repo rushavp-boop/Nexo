@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex flex-col pb-8" style="min-height: calc(100vh - 12rem); max-width: 56rem; margin: 0 auto;">
-    <div class="bg-white border border-amber-200 rounded-[3rem] shadow-2xl overflow-hidden flex flex-col" style="height: calc(100vh - 12rem);">
+<div class="flex flex-col pb-4 md:pb-8" style="min-height: calc(100vh - 10rem); max-width: 56rem; margin: 0 auto;">
+    <div class="bg-white border border-amber-200 rounded-2xl md:rounded-[3rem] shadow-xl md:shadow-2xl overflow-hidden flex flex-col" style="height: calc(100vh - 10rem);">
         <!-- Header -->
-        <div class="bg-gradient-to-r from-amber-100 to-amber-50 p-8 border-b border-amber-200 flex items-center justify-between backdrop-blur-sm">
-            <div class="flex items-center gap-5 animate-fadeIn">
-                <div class="h-14 w-14 rounded-full bg-gradient-to-br from-amber-800 to-amber-900 border-2 border-white/20 flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
-                    <i class="fa-solid fa-robot text-amber-100 text-xl animate-pulse"></i>
+        <div class="bg-gradient-to-r from-amber-100 to-amber-50 p-4 sm:p-6 md:p-8 border-b border-amber-200 flex items-center justify-between backdrop-blur-sm">
+            <div class="flex items-center gap-3 md:gap-5 animate-fadeIn">
+                <div class="h-10 w-10 md:h-14 md:w-14 rounded-full bg-gradient-to-br from-amber-800 to-amber-900 border-2 border-white/20 flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    <i class="fa-solid fa-robot text-amber-100 text-base md:text-xl animate-pulse"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-amber-900 font-serif tracking-tight text-xl uppercase">Nexo<span class="text-amber-700">Chat</span></h3>
-                    <p class="text-[10px] text-amber-700 font-black uppercase tracking-[0.2em] italic">Cognitive Hub Active</p>
+                    <h3 class="font-bold text-amber-900 font-serif tracking-tight text-base md:text-xl uppercase">Nexo<span class="text-amber-700">Chat</span></h3>
+                    <p class="text-[9px] md:text-[10px] text-amber-700 font-black uppercase tracking-[0.15em] md:tracking-[0.2em] italic">Cognitive Hub Active</p>
                 </div>
             </div>
-            <div class="flex gap-1.5 items-center animate-pulse">
+            <div class="flex gap-1 md:gap-1.5 items-center animate-pulse">
                 <div class="h-2 w-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50"></div>
                 <div class="h-2 w-2 rounded-full bg-emerald-400 opacity-75"></div>
                 <div class="h-2 w-2 rounded-full bg-emerald-300 opacity-50"></div>
@@ -23,7 +23,7 @@
 
         <!-- Chat Messages Area -->
         <div x-data="chatApp()" class="flex flex-col flex-1 overflow-hidden">
-            <div class="flex-1 overflow-y-auto p-6 md:p-10 space-y-6 bg-gradient-to-b from-amber-50 via-amber-50/50 to-white"
+            <div class="flex-1 overflow-y-auto p-4 sm:p-6 md:p-10 space-y-4 md:space-y-6 bg-gradient-to-b from-amber-50 via-amber-50/50 to-white"
                  id="chatMessages"
                  style="scroll-behavior: smooth;">
 

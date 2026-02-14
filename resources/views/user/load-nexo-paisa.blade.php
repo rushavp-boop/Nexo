@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="space-y-24 pb-32">
+<div class="space-y-12 md:space-y-24 pb-16 md:pb-32">
 
     {{-- Header --}}
-    <section class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 animate-slide-up">
-        <div class="space-y-4">
-            <div class="flex items-center gap-3 text-amber-700 font-bold italic uppercase tracking-widest text-xs">
+    <section class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 md:gap-12 animate-slide-up">
+        <div class="space-y-3 md:space-y-4">
+            <div class="flex items-center gap-2 md:gap-3 text-amber-700 font-bold italic uppercase tracking-wide md:tracking-widest text-[10px] md:text-xs">
                 <span class="h-1.5 w-1.5 rounded-full bg-amber-700 animate-pulse"></span>
                 Load Nexo Paisa
             </div>
-            <h2 class="text-6xl md:text-8xl italic font-bold tracking-tight leading-none animate-float">
+            <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl italic font-bold tracking-tight leading-none animate-float">
                 Add Funds<span class="text-amber-700">.</span>
             </h2>
-            <p class="text-xl md:text-2xl text-stone-700 font-medium italic max-w-2xl leading-relaxed">
+            <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-stone-700 font-medium italic max-w-2xl leading-relaxed">
                 Load Nexo Paisa from your bank account. 1 NRP = 1 Nexo Paisa.
             </p>
         </div>
@@ -21,10 +21,10 @@
 
     {{-- Load Form --}}
     <section class="max-w-2xl mx-auto animate-fade-in">
-        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 p-12 space-y-8 rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-amber-700/20 transition-all duration-300">
-            <h3 class="text-3xl font-bold italic">Bank Transfer</h3>
+        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 p-6 sm:p-8 md:p-12 space-y-6 md:space-y-8 rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-amber-700/20 transition-all duration-300">
+            <h3 class="text-2xl md:text-3xl font-bold italic">Bank Transfer</h3>
 
-            <form id="loadForm" class="space-y-6">
+            <form id="loadForm" class="space-y-5 md:space-y-6">
                 @csrf
                 <div class="animate-fade-in">
                     <label for="bank" class="block text-sm font-bold italic text-amber-900 mb-2">Select Bank</label>

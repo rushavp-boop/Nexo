@@ -2,26 +2,27 @@
     $user = auth()->user();
 @endphp
 
-<header class="fixed top-0 right-0 left-0 md:left-72 z-40 bg-amber-50/90 backdrop-blur-xl border-b border-amber-200/50 px-8 py-4 shadow-sm">
+<header class="fixed top-0 right-0 left-0 md:left-72 z-40 bg-amber-50/90 backdrop-blur-xl border-b border-amber-200/50 px-4 md:px-8 py-3 md:py-4 shadow-sm">
     <div class="flex items-center justify-between">
 
         {{-- Left Side: Date & Branding --}}
-        <div class="flex items-center gap-3 text-amber-800 font-serif italic font-bold tracking-tight">
-            <i class="fa-solid fa-layer-group text-amber-700 text-lg"></i>
-            <span class="text-sm">{{ now()->format('l, F j, Y') }}</span>
+        <div class="flex items-center gap-2 md:gap-3 text-amber-800 font-serif italic font-bold tracking-tight ml-14 md:ml-0">
+            <i class="fa-solid fa-layer-group text-amber-700 text-sm md:text-lg"></i>
+            <span class="text-xs md:text-sm hidden sm:inline">{{ now()->format('l, F j, Y') }}</span>
+            <span class="text-xs md:text-sm sm:hidden">{{ now()->format('M j, Y') }}</span>
         </div>
 
         {{-- Right Side: Wallet & User --}}
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 md:gap-4">
 
             {{-- Nexo Paisa Wallet --}}
             <a href="{{ route('user.loadNexoPaisa') }}"
-               class="group flex items-center gap-3 px-4 py-2.5 bg-gradient-to-r from-amber-50 to-amber-100/50 hover:from-amber-100 hover:to-amber-200/50 rounded-xl border border-amber-200/50 hover:border-amber-300 transition-all duration-300 hover:shadow-lg">
+               class="group flex items-center gap-2 md:gap-3 px-2 md:px-4 py-2 md:py-2.5 bg-gradient-to-r from-amber-50 to-amber-100/50 hover:from-amber-100 hover:to-amber-200/50 rounded-lg md:rounded-xl border border-amber-200/50 hover:border-amber-300 transition-all duration-300 hover:shadow-lg">
 
                 {{-- Wallet Icon --}}
                 <div class="relative">
-                    <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-700 to-amber-800 flex items-center justify-center shadow-md transition-all">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-gradient-to-br from-amber-700 to-amber-800 flex items-center justify-center shadow-md transition-all">
+                        <svg class="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                         </svg>
                     </div>
@@ -31,28 +32,28 @@
 
                 {{-- Balance Info --}}
                 <div class="flex flex-col">
-                    <span class="text-[10px] font-black text-amber-800 uppercase tracking-wider">Nexo Paisa</span>
-                    <span class="text-base font-bold text-stone-900">{{ number_format($user->nexo_paisa, 2) }}</span>
+                    <span class="text-[9px] md:text-[10px] font-black text-amber-800 uppercase tracking-wider hidden sm:inline">Nexo Paisa</span>
+                    <span class="text-sm md:text-base font-bold text-stone-900">{{ number_format($user->nexo_paisa, 2) }}</span>
                 </div>
 
                 {{-- Arrow Icon --}}
-                <i class="fa-solid fa-chevron-right text-amber-700 text-xs opacity-0 group-hover:opacity-100 -ml-2 group-hover:ml-0 transition-all duration-300"></i>
+                <i class="fa-solid fa-chevron-right text-amber-700 text-xs opacity-0 group-hover:opacity-100 -ml-2 group-hover:ml-0 transition-all duration-300 hidden md:inline"></i>
             </a>
 
             {{-- Divider --}}
-            <div class="h-10 w-px bg-amber-200"></div>
+            <div class="h-8 md:h-10 w-px bg-amber-200"></div>
 
             {{-- User Avatar Dropdown --}}
             <div x-data="{ open: false }" class="relative">
                 <button @click="open = !open"
-                        class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-stone-50 transition-all duration-300 group">
+                        class="flex items-center gap-2 md:gap-3 px-2 md:px-3 py-2 rounded-lg md:rounded-xl hover:bg-stone-50 transition-all duration-300 group">
 
                     {{-- Avatar with Status --}}
                     <div class="relative">
-                        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-amber-700 to-amber-800 flex items-center justify-center text-white font-bold text-sm shadow-md ring-2 ring-amber-200 transition-all">
+                        <div class="h-8 w-8 md:h-10 md:w-10 rounded-full bg-gradient-to-br from-amber-700 to-amber-800 flex items-center justify-center text-white font-bold text-xs md:text-sm shadow-md ring-2 ring-amber-200 transition-all">
                             <span>{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                         </div>
-                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+                        <span class="absolute bottom-0 right-0 w-2 h-2 md:w-3 md:h-3 bg-green-500 rounded-full border-2 border-white"></span>
                     </div>
 
                     {{-- User Info --}}
@@ -62,7 +63,7 @@
                     </div>
 
                     {{-- Chevron --}}
-                    <i class="fa-solid fa-chevron-down text-amber-700 text-xs transition-transform duration-300"
+                    <i class="fa-solid fa-chevron-down text-amber-700 text-xs transition-transform duration-300 hidden md:inline"
                        :class="open ? 'rotate-180' : ''"></i>
                 </button>
 
@@ -75,7 +76,7 @@
                      x-transition:leave="transition ease-in duration-150"
                      x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                      x-transition:leave-end="opacity-0 scale-95 -translate-y-2"
-                     class="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-amber-200/50 overflow-hidden z-50"
+                     class="absolute right-0 mt-3 w-56 md:w-64 bg-white rounded-2xl shadow-2xl border border-amber-200/50 overflow-hidden z-50"
                      style="display: none;">
 
                     {{-- User Header --}}

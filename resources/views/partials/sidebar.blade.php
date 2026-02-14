@@ -3,7 +3,7 @@
     $currentRoute = Route::currentRouteName();
 @endphp
 
-<aside class="fixed left-0 top-0 z-50 h-full w-72 bg-amber-50/95 backdrop-blur-xl border-r border-amber-200 shadow-2xl">
+<aside class="fixed left-0 top-0 z-50 h-full w-72 bg-amber-50/95 backdrop-blur-xl border-r border-amber-200 shadow-2xl transition-transform duration-300 md:translate-x-0" :class="mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'">
 
     <!-- Animated Background Blobs -->
     <div class="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
@@ -11,6 +11,11 @@
         <div class="absolute top-1/3 -right-12 w-48 h-48 bg-amber-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
         <div class="absolute -bottom-24 left-1/4 w-48 h-48 bg-amber-100 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
     </div>
+
+    <!-- Mobile Close Button -->
+    <button @click="mobileMenuOpen = false" class="md:hidden absolute top-4 right-4 z-10 h-10 w-10 rounded-lg bg-amber-100 hover:bg-amber-200 flex items-center justify-center text-amber-900 transition-colors">
+        <i class="fa-solid fa-xmark text-xl"></i>
+    </button>
 
     <!-- Logo Section -->
     <div class="relative flex h-28 items-center px-8 border-b border-amber-200/60">
@@ -76,7 +81,13 @@
             @endforeach
         </div>
     </nav>
+
 </aside>
+
+<!-- Mobile Menu Button -->
+<button @click="mobileMenuOpen = true" class="md:hidden fixed top-4 left-4 z-[60] h-12 w-12 rounded-xl bg-amber-900 hover:bg-amber-800 flex items-center justify-center text-white shadow-lg transition-all">
+    <i class="fa-solid fa-bars text-lg"></i>
+</button>
 
 <style>
 @keyframes blob {

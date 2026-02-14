@@ -1,41 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-    <div x-data="hotelBooking()" class="flex flex-col items-center justify-center py-20 space-y-12">
+    <div x-data="hotelBooking()" class="flex flex-col items-center justify-center py-10 md:py-20 space-y-8 md:space-y-12">
 
-        <div class="animate-slide-up space-y-3 text-center">
-            <h2 class="text-5xl md:text-6xl font-bold text-stone-900 uppercase italic tracking-tighter">Hotel Booking</h2>
-            <p class="text-amber-700 font-bold italic">Reserve your perfect stay today</p>
+        <div class="animate-slide-up space-y-2 md:space-y-3 text-center">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-stone-900 uppercase italic tracking-tighter">Hotel Booking</h2>
+            <p class="text-sm md:text-base text-amber-700 font-bold italic">Reserve your perfect stay today</p>
         </div>
 
         <!-- Hotel Info Card -->
         <div
-            class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-[3rem] shadow-xl w-full max-w-4xl p-10 flex flex-col md:flex-row gap-10 animate-fade-in hover:shadow-2xl hover:shadow-amber-700/10 transition-all duration-300">
+            class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-2xl md:rounded-[3rem] shadow-lg md:shadow-xl w-full max-w-4xl p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 animate-fade-in hover:shadow-2xl hover:shadow-amber-700/10 transition-all duration-300">
 
             <!-- Hotel Image -->
-            <div class="md:w-1/2 rounded-[2rem] overflow-hidden shadow-lg">
+            <div class="md:w-1/2 rounded-xl md:rounded-[2rem] overflow-hidden shadow-lg">
                 <img :src="hotel.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800'"
                     class="w-full h-full object-cover" :alt="hotel.name">
             </div>
 
             <!-- Hotel Details -->
-            <div class="md:w-1/2 space-y-4">
-                <div class="flex items-start justify-between">
-                    <div class="space-y-2">
-                        <h3 class="text-3xl font-bold italic text-stone-900" x-text="hotel.name"></h3>
-                        <p class="text-sm text-stone-600 mt-2 flex items-center gap-2 font-medium italic">
+            <div class="md:w-1/2 space-y-3 md:space-y-4">
+                <div class="flex flex-col sm:flex-row items-start justify-between gap-3">
+                    <div class="space-y-1.5 md:space-y-2">
+                        <h3 class="text-2xl sm:text-3xl font-bold italic text-stone-900" x-text="hotel.name"></h3>
+                        <p class="text-xs md:text-sm text-stone-600 mt-2 flex items-center gap-2 font-medium italic">
                             <i class="fa-solid fa-location-dot text-amber-700"></i>
                             <span x-text="hotel.location"></span>
                         </p>
                     </div>
                     <div
-                        class="bg-gradient-to-br from-amber-700 to-amber-800 text-white px-4 py-2 rounded-full text-sm font-black uppercase tracking-widest shadow-lg shadow-amber-700/20">
+                        class="bg-gradient-to-br from-amber-700 to-amber-800 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-black uppercase tracking-wider md:tracking-widest shadow-lg shadow-amber-700/20">
                         ★ <span x-text="hotel.rating || '4.5'"></span>
                     </div>
                 </div>
 
                 <!-- Amenities -->
-                <div class="flex flex-wrap gap-2 mt-4" x-show="hotel.amenities && hotel.amenities.length > 0">
+                <div class="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-4" x-show="hotel.amenities && hotel.amenities.length > 0">
                     <template x-for="(amenity, aidx) in (hotel.amenities || [])" :key="aidx">
                         <span
                             class="text-[9px] font-black uppercase tracking-widest bg-amber-100 text-amber-900 px-3 py-1.5 rounded-full hover:bg-amber-200 transition-all"
@@ -43,7 +43,7 @@
                     </template>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 mt-4 p-6 bg-amber-50/50 border border-amber-200 rounded-2xl">
+                <div class="grid grid-cols-2 gap-3 md:gap-4 mt-3 md:mt-4 p-4 md:p-6 bg-amber-50/50 border border-amber-200 rounded-xl md:rounded-2xl">
                     <div class="space-y-1">
                         <p class="text-sm font-black uppercase tracking-widest text-amber-900">Location</p>
                         <p class="text-base font-bold italic text-stone-900" x-text="hotel.location"></p>

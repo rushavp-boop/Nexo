@@ -147,14 +147,15 @@ Rules:
     public static function generateQuiz(int $grade, string $topic): array
     {
         $prompt = <<<PROMPT
-Generate 25 multiple-choice quiz questions.
+Generate 25 multiple-choice quiz questions that get harder as progressed more.
 
 Grade: {$grade}
 Topic: {$topic}
 
 Rules:
-- Medium difficulty
-- NEB aligned
+- Dynamic Increased Difficulty
+- NEB aligned (from grade 3-10).
+- STRICLY GIVE QUESTIONS FROM NEPAL CURRICULUM ONLY.
 - Each question has 4 options
 - Clearly indicate correct answer
 
@@ -188,12 +189,14 @@ PROMPT;
     public static function generateFlashCards(int $grade, string $topic): array
     {
         $prompt = <<<PROMPT
-Generate 25 educational flash cards.
+Generate 25 educational flash cards, they should be invormative and advanced as they progress.
 
 Grade: {$grade}
 Topic: {$topic}
 
 Rules:
+- NEB Curriculum aligned (from grade 3-10).
+- STRICLY GIVE FLASHCARDS FROM NEPAL CURRICULUM ONLY.
 - Simple front, clear back
 - Exam focused
 - Concept clarity

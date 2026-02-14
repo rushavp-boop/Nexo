@@ -1,54 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-    <div x-data="travelApp()" class="space-y-8 pb-20 animate-fadeIn">
+    <div x-data="travelApp()" class="space-y-6 md:space-y-8 pb-10 md:pb-20 animate-fadeIn">
 
         <!-- Tabs -->
         <div
-            class="flex bg-amber-50 p-1.5 rounded-[1.5rem] border border-amber-200 w-fit shadow-inner overflow-x-auto no-scrollbar">
+            class="flex bg-amber-50 p-1.5 rounded-xl md:rounded-[1.5rem] border border-amber-200 w-full md:w-fit shadow-inner overflow-x-auto no-scrollbar">
             <template x-for="(tab, idx) in tabs" :key="idx">
                 <button @click="selectTab(tab.id)"
                     :class="currentTab === tab.id ? 'bg-stone-900 text-white' : 'text-amber-700 hover:text-amber-900'"
-                    class="px-8 py-3 rounded-2xl text-[10px] font-bold italic uppercase tracking-[0.2em] transition-all whitespace-nowrap">
+                    class="px-4 sm:px-6 md:px-8 py-2.5 md:py-3 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-bold italic uppercase tracking-[0.15em] md:tracking-[0.2em] transition-all whitespace-nowrap flex-shrink-0">
                     <span x-text="tab.name"></span>
                 </button>
             </template>
         </div>
 
         <!-- Header Section -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <h2 class="text-3xl font-bold italic text-stone-900 tracking-tighter uppercase">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-4">
+            <h2 class="text-2xl sm:text-3xl font-bold italic text-stone-900 tracking-tighter uppercase">
                 Nexo<span class="text-amber-700">.Travel</span>
             </h2>
         </div>
 
         <!-- Plan Tab -->
-        <div x-show="currentTab === 'plan'" class="space-y-8">
+        <div x-show="currentTab === 'plan'" class="space-y-6 md:space-y-8">
             <!-- Input Form -->
-            <div class="bg-white border border-black/5 p-8 md:p-12 rounded-[3rem] shadow-xl">
+            <div class="bg-white border border-black/5 p-6 sm:p-8 md:p-12 rounded-2xl md:rounded-[3rem] shadow-lg md:shadow-xl">
                 <h3
-                    class="text-xl font-bold italic text-stone-900 mb-10 flex items-center gap-4 uppercase tracking-tighter">
+                    class="text-lg md:text-xl font-bold italic text-stone-900 mb-6 md:mb-10 flex items-center gap-3 md:gap-4 uppercase tracking-tighter">
                     <i class="fa-solid fa-compass text-amber-700"></i> Plan your Trip
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
                     <div class="space-y-2">
-                        <label class="text-[10px] font-bold italic text-amber-700 uppercase tracking-widest ml-1">Where
+                        <label class="text-[9px] md:text-[10px] font-bold italic text-amber-700 uppercase tracking-wider md:tracking-widest ml-1">Where
                             to?</label>
                         <input type="text" x-model="destination" @input="saveDestination()" placeholder="e.g. Pokhara"
-                            class="w-full bg-amber-50 border border-amber-200 text-stone-900 rounded-2xl px-6 py-4 focus:ring-1 focus:ring-amber-700 font-bold" />
+                            class="w-full bg-amber-50 border border-amber-200 text-stone-900 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 focus:ring-1 focus:ring-amber-700 font-bold" />
                     </div>
                     <div class="space-y-2">
-                        <label class="text-[10px] font-bold italic text-amber-700 uppercase tracking-widest ml-1">How
+                        <label class="text-[9px] md:text-[10px] font-bold italic text-amber-700 uppercase tracking-wider md:tracking-widest ml-1">How
                             many
                             days?</label>
                         <input type="number" x-model.number="days" min="1"
-                            class="w-full bg-amber-50 border border-amber-200 text-stone-900 rounded-2xl px-6 py-4 focus:ring-1 focus:ring-amber-700 font-bold" />
+                            class="w-full bg-amber-50 border border-amber-200 text-stone-900 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 focus:ring-1 focus:ring-amber-700 font-bold" />
                     </div>
                     <div class="space-y-2">
                         <label
-                            class="text-[10px] font-bold italic text-amber-700 uppercase tracking-widest ml-1">Budget</label>
+                            class="text-[9px] md:text-[10px] font-bold italic text-amber-700 uppercase tracking-wider md:tracking-widest ml-1">Budget</label>
                         <select x-model="budget"
-                            class="w-full bg-amber-50 border border-amber-200 text-stone-900 rounded-2xl px-6 py-4 focus:ring-1 focus:ring-amber-700 font-bold">
+                            class="w-full bg-amber-50 border border-amber-200 text-stone-900 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 focus:ring-1 focus:ring-amber-700 font-bold">
                             <option>Affordable</option>
                             <option>Standard</option>
                             <option>Premium</option>
@@ -88,12 +88,17 @@
                             </template>
                         </div>
 
-                        <div class="flex justify-between items-center pt-4 border-t border-black/10">
-                            <span class="text-xs font-bold italic text-amber-700 uppercase tracking-wider"
-                                x-text="day.budget"></span>
-                            <span
-                                class="text-xs font-semibold text-stone-500 group-hover:text-amber-700 transition-colors">View
-                                Details →</span>
+                        <div class="pt-4 border-t border-black/10 space-y-4">
+                            <div>
+                                <p class="text-[9px] font-bold text-amber-900/60 uppercase tracking-widest mb-1">Daily Budget</p>
+                                <span class="text-sm font-bold italic text-amber-700"
+                                    x-text="day.budget"></span>
+                            </div>
+                            <div class="flex justify-end">
+                                <span
+                                    class="text-xs font-semibold text-stone-500 group-hover:text-amber-700 transition-colors">View
+                                    Details →</span>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -381,7 +386,7 @@
                                 day: day.day,
                                 desc: Array.isArray(day.desc) ? day.desc : (day.desc ? day.desc.split(
                                     '\n') : []),
-                                budget: day.budget || 'Budget not specified'
+                                budget: day.budget || this.budget
                             }));
                         }
 
@@ -423,7 +428,7 @@
                                 days.push({
                                     day: dayNum,
                                     desc: activities,
-                                    budget: budget
+                                    budget: budget || this.budget
                                 });
                             }
                         }
