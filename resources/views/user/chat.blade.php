@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex flex-col pb-4 md:pb-8" style="min-height: calc(100vh - 10rem); max-width: 56rem; margin: 0 auto;">
-    <div class="bg-white border border-amber-200 rounded-2xl md:rounded-[3rem] shadow-xl md:shadow-2xl overflow-hidden flex flex-col" style="height: calc(100vh - 10rem);">
+<div class="flex flex-col pb-4 md:pb-8" style="min-height: calc(100vh - 8rem); max-width: 56rem; margin: 0 auto;">
+    <div class="bg-white border border-amber-200 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3rem] shadow-lg sm:shadow-xl md:shadow-2xl overflow-hidden flex flex-col" style="height: calc(100vh - 8rem);">
         <!-- Header -->
         <div class="bg-gradient-to-r from-amber-100 to-amber-50 p-4 sm:p-6 md:p-8 border-b border-amber-200 flex items-center justify-between backdrop-blur-sm">
             <div class="flex items-center gap-3 md:gap-5 animate-fadeIn">

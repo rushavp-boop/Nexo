@@ -22,10 +22,10 @@
         </div>
 
         <!-- Stats Dashboard -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-xl p-4 text-center hover:shadow-lg transition-all">
-                <p class="text-2xl font-bold text-amber-900" x-text="stats.total || 0"></p>
-                <p class="text-[9px] font-black uppercase tracking-widest text-amber-600 mt-1">Total Events</p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
+            <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center hover:shadow-md sm:hover:shadow-lg transition-all">
+                <p class="text-xl sm:text-2xl font-bold text-amber-900" x-text="stats.total || 0"></p>
+                <p class="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-amber-600 mt-1">Total Events</p>
             </div>
             <div class="bg-gradient-to-br from-yellow-50 to-white border-2 border-yellow-300 rounded-xl p-4 text-center hover:shadow-lg transition-all">
                 <p class="text-2xl font-bold text-yellow-900" x-text="stats.upcoming || 0"></p>

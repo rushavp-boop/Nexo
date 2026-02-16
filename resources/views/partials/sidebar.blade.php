@@ -3,13 +3,13 @@
     $currentRoute = Route::currentRouteName();
 @endphp
 
-<aside class="fixed left-0 top-0 z-50 h-full w-72 bg-amber-50/95 backdrop-blur-xl border-r border-amber-200 shadow-2xl transition-transform duration-300 md:translate-x-0" :class="mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'">
+<aside class="fixed left-0 top-0 z-50 h-full w-64 sm:w-72 bg-amber-50/95 backdrop-blur-xl border-r border-amber-200 shadow-xl sm:shadow-2xl transition-transform duration-300 md:translate-x-0" :class="mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'">
 
     <!-- Animated Background Blobs -->
     <div class="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
-        <div class="absolute -top-24 -left-24 w-48 h-48 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-        <div class="absolute top-1/3 -right-12 w-48 h-48 bg-amber-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-        <div class="absolute -bottom-24 left-1/4 w-48 h-48 bg-amber-100 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+        <div class="absolute -top-16 sm:-top-24 -left-16 sm:-left-24 w-32 h-32 sm:w-48 sm:h-48 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+        <div class="absolute top-1/3 -right-8 sm:-right-12 w-32 h-32 sm:w-48 sm:h-48 bg-amber-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-16 sm:-bottom-24 left-1/4 w-32 h-32 sm:w-48 sm:h-48 bg-amber-100 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
     </div>
 
     <!-- Mobile Close Button -->
@@ -18,15 +18,15 @@
     </button>
 
     <!-- Logo Section -->
-    <div class="relative flex h-28 items-center px-8 border-b border-amber-200/60">
-        <div class="flex items-center gap-4 w-full">
+    <div class="relative flex h-24 sm:h-28 items-center px-4 sm:px-6 md:px-8 border-b border-amber-200/60">
+        <div class="flex items-center gap-3 sm:gap-4 w-full">
             <div class="relative">
-                <div class="relative h-20 w-20 bg-gradient-to-br from-amber-50 to-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
-                    <img src="{{ asset('Nexo_logo.png') }}" alt="NEXO Logo" class="h-16 w-16 object-contain">
+                <div class="relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 bg-gradient-to-br from-amber-50 to-white rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg flex items-center justify-center overflow-hidden">
+                    <img src="{{ asset('Nexo_logo.png') }}" alt="NEXO Logo" class="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 object-contain">
                 </div>
             </div>
             <div class="flex-1">
-                <div class="text-3xl font-serif font-black italic tracking-tight text-amber-900">
+                <div class="text-2xl sm:text-3xl font-serif font-black italic tracking-tight text-amber-900">
                     NEXO<span class="text-amber-700">.</span>
                 </div>
                 <div class="text-[8px] font-black text-amber-700 uppercase tracking-[0.3em] mt-0.5">Global Network</div>

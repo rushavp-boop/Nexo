@@ -11,13 +11,13 @@
         {{-- Hero Greeting Section --}}
         <section class="relative overflow-hidden">
             <div
-                class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-amber-400/5 rounded-2xl md:rounded-[3rem] transform -skew-y-1">
+                class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-amber-400/5 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3rem] transform -skew-y-1">
             </div>
             <div
-                class="relative bg-amber-100/70 backdrop-blur-xl rounded-2xl md:rounded-[3rem] border-2 md:border-4 border-amber-700/40 shadow-xl md:shadow-2xl p-6 sm:p-8 md:p-10 lg:p-14 animate-slide-up hover:border-amber-800/60 transition-all duration-500">
+                class="relative bg-amber-100/70 backdrop-blur-xl rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3rem] border-2 md:border-3 lg:border-4 border-amber-700/40 shadow-lg sm:shadow-xl md:shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 xl:p-14 animate-slide-up hover:border-amber-800/60 transition-all duration-500">
 
                 {{-- Animated Tattoo Decoration - Big Corner Bubble --}}
-                <div class="absolute -top-32 -right-32 md:-top-48 md:-right-48 w-80 h-80 md:w-[32rem] md:h-[32rem] overflow-visible cursor-pointer z-10 group">
+                <div class="absolute -top-20 -right-20 sm:-top-32 sm:-right-32 md:-top-40 md:-right-40 lg:-top-48 lg:-right-48 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[32rem] lg:h-[32rem] overflow-visible cursor-pointer z-10 group">
                     <svg viewBox="0 0 400 400" class="w-full h-full mandala-spin origin-center">
                         <defs>
                             <linearGradient id="tattooGradient">
@@ -236,32 +236,32 @@
         </section>
 
         {{-- Premium Stats Grid --}}
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 animate-fade-in">
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-7 animate-fade-in">
 
             <!-- Nexo Paisa Card -->
             <a href="{{ route('user.loadNexoPaisa') }}"
-                class="group relative bg-gradient-to-br from-amber-700 to-amber-800 rounded-[2rem] p-9 shadow-2xl shadow-amber-700/20 hover:shadow-3xl hover:shadow-amber-700/40 transition-all duration-700 hover:-translate-y-3 cursor-pointer overflow-hidden">
+                class="group relative bg-gradient-to-br from-amber-700 to-amber-800 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[2rem] p-5 sm:p-6 md:p-7 lg:p-9 shadow-lg sm:shadow-xl md:shadow-2xl shadow-amber-700/20 hover:shadow-2xl sm:hover:shadow-3xl hover:shadow-amber-700/40 transition-all duration-700 hover:-translate-y-2 sm:hover:-translate-y-3 cursor-pointer overflow-hidden">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                 </div>
                 <div
-                    class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20 group-hover:scale-150 transition-transform duration-1000">
+                    class="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-white/10 rounded-full -mr-12 -mt-12 sm:-mr-16 sm:-mt-16 md:-mr-20 md:-mt-20 group-hover:scale-150 transition-transform duration-1000">
                 </div>
-                <div class="relative z-10 space-y-5">
+                <div class="relative z-10 space-y-3 sm:space-y-4 md:space-y-5">
                     <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-black text-amber-100 uppercase tracking-[0.2em]">Nexo Paisa</span>
+                        <span class="text-[9px] sm:text-[10px] font-black text-amber-100 uppercase tracking-[0.15em] sm:tracking-[0.2em]">Nexo Paisa</span>
                         <div
-                            class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:rotate-12 group-hover:scale-110 transition-all duration-500">
-                            <i class="fa-solid fa-wallet text-white text-xl"></i>
+                            class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-lg sm:rounded-xl flex items-center justify-center group-hover:rotate-12 group-hover:scale-110 transition-all duration-500">
+                            <i class="fa-solid fa-wallet text-white text-lg sm:text-xl"></i>
                         </div>
                     </div>
-                    <div class="space-y-3">
+                    <div class="space-y-2 sm:space-y-3">
                         <div
-                            class="text-4xl font-black text-white group-hover:scale-110 transition-transform duration-500 origin-left font-serif">
+                            class="text-2xl sm:text-3xl md:text-4xl font-black text-white group-hover:scale-110 transition-transform duration-500 origin-left font-serif">
                             Rs. {{ number_format(auth()->user()->nexo_paisa, 2) }}
                         </div>
                         <div
-                            class="inline-flex items-center gap-2 text-sm font-bold text-white/90 hover:text-white transition-colors">
+                            class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-white/90 hover:text-white transition-colors">
                             <span>Load More</span>
                             <i
                                 class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform duration-300"></i>
@@ -272,91 +272,91 @@
 
             <!-- Profile Card -->
             <a href="{{ route('user.profile') }}"
-                class="group relative bg-amber-50 rounded-[2rem] p-9 shadow-xl border border-amber-200 hover:shadow-3xl hover:border-amber-300 transition-all duration-700 hover:-translate-y-3 overflow-hidden">
+                class="group relative bg-amber-50 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[2rem] p-5 sm:p-6 md:p-7 lg:p-9 shadow-lg sm:shadow-xl border border-amber-200 hover:shadow-2xl sm:hover:shadow-3xl hover:border-amber-300 transition-all duration-700 hover:-translate-y-2 sm:hover:-translate-y-3 overflow-hidden">
                 <div
                     class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-amber-200 to-transparent rounded-full -mr-20 -mt-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                 </div>
                 <div class="relative z-10 space-y-5">
                     <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-black text-amber-700 uppercase tracking-[0.2em]">Profile</span>
+                        <span class="text-[9px] sm:text-[10px] font-black text-amber-700 uppercase tracking-[0.15em] sm:tracking-[0.2em]">Profile</span>
                         <div
-                            class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center group-hover:bg-amber-200 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                            <i class="fa-solid fa-user text-amber-700 text-xl"></i>
+                            class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-100 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:bg-amber-200 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                            <i class="fa-solid fa-user text-amber-700 text-lg sm:text-xl"></i>
                         </div>
                     </div>
                     <div
-                        class="text-4xl font-black text-amber-900 group-hover:scale-110 transition-transform duration-500 origin-left font-serif">
+                        class="text-2xl sm:text-3xl md:text-4xl font-black text-amber-900 group-hover:scale-110 transition-transform duration-500 origin-left font-serif">
                         {{ auth()->user()->name }}
                     </div>
-                    <div class="text-sm text-amber-700 font-bold">View & Edit Profile</div>
+                    <div class="text-xs sm:text-sm text-amber-700 font-bold">View & Edit Profile</div>
                 </div>
             </a>
 
             <!-- No. of Transactions Card -->
             <div
-                class="group relative bg-amber-50 rounded-[2rem] p-9 shadow-xl border border-amber-200 hover:shadow-3xl hover:border-amber-300 transition-all duration-700 hover:-translate-y-3 overflow-hidden">
+                class="group relative bg-amber-50 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[2rem] p-5 sm:p-6 md:p-7 lg:p-9 shadow-lg sm:shadow-xl border border-amber-200 hover:shadow-2xl sm:hover:shadow-3xl hover:border-amber-300 transition-all duration-700 hover:-translate-y-2 sm:hover:-translate-y-3 overflow-hidden">
                 @php
                     $transactionsCount = \App\Models\NexoPaisaTransaction::where('user_id', auth()->id())->count();
                 @endphp
                 <div
-                    class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-amber-200 to-transparent rounded-full -mr-20 -mt-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    class="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-gradient-to-br from-amber-200 to-transparent rounded-full -mr-12 -mt-12 sm:-mr-16 sm:-mt-16 md:-mr-20 md:-mt-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                 </div>
-                <div class="relative z-10 space-y-5">
+                <div class="relative z-10 space-y-3 sm:space-y-4 md:space-y-5">
                     <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-black text-amber-700 uppercase tracking-[0.2em]">Transactions</span>
+                        <span class="text-[9px] sm:text-[10px] font-black text-amber-700 uppercase tracking-[0.15em] sm:tracking-[0.2em]">Transactions</span>
                         <div
-                            class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center group-hover:bg-amber-200 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                            <i class="fa-solid fa-list-check text-amber-700 text-xl"></i>
+                            class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-100 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:bg-amber-200 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                            <i class="fa-solid fa-list-check text-amber-700 text-lg sm:text-xl"></i>
                         </div>
                     </div>
                     <div
-                        class="text-4xl font-black text-amber-900 group-hover:scale-110 transition-transform duration-500 origin-left font-serif">
+                        class="text-2xl sm:text-3xl md:text-4xl font-black text-amber-900 group-hover:scale-110 transition-transform duration-500 origin-left font-serif">
                         {{ $transactionsCount }}
                     </div>
-                    <div class="text-sm text-amber-700 font-bold">Total Transactions</div>
+                    <div class="text-xs sm:text-sm text-amber-700 font-bold">Total Transactions</div>
                 </div>
             </div>
 
             <!-- Climate Card -->
             <div x-data="weatherCard()" x-init="fetchWeather()"
-                class="group relative rounded-[2rem] p-9 shadow-xl border border-amber-200 transition-all duration-700 hover:-translate-y-3 overflow-hidden"
+                class="group relative rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[2rem] p-5 sm:p-6 md:p-7 lg:p-9 shadow-lg sm:shadow-xl border border-amber-200 transition-all duration-700 hover:-translate-y-2 sm:hover:-translate-y-3 overflow-hidden"
                 :class="cardBg">
 
                 <!-- Glow -->
-                <div class="absolute top-0 right-0 w-40 h-40 rounded-full -mr-20 -mt-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                <div class="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full -mr-12 -mt-12 sm:-mr-16 sm:-mt-16 md:-mr-20 md:-mt-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                     :class="glowBg"></div>
 
-                <div class="relative z-10 space-y-5">
+                <div class="relative z-10 space-y-3 sm:space-y-4 md:space-y-5">
                     <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-amber-700">
+                        <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-amber-700">
                             Climate · Kathmandu
                         </span>
 
-                        <div class="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500"
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-500"
                             :class="iconBg">
-                            <i :class="icon" class="text-xl"></i>
+                            <i :class="icon" class="text-lg sm:text-xl"></i>
                         </div>
                     </div>
 
-                    <div class="text-4xl font-black font-serif transition-transform duration-500 origin-left group-hover:scale-110"
+                    <div class="text-2xl sm:text-3xl md:text-4xl font-black font-serif transition-transform duration-500 origin-left group-hover:scale-110"
                         x-text="temp"></div>
 
-                    <div class="text-sm font-bold" x-text="desc"></div>
+                    <div class="text-xs sm:text-sm font-bold" x-text="desc"></div>
                 </div>
             </div>
 
         </section>
 
         {{-- Premium Modules Grid --}}
-        <section class="space-y-10 animate-slide-up">
+        <section class="space-y-6 sm:space-y-8 md:space-y-10 animate-slide-up">
             <div class="flex items-center justify-between">
-                <div class="space-y-3">
-                    <h3 class="text-4xl font-black text-amber-900 font-serif italic">Nexo Modules</h3>
-                    <p class="text-amber-700 font-medium">Access your integrated services</p>
+                <div class="space-y-2 sm:space-y-3">
+                    <h3 class="text-2xl sm:text-3xl md:text-4xl font-black text-amber-900 font-serif italic">Nexo Modules</h3>
+                    <p class="text-sm sm:text-base text-amber-700 font-medium">Access your integrated services</p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-7">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5 md:gap-6 lg:gap-7">
                 @php
                     $modules = [
                         [
@@ -394,7 +394,7 @@
 
                 @foreach ($modules as $index => $mod)
                     <a href="{{ route($mod['route'] ?? '#') }}"
-                        class="group relative rounded-[2rem] p-10 shadow-xl border border-amber-200 hover:border-transparent transition-all duration-700 hover:-translate-y-3 overflow-hidden flex flex-col justify-between aspect-square"
+                        class="group relative rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[2rem] p-6 sm:p-8 md:p-9 lg:p-10 shadow-lg sm:shadow-xl md:shadow-2xl border border-amber-200 hover:border-transparent transition-all duration-700 hover:-translate-y-2 sm:hover:-translate-y-3 overflow-hidden flex flex-col justify-between aspect-square"
                         style="animation-delay: {{ $index * 100 }}ms; background-image: url('/old-paper-texture.jpg'); background-size: cover; background-position: center;"
                         onmouseover="this.style.backgroundImage=''"
                         onmouseout="this.style.backgroundImage='url(/old-paper-texture.jpg)'">
@@ -409,22 +409,22 @@
 
                         <div class="relative z-10">
                             <div
-                                class="h-16 w-16 bg-white/30 rounded-2xl flex items-center justify-center group-hover:bg-white group-hover:text-amber-800 shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-700">
-                                <i class="fa-solid {{ $mod['icon'] }} text-3xl text-amber-900 group-hover:text-amber-800"></i>
+                                class="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 bg-white/30 rounded-lg sm:rounded-xl md:rounded-2xl flex items-center justify-center group-hover:bg-white group-hover:text-amber-800 shadow-md sm:shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-700">
+                                <i class="fa-solid {{ $mod['icon'] }} text-2xl sm:text-3xl text-amber-900 group-hover:text-amber-800"></i>
                             </div>
                         </div>
 
-                        <div class="relative z-10 space-y-3">
+                        <div class="relative z-10 space-y-2 sm:space-y-3">
                             <h4
-                                class="text-3xl font-black font-serif italic text-amber-900 group-hover:text-white transition-colors duration-500">
+                                class="text-2xl sm:text-3xl font-black font-serif italic text-amber-900 group-hover:text-white transition-colors duration-500">
                                 {{ $mod['title'] }}
                             </h4>
                             <p
-                                class="text-sm text-amber-800 group-hover:text-white/90 font-medium transition-colors duration-500">
+                                class="text-xs sm:text-sm text-amber-800 group-hover:text-white/90 font-medium transition-colors duration-500">
                                 {{ $mod['desc'] }}
                             </p>
                             <div
-                                class="w-10 h-1 bg-amber-400 group-hover:bg-white group-hover:w-16 rounded-full transition-all duration-700">
+                                class="w-8 sm:w-10 h-1 bg-amber-400 group-hover:bg-white group-hover:w-12 sm:group-hover:w-16 rounded-full transition-all duration-700">
                             </div>
                         </div>
                     </a>
@@ -435,22 +435,22 @@
     </div>
 
     <!-- Simple Floating Chatbot -->
-    <div class="fixed bottom-8 right-8 z-50">
+    <div class="fixed bottom-6 sm:bottom-8 right-6 sm:right-8 z-50">
         <a href="{{ route('user.chat') }}"
-            class="relative h-14 w-14
+            class="relative h-12 w-12 sm:h-14 sm:w-14
                bg-gradient-to-br from-amber-700 to-amber-800
-               text-white rounded-2xl
-               shadow-lg
+               text-white rounded-xl sm:rounded-2xl
+               shadow-lg sm:shadow-xl
                flex items-center justify-center
                hover:scale-105 transition-transform duration-200">
 
             <!-- Robot Icon -->
-            <i class="fa-solid fa-robot text-xl"></i>
+            <i class="fa-solid fa-robot text-lg sm:text-xl"></i>
 
             <!-- Online Dot -->
             <span
-                class="absolute -top-1 -right-1
-                   h-3 w-3
+                class="absolute -top-0.5 sm:-top-1 -right-0.5 sm:-right-1
+                   h-2.5 w-2.5 sm:h-3 sm:w-3
                    bg-emerald-500
                    border-2 border-white
                    rounded-full">

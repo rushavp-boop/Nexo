@@ -25,7 +25,7 @@
         <!-- Plan Tab -->
         <div x-show="currentTab === 'plan'" class="space-y-6 md:space-y-8">
             <!-- Input Form -->
-            <div class="bg-white border border-black/5 p-6 sm:p-8 md:p-12 rounded-2xl md:rounded-[3rem] shadow-lg md:shadow-xl">
+            <div class="bg-white border border-black/5 p-4 sm:p-6 md:p-8 lg:p-12 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3rem] shadow-md sm:shadow-lg md:shadow-xl">
                 <h3
                     class="text-lg md:text-xl font-bold italic text-stone-900 mb-6 md:mb-10 flex items-center gap-3 md:gap-4 uppercase tracking-tighter">
                     <i class="fa-solid fa-compass text-amber-700"></i> Plan your Trip
@@ -56,7 +56,7 @@
                     </div>
                     <div class="flex items-end">
                         <button @click="fetchPlan()" :disabled="loading"
-                            class="w-full h-[64px] bg-stone-900 hover:bg-amber-700 disabled:bg-stone-400 text-white rounded-2xl font-bold italic uppercase tracking-widest shadow-xl transition-all flex items-center justify-center gap-3">
+                            class="w-full h-12 sm:h-14 md:h-16 lg:h-[64px] bg-stone-900 hover:bg-amber-700 disabled:bg-stone-400 text-white rounded-xl sm:rounded-2xl font-bold italic uppercase tracking-widest shadow-lg sm:shadow-xl transition-all flex items-center justify-center gap-2 sm:gap-3">
                             <span x-show="!loading">CREATE PLAN</span>
                             <span x-show="loading"><i class="fa-solid fa-spinner fa-spin"></i></span>
                         </button>

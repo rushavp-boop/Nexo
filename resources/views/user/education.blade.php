@@ -28,11 +28,11 @@
 
                 <!-- Hero Header -->
                 <div
-                    class="relative overflow-hidden bg-gradient-to-br from-black via-stone-950 to-black text-white p-8 sm:p-12 md:p-16 rounded-2xl md:rounded-[3rem] shadow-xl md:shadow-2xl">
+                    class="relative overflow-hidden bg-gradient-to-br from-black via-stone-950 to-black text-white p-6 sm:p-10 md:p-12 lg:p-16 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3rem] shadow-lg sm:shadow-xl md:shadow-2xl">
                     <div
-                        class="absolute top-0 right-0 w-96 h-96 bg-amber-600/30 rounded-full blur-3xl animate-[pulse_8s_ease-in-out_infinite]">
+                        class="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-amber-600/30 rounded-full blur-3xl animate-[pulse_8s_ease-in-out_infinite]">
                     </div>
-                    <div class="absolute bottom-0 left-0 w-96 h-96 bg-amber-700/20 rounded-full blur-3xl animate-[pulse_10s_ease-in-out_infinite]"
+                    <div class="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-amber-700/20 rounded-full blur-3xl animate-[pulse_10s_ease-in-out_infinite]"
                         style="animation-delay: 2s;"></div>
 
                     <div class="relative z-10 text-center space-y-4 md:space-y-6">
@@ -63,13 +63,13 @@
                     <div
                         class="absolute -inset-1 bg-gradient-to-r from-amber-700 to-amber-600 rounded-3xl blur opacity-20">
                     </div>
-                    <div class="relative bg-white rounded-3xl shadow-xl p-10 space-y-8">
+                    <div class="relative bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-lg sm:shadow-xl p-6 sm:p-8 md:p-10 space-y-6 sm:space-y-8">
                         <div class="flex items-center gap-3 mb-4">
                             <div
-                                class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-700 to-amber-800 flex items-center justify-center">
+                                class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-amber-700 to-amber-800 flex items-center justify-center">
                                 <i class="fa-solid fa-sliders text-white"></i>
                             </div>
-                            <h3 class="text-3xl font-bold italic text-amber-900 tracking-tight">Configure Your Learning</h3>
+                            <h3 class="text-2xl sm:text-3xl font-bold italic text-amber-900 tracking-tight">Configure Your Learning</h3>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -163,10 +163,9 @@
                                                         :disabled="userAnswers[i] !== undefined"
                                                         :class="{
                                                             'border-green-500 bg-green-50': userAnswers[i] !==
-                                                                undefined && option === q.answer,
+                                                                undefined && idx === getCorrectAnswerIndex(q),
                                                             'border-red-500 bg-red-50': userAnswers[i] !== undefined &&
-                                                                userAnswers[i].selectedIndex === idx && option !== q
-                                                                .answer,
+                                                                userAnswers[i].selectedIndex === idx && idx !== getCorrectAnswerIndex(q),
                                                             'border-amber-200 hover:border-amber-300 hover:bg-amber-50/50': userAnswers[
                                                                 i] === undefined
                                                         }"
@@ -176,11 +175,10 @@
                                                                 <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl border-2 flex items-center justify-center font-bold text-xs md:text-sm transition-all"
                                                                     :class="{
                                                                         'border-green-500 bg-green-500 text-white': userAnswers[
-                                                                            i] !== undefined && option === q.answer,
+                                                                            i] !== undefined && idx === getCorrectAnswerIndex(q),
                                                                         'border-red-500 bg-red-500 text-white': userAnswers[
                                                                                 i] !== undefined && userAnswers[i]
-                                                                            .selectedIndex === idx && option !== q
-                                                                            .answer,
+                                                                            .selectedIndex === idx && idx !== getCorrectAnswerIndex(q),
                                                                         'border-amber-300 text-amber-700 group-hover:border-amber-500': userAnswers[
                                                                             i] === undefined
                                                                     }">
@@ -190,9 +188,9 @@
                                                                     x-text="option"></span>
                                                             </div>
                                                             <div x-show="userAnswers[i] !== undefined">
-                                                                <i x-show="option === q.answer"
+                                                                <i x-show="idx === getCorrectAnswerIndex(q)"
                                                                     class="fa-solid fa-circle-check text-2xl text-green-500"></i>
-                                                                <i x-show="userAnswers[i].selectedIndex === idx && option !== q.answer"
+                                                                <i x-show="userAnswers[i].selectedIndex === idx && idx !== getCorrectAnswerIndex(q)"
                                                                     class="fa-solid fa-circle-xmark text-2xl text-red-500"></i>
                                                             </div>
                                                         </div>
@@ -944,6 +942,12 @@
                 },
 
                 // Quiz Methods
+                getCorrectAnswerIndex(question) {
+                    // Convert letter answer (A, B, C, D) to index (0, 1, 2, 3)
+                    const letterToIndex = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
+                    return letterToIndex[question.answer?.toUpperCase()] ?? -1;
+                },
+
                 selectAnswer(questionIndex, optionIndex, answer) {
                     // Prevent changing answer after selection
                     if (this.userAnswers[questionIndex] !== undefined) return;
@@ -973,7 +977,8 @@
                 calculateScore() {
                     let correct = 0;
                     this.quiz.forEach((q, i) => {
-                        if (this.userAnswers[i]?.selectedValue === q.answer) {
+                        const correctIndex = this.getCorrectAnswerIndex(q);
+                        if (this.userAnswers[i]?.selectedIndex === correctIndex) {
                             correct++;
                         }
                     });

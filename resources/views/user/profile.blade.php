@@ -11,13 +11,13 @@
         </div>
 
         <!-- User Information Card -->
-        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-2xl md:rounded-[3rem] shadow-lg p-6 sm:p-8 md:p-10 animate-fade-in hover:shadow-xl hover:shadow-amber-700/10 transition-all">
-            <h3 class="text-xl md:text-2xl font-bold italic text-stone-900 mb-4 md:mb-6">Personal Information</h3>
+        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3rem] shadow-md sm:shadow-lg p-4 sm:p-6 md:p-8 lg:p-10 animate-fade-in hover:shadow-lg sm:hover:shadow-xl hover:shadow-amber-700/10 transition-all">
+            <h3 class="text-lg sm:text-xl md:text-2xl font-bold italic text-stone-900 mb-3 sm:mb-4 md:mb-6">Personal Information</h3>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
                 <div class="animate-fade-in">
-                    <label class="text-[10px] font-bold italic text-amber-900 uppercase tracking-widest mb-2 block">Name</label>
-                    <p class="text-lg font-bold italic text-stone-900">{{ $user->name }}</p>
+                    <label class="text-[9px] sm:text-[10px] font-bold italic text-amber-900 uppercase tracking-widest mb-2 block">Name</label>
+                    <p class="text-base sm:text-lg font-bold italic text-stone-900">{{ $user->name }}</p>
                 </div>
                 <div class="animate-fade-in">
                     <label class="text-[10px] font-bold italic text-amber-900 uppercase tracking-widest mb-2 block">Email</label>
@@ -40,40 +40,40 @@
 
         <!-- Nexo Paisa Card -->
         <div
-            class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-2xl md:rounded-[3rem] shadow-lg p-6 sm:p-8 md:p-10 animate-fade-in hover:shadow-xl hover:shadow-amber-700/10 transition-all">
-            <h3 class="text-xl md:text-2xl font-bold italic text-stone-900 mb-4 md:mb-6">Nexo Paisa</h3>
+            class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3rem] shadow-md sm:shadow-lg p-4 sm:p-6 md:p-8 lg:p-10 animate-fade-in hover:shadow-lg sm:hover:shadow-xl hover:shadow-amber-700/10 transition-all">
+            <h3 class="text-lg sm:text-xl md:text-2xl font-bold italic text-stone-900 mb-3 sm:mb-4 md:mb-6">Nexo Paisa</h3>
 
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
                 <div>
-                    <label class="text-[10px] font-bold italic text-amber-900 uppercase tracking-widest mb-2 block">Current
+                    <label class="text-[9px] sm:text-[10px] font-bold italic text-amber-900 uppercase tracking-widest mb-2 block">Current
                         Balance</label>
-                    <p class="text-3xl font-bold italic text-amber-700 animate-float">Rs. {{ number_format($user->nexo_paisa, 2) }}
+                    <p class="text-2xl sm:text-3xl font-bold italic text-amber-700 animate-float">Rs. {{ number_format($user->nexo_paisa, 2) }}
                     </p>
                 </div>
                 <a href="{{ route('user.loadNexoPaisa') }}"
-                    class="bg-stone-900 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-bold italic uppercase tracking-widest transition-all duration-300 hover:scale-105 hover:shadow-lg animate-bounce-in shadow-md">
+                    class="bg-stone-900 hover:bg-amber-700 text-white px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-lg font-bold italic text-xs sm:text-sm uppercase tracking-widest transition-all duration-300 hover:scale-105 hover:shadow-md sm:hover:shadow-lg animate-bounce-in shadow-sm sm:shadow-md">
                     Load Nexo Paisa
                 </a>
             </div>
         </div>
 
         <!-- Transaction History Section -->
-        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-[3rem] shadow-lg p-10 animate-fade-in">
-            <h3 class="text-2xl font-bold italic text-stone-900 mb-6">Transaction History</h3>
+        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3rem] shadow-md sm:shadow-lg p-4 sm:p-6 md:p-8 lg:p-10 animate-fade-in">
+            <h3 class="text-lg sm:text-xl md:text-2xl font-bold italic text-stone-900 mb-4 sm:mb-6">Transaction History</h3>
 
             <!-- Transaction Summary -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-300 rounded-2xl p-6 text-center shadow-md">
-                    <div class="text-sm font-bold italic text-amber-900 uppercase tracking-widest mb-2">Total Loaded</div>
-                    <div class="text-2xl font-bold italic text-amber-700">Rs. {{ number_format($totalLoaded, 2) }}</div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center shadow-sm sm:shadow-md">
+                    <div class="text-xs sm:text-sm font-bold italic text-amber-900 uppercase tracking-widest mb-2">Total Loaded</div>
+                    <div class="text-xl sm:text-2xl font-bold italic text-amber-700">Rs. {{ number_format($totalLoaded, 2) }}</div>
                 </div>
-                <div class="bg-gradient-to-br from-red-50 to-white border-2 border-red-300 rounded-2xl p-6 text-center shadow-md">
-                    <div class="text-sm font-bold italic text-red-900 uppercase tracking-widest mb-2">Total Spent</div>
-                    <div class="text-2xl font-bold italic text-red-600">Rs. {{ number_format($totalSpent, 2) }}</div>
+                <div class="bg-gradient-to-br from-red-50 to-white border-2 border-red-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center shadow-sm sm:shadow-md">
+                    <div class="text-xs sm:text-sm font-bold italic text-red-900 uppercase tracking-widest mb-2">Total Spent</div>
+                    <div class="text-xl sm:text-2xl font-bold italic text-red-600">Rs. {{ number_format($totalSpent, 2) }}</div>
                 </div>
-                <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-300 rounded-2xl p-6 text-center shadow-md">
-                    <div class="text-sm font-bold italic text-blue-900 uppercase tracking-widest mb-2">Current Balance</div>
-                    <div class="text-2xl font-bold italic text-blue-600">Rs. {{ number_format($user->nexo_paisa, 2) }}
+                <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center shadow-sm sm:shadow-md">
+                    <div class="text-xs sm:text-sm font-bold italic text-blue-900 uppercase tracking-widest mb-2">Current Balance</div>
+                    <div class="text-xl sm:text-2xl font-bold italic text-blue-600">Rs. {{ number_format($user->nexo_paisa, 2) }}
                     </div>
                 </div>
             </div>

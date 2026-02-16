@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div x-data="hotelBooking()" class="flex flex-col items-center justify-center py-10 md:py-20 space-y-8 md:space-y-12">
+    <div x-data="hotelBooking()" class="flex flex-col items-center justify-center py-6 sm:py-8 md:py-12 lg:py-20 space-y-6 sm:space-y-8 md:space-y-10 lg:space-y-12">
 
         <div class="animate-slide-up space-y-2 md:space-y-3 text-center">
             <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-stone-900 uppercase italic tracking-tighter">Hotel Booking</h2>
@@ -10,10 +10,10 @@
 
         <!-- Hotel Info Card -->
         <div
-            class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-2xl md:rounded-[3rem] shadow-lg md:shadow-xl w-full max-w-4xl p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 animate-fade-in hover:shadow-2xl hover:shadow-amber-700/10 transition-all duration-300">
+            class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3rem] shadow-md sm:shadow-lg md:shadow-xl w-full max-w-4xl p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-10 animate-fade-in hover:shadow-xl hover:shadow-amber-700/10 transition-all duration-300">
 
             <!-- Hotel Image -->
-            <div class="md:w-1/2 rounded-xl md:rounded-[2rem] overflow-hidden shadow-lg">
+            <div class="md:w-1/2 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-[2rem] overflow-hidden shadow-md sm:shadow-lg">
                 <img :src="hotel.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800'"
                     class="w-full h-full object-cover" :alt="hotel.name">
             </div>
@@ -22,8 +22,8 @@
             <div class="md:w-1/2 space-y-3 md:space-y-4">
                 <div class="flex flex-col sm:flex-row items-start justify-between gap-3">
                     <div class="space-y-1.5 md:space-y-2">
-                        <h3 class="text-2xl sm:text-3xl font-bold italic text-stone-900" x-text="hotel.name"></h3>
-                        <p class="text-xs md:text-sm text-stone-600 mt-2 flex items-center gap-2 font-medium italic">
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold italic text-stone-900" x-text="hotel.name"></h3>
+                        <p class="text-xs sm:text-sm md:text-base text-stone-600 mt-2 flex items-center gap-2 font-medium italic">
                             <i class="fa-solid fa-location-dot text-amber-700"></i>
                             <span x-text="hotel.location"></span>
                         </p>
