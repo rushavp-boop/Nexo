@@ -15,6 +15,186 @@
             </div>
             <div
                 class="relative bg-amber-100/70 backdrop-blur-xl rounded-2xl md:rounded-[3rem] border-2 md:border-4 border-amber-700/40 shadow-xl md:shadow-2xl p-6 sm:p-8 md:p-10 lg:p-14 animate-slide-up hover:border-amber-800/60 transition-all duration-500">
+
+                {{-- Animated Tattoo Decoration - Big Corner Bubble --}}
+                <div class="absolute -top-32 -right-32 md:-top-48 md:-right-48 w-80 h-80 md:w-[32rem] md:h-[32rem] overflow-visible cursor-pointer z-10 group">
+                    <svg viewBox="0 0 400 400" class="w-full h-full mandala-spin origin-center">
+                        <defs>
+                            <linearGradient id="tattooGradient">
+                                <stop offset="0%" class="mandala-color-1" style="stop-color:#d97706;stop-opacity:1">
+                                    <animate attributeName="stop-color"
+                                             values="#d97706;#b45309;#92400e;#b45309;#d97706"
+                                             dur="10s"
+                                             repeatCount="indefinite" />
+                                </stop>
+                                <stop offset="100%" class="mandala-color-2" style="stop-color:#92400e;stop-opacity:1">
+                                    <animate attributeName="stop-color"
+                                             values="#92400e;#78350f;#92400e;#78350f;#92400e"
+                                             dur="10s"
+                                             repeatCount="indefinite" />
+                                </stop>
+                            </linearGradient>
+
+                            <linearGradient id="tattooGradientDark">
+                                <stop offset="0%" style="stop-color:#78350f;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#451a03;stop-opacity:1" />
+                            </linearGradient>
+
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        {{-- Mandala Pattern - Normal State --}}
+                        <g transform="translate(200,200)" class="mandala-normal opacity-25 group-hover:opacity-0 transition-opacity duration-500" filter="url(#glow)">
+                            {{-- Outermost layer with 12 petals --}}
+                            @for ($i = 0; $i < 12; $i++)
+                                <path d="M 0,-150 Q -15,-170 0,-185 Q 15,-170 0,-150"
+                                      fill="url(#tattooGradient)"
+                                      opacity="0.7"
+                                      transform="rotate({{ $i * 30 }})"
+                                      stroke="url(#tattooGradient)"
+                                      stroke-width="0.5" />
+                            @endfor
+
+                            {{-- Large outer circles --}}
+                            <circle cx="0" cy="0" r="165" fill="none" stroke="url(#tattooGradient)" stroke-width="3" opacity="0.5" />
+                            <circle cx="0" cy="0" r="145" fill="none" stroke="url(#tattooGradient)" stroke-width="2" opacity="0.6" />
+                            <circle cx="0" cy="0" r="130" fill="none" stroke="url(#tattooGradient)" stroke-width="2.5" opacity="0.6" />
+
+                            {{-- Large decorative petals (16 petals) --}}
+                            @for ($i = 0; $i < 16; $i++)
+                                <ellipse cx="0" cy="-120" rx="12" ry="35" fill="url(#tattooGradient)" opacity="0.75" transform="rotate({{ $i * 22.5 }})" stroke="url(#tattooGradient)" stroke-width="1" />
+                            @endfor
+
+                            {{-- Middle layer circles --}}
+                            <circle cx="0" cy="0" r="110" fill="none" stroke="url(#tattooGradient)" stroke-width="2" opacity="0.7" />
+                            <circle cx="0" cy="0" r="95" fill="none" stroke="url(#tattooGradient)" stroke-width="1.5" opacity="0.6" />
+
+                            {{-- Radiating lines from center --}}
+                            @for ($i = 0; $i < 16; $i++)
+                                <line x1="0" y1="0" x2="0" y2="-90" stroke="url(#tattooGradient)" stroke-width="2" opacity="0.6" transform="rotate({{ $i * 22.5 }})" />
+                            @endfor
+
+                            {{-- Medium petals (12 petals) --}}
+                            @for ($i = 0; $i < 12; $i++)
+                                <ellipse cx="0" cy="-75" rx="10" ry="28" fill="url(#tattooGradient)" opacity="0.8" transform="rotate({{ $i * 30 }})" />
+                            @endfor
+
+                            {{-- Inner decorative layer --}}
+                            <circle cx="0" cy="0" r="65" fill="none" stroke="url(#tattooGradient)" stroke-width="2.5" opacity="0.8" />
+                            <circle cx="0" cy="0" r="55" fill="none" stroke="url(#tattooGradient)" stroke-width="1.5" opacity="0.7" />
+
+                            {{-- Inner petals (8 large petals) --}}
+                            @for ($i = 0; $i < 8; $i++)
+                                <path d="M 0,-45 Q -12,-55 0,-65 Q 12,-55 0,-45"
+                                      fill="url(#tattooGradient)"
+                                      opacity="0.85"
+                                      transform="rotate({{ $i * 45 }})" />
+                            @endfor
+
+                            {{-- Central design --}}
+                            <circle cx="0" cy="0" r="40" fill="none" stroke="url(#tattooGradient)" stroke-width="3" opacity="0.9" />
+                            <circle cx="0" cy="0" r="30" fill="none" stroke="url(#tattooGradient)" stroke-width="2" opacity="0.85" />
+                            <circle cx="0" cy="0" r="20" fill="url(#tattooGradient)" opacity="0.3" stroke="url(#tattooGradient)" stroke-width="2" />
+
+                            {{-- Center star/flower --}}
+                            @for ($i = 0; $i < 8; $i++)
+                                <ellipse cx="0" cy="-12" rx="3" ry="12" fill="url(#tattooGradient)" opacity="0.95" transform="rotate({{ $i * 45 }})" />
+                            @endfor
+
+                            {{-- Central circle --}}
+                            <circle cx="0" cy="0" r="8" fill="url(#tattooGradient)" opacity="1" />
+
+                            {{-- Decorative outer dots --}}
+                            @for ($i = 0; $i < 24; $i++)
+                                <circle cx="0" cy="-140" r="3" fill="url(#tattooGradient)" opacity="0.8" transform="rotate({{ $i * 15 }})" />
+                            @endfor
+
+                            {{-- Additional decorative elements between petals --}}
+                            @for ($i = 0; $i < 12; $i++)
+                                <circle cx="0" cy="-105" r="4" fill="url(#tattooGradient)" opacity="0.7" transform="rotate({{ $i * 30 + 15 }})" />
+                            @endfor
+                        </g>
+
+                        {{-- Mandala Pattern - Hover State (Darker) --}}
+                        <g transform="translate(200,200)" class="mandala-hover opacity-0 group-hover:opacity-50 transition-opacity duration-500" filter="url(#glow)">
+                            {{-- Outermost layer with 12 petals --}}
+                            @for ($i = 0; $i < 12; $i++)
+                                <path d="M 0,-150 Q -15,-170 0,-185 Q 15,-170 0,-150"
+                                      fill="url(#tattooGradientDark)"
+                                      opacity="0.7"
+                                      transform="rotate({{ $i * 30 }})"
+                                      stroke="url(#tattooGradientDark)"
+                                      stroke-width="0.5" />
+                            @endfor
+
+                            {{-- Large outer circles --}}
+                            <circle cx="0" cy="0" r="165" fill="none" stroke="url(#tattooGradientDark)" stroke-width="3" opacity="0.5" />
+                            <circle cx="0" cy="0" r="145" fill="none" stroke="url(#tattooGradientDark)" stroke-width="2" opacity="0.6" />
+                            <circle cx="0" cy="0" r="130" fill="none" stroke="url(#tattooGradientDark)" stroke-width="2.5" opacity="0.6" />
+
+                            {{-- Large decorative petals (16 petals) --}}
+                            @for ($i = 0; $i < 16; $i++)
+                                <ellipse cx="0" cy="-120" rx="12" ry="35" fill="url(#tattooGradientDark)" opacity="0.75" transform="rotate({{ $i * 22.5 }})" stroke="url(#tattooGradientDark)" stroke-width="1" />
+                            @endfor
+
+                            {{-- Middle layer circles --}}
+                            <circle cx="0" cy="0" r="110" fill="none" stroke="url(#tattooGradientDark)" stroke-width="2" opacity="0.7" />
+                            <circle cx="0" cy="0" r="95" fill="none" stroke="url(#tattooGradientDark)" stroke-width="1.5" opacity="0.6" />
+
+                            {{-- Radiating lines from center --}}
+                            @for ($i = 0; $i < 16; $i++)
+                                <line x1="0" y1="0" x2="0" y2="-90" stroke="url(#tattooGradientDark)" stroke-width="2" opacity="0.6" transform="rotate({{ $i * 22.5 }})" />
+                            @endfor
+
+                            {{-- Medium petals (12 petals) --}}
+                            @for ($i = 0; $i < 12; $i++)
+                                <ellipse cx="0" cy="-75" rx="10" ry="28" fill="url(#tattooGradientDark)" opacity="0.8" transform="rotate({{ $i * 30 }})" />
+                            @endfor
+
+                            {{-- Inner decorative layer --}}
+                            <circle cx="0" cy="0" r="65" fill="none" stroke="url(#tattooGradientDark)" stroke-width="2.5" opacity="0.8" />
+                            <circle cx="0" cy="0" r="55" fill="none" stroke="url(#tattooGradientDark)" stroke-width="1.5" opacity="0.7" />
+
+                            {{-- Inner petals (8 large petals) --}}
+                            @for ($i = 0; $i < 8; $i++)
+                                <path d="M 0,-45 Q -12,-55 0,-65 Q 12,-55 0,-45"
+                                      fill="url(#tattooGradientDark)"
+                                      opacity="0.85"
+                                      transform="rotate({{ $i * 45 }})" />
+                            @endfor
+
+                            {{-- Central design --}}
+                            <circle cx="0" cy="0" r="40" fill="none" stroke="url(#tattooGradientDark)" stroke-width="3" opacity="0.9" />
+                            <circle cx="0" cy="0" r="30" fill="none" stroke="url(#tattooGradientDark)" stroke-width="2" opacity="0.85" />
+                            <circle cx="0" cy="0" r="20" fill="url(#tattooGradientDark)" opacity="0.3" stroke="url(#tattooGradientDark)" stroke-width="2" />
+
+                            {{-- Center star/flower --}}
+                            @for ($i = 0; $i < 8; $i++)
+                                <ellipse cx="0" cy="-12" rx="3" ry="12" fill="url(#tattooGradientDark)" opacity="0.95" transform="rotate({{ $i * 45 }})" />
+                            @endfor
+
+                            {{-- Central circle --}}
+                            <circle cx="0" cy="0" r="8" fill="url(#tattooGradientDark)" opacity="1" />
+
+                            {{-- Decorative outer dots --}}
+                            @for ($i = 0; $i < 24; $i++)
+                                <circle cx="0" cy="-140" r="3" fill="url(#tattooGradientDark)" opacity="0.8" transform="rotate({{ $i * 15 }})" />
+                            @endfor
+
+                            {{-- Additional decorative elements between petals --}}
+                            @for ($i = 0; $i < 12; $i++)
+                                <circle cx="0" cy="-105" r="4" fill="url(#tattooGradientDark)" opacity="0.7" transform="rotate({{ $i * 30 + 15 }})" />
+                            @endfor
+                        </g>
+                    </svg>
+                </div>
+
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 md:gap-10">
                     <div class="space-y-4 md:space-y-6 flex-1">
                         <!-- Status Badge -->

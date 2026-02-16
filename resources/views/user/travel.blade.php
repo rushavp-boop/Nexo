@@ -92,7 +92,7 @@
                             <div>
                                 <p class="text-[9px] font-bold text-amber-900/60 uppercase tracking-widest mb-1">Daily Budget</p>
                                 <span class="text-sm font-bold italic text-amber-700"
-                                    x-text="day.budget"></span>
+                                    x-text="formatBudget(day.budget)"></span>
                             </div>
                             <div class="flex justify-end">
                                 <span
@@ -437,6 +437,24 @@
                     }
 
                     return days;
+                },
+
+                formatBudget(budget) {
+                    if (!budget) return 'Budget varies';
+
+                    // If already in correct format (contains "Rs" or starts with "Approx"), return as-is
+                    if (budget.includes('Rs') || budget.startsWith('Approx')) {
+                        return budget;
+                    }
+
+                    // If it's a tier name (Standard, Luxury, etc.), show as budget range
+                    const tierRanges = {
+                        'Budget': 'Approx. Rs. 2,000-3,000',
+                        'Standard': 'Approx. Rs. 3,000-5,000',
+                        'Luxury': 'Approx. Rs. 6,000-10,000'
+                    };
+
+                    return tierRanges[budget] || `Approx. Rs. varies (${budget})`;
                 },
 
                 selectTab(tabId) {

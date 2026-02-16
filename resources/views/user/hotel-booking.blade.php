@@ -61,6 +61,13 @@
                 <!-- Input & Pay Button -->
                 <div class="mt-6 space-y-4" x-show="!receipt">
                     <div>
+                        <label class="block text-amber-900 font-bold italic text-sm mb-3 uppercase tracking-widest">Check-in Date</label>
+                        <input type="date" x-model="checkInDate"
+                            :min="new Date().toISOString().split('T')[0]"
+                            class="w-full bg-amber-50 border-2 border-amber-200 rounded-xl px-4 py-3 font-bold italic focus:border-amber-700 focus:ring-2 focus:ring-amber-700/20 outline-none transition-all">
+                    </div>
+
+                    <div>
                         <label class="block text-amber-900 font-bold italic text-sm mb-3 uppercase tracking-widest">Number of Nights</label>
                         <input type="number" x-model.number="nights" min="1"
                             class="w-full bg-amber-50 border-2 border-amber-200 rounded-xl px-4 py-3 font-bold italic focus:border-amber-700 focus:ring-2 focus:ring-amber-700/20 outline-none transition-all"
@@ -146,6 +153,7 @@
             return {
                 hotel: JSON.parse(hotelData),
                 nights: 1,
+                checkInDate: new Date().toISOString().split('T')[0],
                 receipt: null,
 
                 calculatePrice() {
@@ -160,6 +168,17 @@
                             icon: 'error',
                             title: 'Invalid Input',
                             text: 'Please enter a valid number of nights',
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#b45309'
+                        });
+                        return;
+                    }
+
+                    if (!this.checkInDate) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Missing Date',
+                            text: 'Please select a check-in date',
                             confirmButtonText: 'OK',
                             confirmButtonColor: '#b45309'
                         });
@@ -189,6 +208,7 @@
                                 hotelName: this.hotel.name,
                                 location: this.hotel.location,
                                 nights: this.nights,
+                                checkInDate: this.checkInDate,
                                 total: this.nights * (this.hotel.pricePerNight || 5000),
                                 hotelData: this.hotel
                             })
@@ -197,10 +217,13 @@
                         const data = await response.json();
 
                         if (data.status === 'success') {
+                            // Save event to calendar
+                            await this.saveToCalendar(data.bookingId);
+
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Booking Successful!',
-                                text: 'Your hotel booking has been confirmed',
+                                html: 'Your hotel booking has been confirmed<br><small>Event added to calendar</small>',
                                 confirmButtonText: 'Great!',
                                 confirmButtonColor: '#b45309'
                             });
@@ -220,6 +243,29 @@
                     }
                 },
 
+                async saveToCalendar(bookingId) {
+                    try {
+                        const eventData = {
+                            title: `Hotel: ${this.hotel.name}`,
+                            description: `Check-in at ${this.hotel.name}, ${this.hotel.location} for ${this.nights} night(s)`,
+                            event_date: this.checkInDate,
+                            event_type: 'hotel',
+                            related_id: bookingId
+                        };
+
+                        await fetch('{{ url('/api/events') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify(eventData)
+                        });
+                    } catch (e) {
+                        console.error('Failed to save calendar event:', e);
+                    }
+                },
+
                 confirmBooking() {
                     if (!this.hotel) return;
                     if (this.nights < 1) {
@@ -227,6 +273,17 @@
                             icon: 'error',
                             title: 'Invalid Input',
                             text: 'Please enter a valid number of nights',
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#b45309'
+                        });
+                        return;
+                    }
+
+                    if (!this.checkInDate) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Missing Date',
+                            text: 'Please select a check-in date',
                             confirmButtonText: 'OK',
                             confirmButtonColor: '#b45309'
                         });
@@ -241,6 +298,7 @@
                                 <div class="bg-amber-50 p-4 rounded-lg">
                                     <p class="mb-2 font-bold"><span class="text-amber-700">Hotel:</span> ${this.hotel.name}</p>
                                     <p class="mb-2 font-bold"><span class="text-amber-700">Location:</span> ${this.hotel.location}</p>
+                                    <p class="mb-2 font-bold"><span class="text-amber-700">Check-in:</span> ${this.checkInDate}</p>
                                     <p class="mb-2 font-bold"><span class="text-amber-700">Nights:</span> ${this.nights}</p>
                                     <p class="mb-2 font-bold"><span class="text-amber-700">Price per Night:</span> Rs. ${(this.hotel.pricePerNight || 5000).toLocaleString()}</p>
                                 </div>

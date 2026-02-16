@@ -535,7 +535,7 @@
             <template x-if="lesson">
                 <div x-transition x-cloak
                     class="bg-gradient-to-br from-black via-stone-900 to-black
-               text-white p-20 rounded-[4rem] space-y-14 shadow-2xl">
+               text-white p-6 sm:p-10 md:p-14 lg:p-20 rounded-2xl sm:rounded-3xl md:rounded-[4rem] space-y-8 sm:space-y-10 md:space-y-14 shadow-2xl">
 
                     <!-- Back -->
                     <button @click="resetLesson" class="text-amber-400 text-xs uppercase hover:underline font-semibold">
@@ -543,16 +543,16 @@
                     </button>
 
                     <!-- Lesson Title -->
-                    <h2 class="text-6xl font-bold italic leading-tight text-white" x-text="lesson.title"></h2>
-                    <p class="mt-3 text-xl text-amber-200 font-semibold" x-text="lesson.description"></p>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold italic leading-tight text-white" x-text="lesson.title"></h2>
+                    <p class="mt-2 md:mt-3 text-base sm:text-lg md:text-xl text-amber-200 font-semibold" x-text="lesson.description"></p>
 
                     <!-- Learning Objectives -->
-                    <div class="mt-10">
-                        <h3 class="text-4xl font-bold italic mb-6 tracking-tight text-white">Learning Objectives</h3>
+                    <div class="mt-6 sm:mt-8 md:mt-10">
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold italic mb-4 md:mb-6 tracking-tight text-white">Learning Objectives</h3>
 
-                        <ul class="space-y-3">
+                        <ul class="space-y-2 md:space-y-3">
                             <template x-for="(obj, index) in lesson.objectives" :key="'obj-' + index">
-                                <li class="flex gap-3 text-xl text-white/90">
+                                <li class="flex gap-2 md:gap-3 text-base sm:text-lg md:text-xl text-white/90">
                                     <span class="text-purple-400 font-black">•</span>
                                     <span x-text="obj"></span>
                                 </li>
@@ -561,20 +561,20 @@
                     </div>
 
                     <!-- Lesson Content -->
-                    <div class="mt-12 space-y-8">
-                        <p class="text-lg leading-relaxed whitespace-pre-wrap text-white/90 font-medium" x-text="lesson.content"></p>
+                    <div class="mt-8 sm:mt-10 md:mt-12 space-y-6 md:space-y-8">
+                        <p class="text-sm sm:text-base md:text-lg leading-relaxed whitespace-pre-wrap text-white/90 font-medium" x-text="lesson.content"></p>
 
-                        <p class="text-xl leading-relaxed whitespace-pre-wrap text-white/90"
+                        <p class="text-base sm:text-lg md:text-xl leading-relaxed whitespace-pre-wrap text-white/90"
                             x-text="lesson.nepal_context"></p>
                     </div>
 
                     <!-- Key Points -->
-                    <div class="mt-12">
-                        <h3 class="text-4xl font-bold italic mb-6 tracking-tight text-white">Key Points</h3>
+                    <div class="mt-8 sm:mt-10 md:mt-12">
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold italic mb-4 md:mb-6 tracking-tight text-white">Key Points</h3>
 
-                        <ul class="grid md:grid-cols-2 gap-4">
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                             <template x-for="(point, index) in lesson.key_points" :key="'kp-' + index">
-                                <li class="bg-white/5 border border-white/10 rounded-xl p-4 text-lg text-white/90">
+                                <li class="bg-white/5 border border-white/10 rounded-lg md:rounded-xl p-3 md:p-4 text-sm sm:text-base md:text-lg text-white/90">
                                     <span x-text="point"></span>
                                 </li>
                             </template>
@@ -582,25 +582,25 @@
                     </div>
 
                     <!-- ANALOGY -->
-                    <div class="mt-12 bg-white/5 border border-white/10 rounded-2xl p-6">
-                        <h3 class="text-3xl font-bold italic mb-4 tracking-tight text-amber-300">Analogy</h3>
-                        <p class="text-lg text-amber-100 leading-relaxed font-medium" x-text="lesson.analogy"></p>
+                    <div class="mt-8 sm:mt-10 md:mt-12 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6">
+                        <h3 class="text-2xl sm:text-3xl font-bold italic mb-3 md:mb-4 tracking-tight text-amber-300">Analogy</h3>
+                        <p class="text-sm sm:text-base md:text-lg text-amber-100 leading-relaxed font-medium" x-text="lesson.analogy"></p>
                     </div>
 
                     <!-- PRACTICE QUESTIONS -->
-                    <div class="mt-14">
-                        <h3 class="text-4xl font-bold italic mb-8 tracking-tight text-white">Practice Questions</h3>
+                    <div class="mt-10 sm:mt-12 md:mt-14">
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold italic mb-6 md:mb-8 tracking-tight text-white">Practice Questions</h3>
 
                         <template x-for="(q, qIndex) in lesson.questions" :key="'q-' + qIndex">
-                            <div class="mb-8 bg-white/5 border border-white/10 rounded-2xl p-6 space-y-5">
+                            <div class="mb-6 md:mb-8 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 space-y-4 md:space-y-5">
 
                                 <!-- Question -->
-                                <p class="text-xl font-bold italic text-white" x-text="q.question"></p>
+                                <p class="text-lg sm:text-xl font-bold italic text-white" x-text="q.question"></p>
 
                                 <!-- Options -->
-                                <ul class="space-y-2 pl-4">
+                                <ul class="space-y-1.5 md:space-y-2 pl-3 md:pl-4">
                                     <template x-for="(opt, oIndex) in q.options" :key="'opt-' + qIndex + '-' + oIndex">
-                                        <li class="text-white/80 flex gap-2 font-medium">
+                                        <li class="text-white/80 flex gap-2 font-medium text-sm sm:text-base">
                                             <span>•</span>
                                             <span x-text="opt"></span>
                                         </li>
@@ -608,11 +608,11 @@
                                 </ul>
 
                                 <!-- Correct Answer -->
-                                <div class="mt-4 pt-4 border-t border-white/10">
-                                    <p class="text-xs uppercase tracking-widest text-emerald-400 font-bold mb-2">
+                                <div class="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10">
+                                    <p class="text-[10px] md:text-xs uppercase tracking-widest text-emerald-400 font-bold mb-2">
                                         Correct Answer
                                     </p>
-                                    <p class="text-lg text-amber-200 font-bold italic" x-text="q.correct_answer"></p>
+                                    <p class="text-base sm:text-lg text-amber-200 font-bold italic" x-text="q.correct_answer"></p>
                                 </div>
 
                             </div>
@@ -620,12 +620,12 @@
                     </div>
 
                     <!-- FOLLOW-UP ACTIVITIES -->
-                    <div class="mt-14">
-                        <h3 class="text-4xl font-bold italic mb-6 tracking-tight text-white">Follow-Up Activities</h3>
+                    <div class="mt-10 sm:mt-12 md:mt-14">
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold italic mb-4 md:mb-6 tracking-tight text-white">Follow-Up Activities</h3>
 
-                        <ul class="space-y-3">
+                        <ul class="space-y-2 md:space-y-3">
                             <template x-for="(item, index) in lesson.follow_up_suggestions" :key="'fu-' + index">
-                                <li class="text-lg text-amber-100 flex gap-3 font-medium leading-relaxed">
+                                <li class="text-base sm:text-lg text-amber-100 flex gap-2 md:gap-3 font-medium leading-relaxed">
                                     <span class="text-emerald-400 font-bold">→</span>
                                     <span x-text="item"></span>
                                 </li>

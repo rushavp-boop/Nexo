@@ -50,16 +50,16 @@
                         x-transition:enter-end="opacity-100 transform translate-y-0">
                         <div
                             :class="msg.role === 'user'
-                                ? 'max-w-[85%] md:max-w-[75%] rounded-3xl px-6 py-4 shadow-lg bg-gradient-to-br from-amber-800 to-amber-900 text-amber-50 border border-amber-700/20 font-medium transform hover:scale-[1.02] transition-all duration-200'
-                                : 'max-w-[85%] md:max-w-[75%] rounded-3xl px-6 py-4 shadow-lg bg-white text-amber-900 border border-amber-200 font-serif leading-relaxed backdrop-blur-sm transform hover:scale-[1.02] transition-all duration-200'">
-                            <div class="flex items-start gap-3">
+                                ? 'max-w-[90%] sm:max-w-[85%] md:max-w-[75%] rounded-2xl md:rounded-3xl px-4 sm:px-5 md:px-6 py-3 md:py-4 shadow-lg bg-gradient-to-br from-amber-800 to-amber-900 text-amber-50 border border-amber-700/20 font-medium transform hover:scale-[1.02] transition-all duration-200'
+                                : 'max-w-[90%] sm:max-w-[85%] md:max-w-[75%] rounded-2xl md:rounded-3xl px-4 sm:px-5 md:px-6 py-3 md:py-4 shadow-lg bg-white text-amber-900 border border-amber-200 font-serif leading-relaxed backdrop-blur-sm transform hover:scale-[1.02] transition-all duration-200'">
+                            <div class="flex items-start gap-2 md:gap-3">
                                 <template x-if="msg.role === 'model'">
-                                    <div class="h-8 w-8 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0 mt-1">
-                                        <i class="fa-solid fa-robot text-white text-xs"></i>
+                                    <div class="h-7 w-7 md:h-8 md:w-8 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0 mt-0.5 md:mt-1">
+                                        <i class="fa-solid fa-robot text-white text-[10px] md:text-xs"></i>
                                     </div>
                                 </template>
                                 <div class="flex-1">
-                                    <div class="whitespace-pre-wrap text-sm leading-relaxed" x-html="formatMessage(msg.content)"></div>
+                                    <div class="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed" x-html="formatMessage(msg.content)"></div>
                                 </div>
                             </div>
                         </div>
@@ -69,14 +69,14 @@
                 <!-- Loading Indicator -->
                 <template x-if="loading">
                     <div class="flex justify-start animate-slideInLeft">
-                        <div class="max-w-[75%] rounded-3xl px-6 py-4 shadow-lg bg-white border border-amber-200 backdrop-blur-sm flex items-center gap-3">
-                            <div class="h-8 w-8 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0">
-                                <i class="fa-solid fa-robot text-white text-xs"></i>
+                        <div class="max-w-[75%] rounded-2xl md:rounded-3xl px-4 sm:px-5 md:px-6 py-3 md:py-4 shadow-lg bg-white border border-amber-200 backdrop-blur-sm flex items-center gap-2 md:gap-3">
+                            <div class="h-7 w-7 md:h-8 md:w-8 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-robot text-white text-[10px] md:text-xs"></i>
                             </div>
-                            <div class="flex gap-2">
-                                <div class="w-2 h-2 bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0s"></div>
-                                <div class="w-2 h-2 bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-                                <div class="w-2 h-2 bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                            <div class="flex gap-1.5 md:gap-2">
+                                <div class="w-1.5 h-1.5 md:w-2 md:h-2 bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                                <div class="w-1.5 h-1.5 md:w-2 md:h-2 bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                                <div class="w-1.5 h-1.5 md:w-2 md:h-2 bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
                             </div>
                         </div>
                     </div>

@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/agro/plants', [AgroController::class, 'getPlants'])->name('user.agro.plants');
         Route::get('/agro/plant/{id}', [AgroController::class, 'getPlantDetails'])->name('user.agro.plant');
         Route::get('/agro/translate', [AgroController::class, 'translatePlant'])->name('user.agro.translate');
+        Route::get('/agro/market-prices', [AgroController::class, 'getMarketPrices'])->name('user.agro.market-prices');
         Route::get('/agro/diseases', [AgroController::class, 'getDiseases'])->name('user.agro.diseases');
         Route::post('/agro/analyze', [AgroController::class, 'analyze'])->name('user.agro.analyze');
 
@@ -95,6 +96,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/api/ad-to-bs/{year}/{month}/{day}', [CalendarController::class, 'adToBs']);
         Route::get('/api/calculateage/bs/{year}/{month}/{day}', [CalendarController::class, 'calculateAgeFromBs']);
         Route::get('/api/calculateage/ad/{year}/{month}/{day}', [CalendarController::class, 'calculateAgeFromAd']);
+
+        // Event Management
+        Route::get('/api/events', [CalendarController::class, 'getEvents']);
+        Route::get('/api/events/search', [CalendarController::class, 'searchEvents']);
+        Route::get('/api/events/stats', [CalendarController::class, 'getEventStats']);
+        Route::get('/api/events/{year}/{month}', [CalendarController::class, 'getEventsByMonth']);
+        Route::post('/api/events', [CalendarController::class, 'createEvent']);
+        Route::delete('/api/events/{id}', [CalendarController::class, 'deleteEvent']);
     });
     // ================== Admin Routes ==================
     Route::middleware('role:admin')->group(function () {

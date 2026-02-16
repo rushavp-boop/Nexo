@@ -44,6 +44,11 @@
 
                 <!-- Input & Pay Button -->
                 <div class="mt-4 md:mt-6" x-show="!receipt">
+                    <label class="block text-amber-700 font-bold italic text-xs md:text-sm mb-2">Rental Start Date</label>
+                    <input type="date" x-model="rentalDate"
+                        :min="new Date().toISOString().split('T')[0]"
+                        class="w-full border border-amber-200 bg-amber-50 rounded-lg md:rounded-xl px-3 md:px-4 py-2 mb-3 md:mb-4 focus:ring-2 focus:ring-amber-700">
+
                     <label class="block text-amber-700 font-bold italic text-xs md:text-sm mb-2">Number of Days</label>
                     <input type="number" x-model.number="days" min="1"
                         class="w-full border border-amber-200 bg-amber-50 rounded-lg md:rounded-xl px-3 md:px-4 py-2 mb-3 md:mb-4 focus:ring-2 focus:ring-amber-700">
@@ -99,6 +104,7 @@
             return {
                 car: JSON.parse(carData),
                 days: 1,
+                rentalDate: new Date().toISOString().split('T')[0],
                 receipt: null,
 
                 async payCar() {
@@ -108,6 +114,16 @@
                             icon: 'error',
                             title: 'Invalid Input',
                             text: 'Please enter a valid number of days',
+                            confirmButtonText: 'OK'
+                        });
+                        return;
+                    }
+
+                    if (!this.rentalDate) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Missing Date',
+                            text: 'Please select a rental start date',
                             confirmButtonText: 'OK'
                         });
                         return;
@@ -134,6 +150,7 @@
                             body: JSON.stringify({
                                 carId: this.car.id,
                                 days: this.days,
+                                rentalDate: this.rentalDate,
                                 total: this.days * this.car.pricePerDay
                             })
                         });
@@ -141,10 +158,13 @@
                         const data = await response.json();
 
                         if (data.status === 'success') {
+                            // Save event to calendar
+                            await this.saveToCalendar(data.bookingId);
+
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Rental Successful!',
-                                text: 'Your car rental has been confirmed',
+                                html: 'Your car rental has been confirmed<br><small>Event added to calendar</small>',
                                 confirmButtonText: 'Great!'
                             });
                             // Show receipt
@@ -162,6 +182,29 @@
                     }
                 },
 
+                async saveToCalendar(bookingId) {
+                    try {
+                        const eventData = {
+                            title: `Car Rental: ${this.car.name}`,
+                            description: `${this.car.name} (${this.car.type}) rental for ${this.days} day(s)`,
+                            event_date: this.rentalDate,
+                            event_type: 'car',
+                            related_id: bookingId
+                        };
+
+                        await fetch('{{ url('/api/events') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify(eventData)
+                        });
+                    } catch (e) {
+                        console.error('Failed to save calendar event:', e);
+                    }
+                },
+
                 confirmBooking() {
                     if (!this.car) return;
                     if (this.days < 1) {
@@ -174,6 +217,16 @@
                         return;
                     }
 
+                    if (!this.rentalDate) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Missing Date',
+                            text: 'Please select a rental start date',
+                            confirmButtonText: 'OK'
+                        });
+                        return;
+                    }
+
                     const total = this.days * this.car.pricePerDay;
                     Swal.fire({
                         title: 'Confirm Car Rental',
@@ -181,6 +234,7 @@
                             <div class="text-left">
                                 <p class="mb-2"><strong>Car:</strong> ${this.car.name}</p>
                                 <p class="mb-2"><strong>Type:</strong> ${this.car.type}</p>
+                                <p class="mb-2"><strong>Rental Start:</strong> ${this.rentalDate}</p>
                                 <p class="mb-2"><strong>Days:</strong> ${this.days}</p>
                                 <p class="mb-2"><strong>Price per Day:</strong> Rs. ${this.car.pricePerDay.toLocaleString()}</p>
                                 <p class="text-lg font-bold text-amber-700"><strong>Total Amount:</strong> Rs. ${total.toLocaleString()}</p>

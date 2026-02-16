@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'EduSync Calendar')
+@section('title', 'NEXO Calender')
 
 @section('content')
     <div x-data="calendarApp()" class="space-y-8 md:space-y-12 pb-10 md:pb-20">
@@ -9,7 +9,7 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
             <div class="space-y-1.5 md:space-y-2">
                 <h2 class="text-3xl sm:text-4xl font-bold text-amber-900 font-serif tracking-tighter uppercase italic">
-                    EduSync<span class="text-amber-600">.Calendar</span>
+                    NEXO<span class="text-amber-600">.CALENDER</span>
                 </h2>
                 <p class="text-xs md:text-sm text-amber-700 font-medium font-serif">Nepali Calendar System - BS <span x-text="currentYear"></span></p>
             </div>
@@ -21,8 +21,63 @@
             </div>
         </div>
 
+        <!-- Stats Dashboard -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-xl p-4 text-center hover:shadow-lg transition-all">
+                <p class="text-2xl font-bold text-amber-900" x-text="stats.total || 0"></p>
+                <p class="text-[9px] font-black uppercase tracking-widest text-amber-600 mt-1">Total Events</p>
+            </div>
+            <div class="bg-gradient-to-br from-yellow-50 to-white border-2 border-yellow-300 rounded-xl p-4 text-center hover:shadow-lg transition-all">
+                <p class="text-2xl font-bold text-yellow-900" x-text="stats.upcoming || 0"></p>
+                <p class="text-[9px] font-black uppercase tracking-widest text-yellow-700 mt-1">Upcoming</p>
+            </div>
+            <div class="bg-gradient-to-br from-amber-100/50 to-white border-2 border-amber-300 rounded-xl p-4 text-center hover:shadow-lg transition-all">
+                <p class="text-2xl font-bold text-amber-800" x-text="stats.past || 0"></p>
+                <p class="text-[9px] font-black uppercase tracking-widest text-amber-700 mt-1">Past</p>
+            </div>
+            <div class="bg-gradient-to-br from-orange-50 to-white border-2 border-orange-300 rounded-xl p-4 text-center hover:shadow-lg transition-all">
+                <p class="text-2xl font-bold text-orange-900" x-text="(stats.by_priority && stats.by_priority.high) || 0"></p>
+                <p class="text-[9px] font-black uppercase tracking-widest text-orange-700 mt-1">High Priority</p>
+            </div>
+            <div class="bg-gradient-to-br from-amber-200/40 to-white border-2 border-amber-400 rounded-xl p-4 text-center hover:shadow-lg transition-all">
+                <p class="text-2xl font-bold text-amber-900" x-text="Object.keys(stats.by_category || {}).length"></p>
+                <p class="text-[9px] font-black uppercase tracking-widest text-amber-700 mt-1">Categories</p>
+            </div>
+        </div>
+
+        <!-- Search & Filter Bar -->
+        <div class="bg-amber-50/50 border border-amber-200 rounded-2xl p-4 md:p-6">
+            <div class="flex flex-col md:flex-row gap-3">
+                <div class="flex-1">
+                    <input type="text" x-model="searchQuery" @input="searchEvents()"
+                           placeholder="🔍 Search events..."
+                           class="w-full px-4 py-2.5 border-2 border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-600 focus:border-transparent font-serif">
+                </div>
+                <select x-model="filterCategory" @change="filterEvents()"
+                        class="px-4 py-2.5 border-2 border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-600 font-semibold font-serif">
+                    <option value="">All Categories</option>
+                    <option value="work">Work</option>
+                    <option value="personal">Personal</option>
+                    <option value="health">Health</option>
+                    <option value="travel">Travel</option>
+                    <option value="education">Education</option>
+                </select>
+                <select x-model="filterPriority" @change="filterEvents()"
+                        class="px-4 py-2.5 border-2 border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-600 font-semibold font-serif">
+                    <option value="">All Priorities</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+                <button @click="viewMode = (viewMode === 'month' ? 'list' : 'month')"
+                        class="px-6 py-2.5 bg-amber-900 hover:bg-amber-700 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-md">
+                    <span x-text="viewMode === 'month' ? '📋 List' : '📅 Month'"></span>
+                </button>
+            </div>
+        </div>
+
         <!-- Main Calendar Card -->
-        <div class="bg-white border border-black/5 rounded-2xl md:rounded-[3rem] shadow-xl md:shadow-2xl overflow-hidden">
+        <div x-show="viewMode === 'month'" class="bg-white border border-black/5 rounded-2xl md:rounded-[3rem] shadow-xl md:shadow-2xl overflow-hidden">
             <!-- Calendar Header -->
             <div class="bg-gradient-to-r from-amber-600 to-amber-500 px-6 md:px-10 py-6 md:py-8">
                 <div class="flex items-center justify-between">
@@ -57,20 +112,98 @@
                     <template x-for="(cell, index) in getCalendarGrid()" :key="index">
                         <div class="aspect-square">
                             <div x-show="cell.day"
-                                 :class="isToday(cell.day) ? 'bg-amber-600 text-white shadow-xl ring-4 ring-amber-200' : 'bg-amber-50 hover:bg-amber-100 text-amber-900'"
-                                 class="h-full rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer hover:scale-105 hover:shadow-lg group relative">
+                                 @click="cell.day && openEventModal(cell.day)"
+                                 :class="[
+                                     isToday(cell.day)
+                                         ? 'bg-amber-600 text-white shadow-xl ring-4 ring-amber-200 font-bold'
+                                         : hasEvents(cell.day)
+                                             ? 'bg-amber-50 hover:bg-amber-100 text-amber-900 ring-2 ring-amber-300 font-semibold'
+                                             : 'bg-white hover:bg-amber-50 text-gray-700 border border-gray-200'
+                                 ]"
+                                 class="h-full rounded-lg flex flex-col items-center justify-center transition-all cursor-pointer hover:scale-105 hover:shadow-lg group relative">
                                 <span class="text-2xl font-bold font-serif" x-text="cell.day?.date"></span>
                                 <span class="text-[8px] font-black uppercase tracking-widest mt-1 font-serif"
-                                      :class="isToday(cell.day) ? 'text-white/80' : 'text-amber-600 group-hover:text-amber-700'"
+                                      :class="isToday(cell.day) ? 'text-white/90' : hasEvents(cell.day) ? 'text-amber-600' : 'text-gray-500'"
                                       x-text="cell.day?.day"></span>
                                 <!-- Today Badge -->
                                 <div x-show="isToday(cell.day)" class="absolute -top-2 -right-2 bg-white text-amber-600 text-[7px] font-black px-2 py-0.5 rounded-full shadow-lg uppercase tracking-wider">
                                     Today
                                 </div>
+                                <!-- Event Indicators (Google Calendar Style) -->
+                                <div x-show="hasEvents(cell.day)" class="absolute bottom-2 left-2 right-2">
+                                    <template x-for="(event, idx) in getDayEvents(cell.day).slice(0, 3)" :key="event.id">
+                                        <div class="text-[8px] font-bold px-1.5 py-0.5 rounded mb-0.5 truncate"
+                                             :class="getEventColorClass(event)"
+                                             :style="isToday(cell.day) ? 'color: white; opacity: 0.95;' : ''"
+                                             x-text="event.title.substring(0, 12)"></div>
+                                    </template>
+                                    <div x-show="getDayEvents(cell.day).length > 3"
+                                         class="text-[7px] font-bold text-center"
+                                         :class="isToday(cell.day) ? 'text-white/80' : 'text-amber-600'">
+                                        +<span x-text="getDayEvents(cell.day).length - 3"></span> more
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </template>
                 </div>
+            </div>
+        </div>
+
+        <!-- List View -->
+        <div x-show="viewMode === 'list'" class="bg-white border border-black/5 rounded-2xl md:rounded-[3rem] shadow-xl md:shadow-2xl p-6 md:p-10">
+            <h3 class="text-2xl font-bold text-amber-900 font-serif italic mb-6">All Events</h3>
+
+            <template x-if="filteredEvents.length === 0">
+                <div class="text-center py-12">
+                    <i class="fa-solid fa-calendar-xmark text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500 font-semibold">No events found</p>
+                </div>
+            </template>
+
+            <div class="space-y-4">
+                <template x-for="event in filteredEvents.slice().sort((a, b) => new Date(a.event_date) - new Date(b.event_date))" :key="event.id">
+                    <div class="border-l-4 rounded-lg p-4 bg-gradient-to-r from-amber-50/50 to-white hover:shadow-md transition-all"
+                         :class="{
+                             'border-orange-600': event.priority === 'high',
+                             'border-amber-500': event.priority === 'medium',
+                             'border-yellow-500': event.priority === 'low'
+                         }">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <h4 class="text-lg font-bold text-amber-900 font-serif" x-text="event.title"></h4>
+                                    <span class="text-[8px] font-black uppercase px-2 py-0.5 rounded-full"
+                                          :class="{
+                                              'bg-amber-200 text-amber-900': event.category === 'work',
+                                              'bg-yellow-200 text-yellow-900': event.category === 'personal',
+                                              'bg-amber-300 text-amber-900': event.category === 'health',
+                                              'bg-orange-200 text-orange-900': event.category === 'travel',
+                                              'bg-yellow-300 text-yellow-900': event.category === 'education'
+                                          }"
+                                          x-text="event.category"></span>
+                                    <span class="text-[8px] font-black uppercase px-2 py-0.5 rounded-full"
+                                          :class="{
+                                              'bg-orange-600 text-white': event.priority === 'high',
+                                              'bg-amber-500 text-white': event.priority === 'medium',
+                                              'bg-yellow-500 text-white': event.priority === 'low'
+                                          }"
+                                          x-text="event.priority"></span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2" x-text="event.description || 'No description'"></p>
+                                <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500">
+                                    <span><i class="fa-solid fa-calendar text-amber-600"></i> <span x-text="event.event_date"></span></span>
+                                    <span x-show="event.start_time"><i class="fa-solid fa-clock text-amber-600"></i> <span x-text="event.start_time"></span><span x-show="event.end_time" x-text="' - ' + event.end_time"></span></span>
+                                    <span x-show="event.location"><i class="fa-solid fa-location-dot text-amber-600"></i> <span x-text="event.location"></span></span>
+                                </div>
+                            </div>
+                            <button @click="deleteEvent(event.id)"
+                                    class="text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg px-3 py-2 transition-all">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </template>
             </div>
         </div>
 
@@ -259,6 +392,159 @@
             </div>
 
         </div>
+
+        <!-- Event Creation/View Modal -->
+        <div x-show="showEventModal"
+             x-cloak
+             @click.self="closeEventModal()"
+             class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0">
+            <div @click.stop
+                 class="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95">
+
+                <!-- Modal Header -->
+                <div class="bg-gradient-to-r from-amber-600 to-amber-500 px-8 py-6 rounded-t-3xl">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white font-serif italic">Events</h3>
+                            <p class="text-white/80 text-sm font-serif" x-text="selectedDateText"></p>
+                        </div>
+                        <button @click="closeEventModal()"
+                                class="text-white hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-xmark text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="p-8 space-y-6">
+
+                    <!-- Existing Events List -->
+                    <div x-show="selectedDayEvents.length > 0" class="space-y-3">
+                        <h4 class="text-sm font-black uppercase tracking-widest text-gray-900">Scheduled Events</h4>
+                        <template x-for="event in selectedDayEvents" :key="event.id">
+                            <div class="border-l-4 rounded-lg p-4 space-y-2 relative shadow-sm hover:shadow-md transition-all"
+                                 :class="{
+                                     'bg-indigo-50 border-indigo-500': event.event_type === 'hotel',
+                                     'bg-green-50 border-green-500': event.event_type === 'car',
+                                     'bg-amber-50 border-amber-500': event.event_type === 'manual'
+                                 }">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-lg font-bold font-serif"
+                                                  :class="{
+                                                      'text-indigo-900': event.event_type === 'hotel',
+                                                      'text-green-900': event.event_type === 'car',
+                                                      'text-amber-900': event.event_type === 'manual'
+                                                  }"
+                                                  x-text="event.title"></span>
+                                            <span class="text-[8px] font-black uppercase px-2 py-0.5 rounded-full"
+                                                  :class="{
+                                                      'bg-indigo-200 text-indigo-800': event.event_type === 'hotel',
+                                                      'bg-green-200 text-green-800': event.event_type === 'car',
+                                                      'bg-amber-200 text-amber-800': event.event_type === 'manual'
+                                                  }"
+                                                  x-text="event.event_type"></span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mt-1" x-text="event.description || 'No description'"></p>
+                                    </div>
+                                    <button @click="deleteEvent(event.id)"
+                                            class="text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg px-2 py-1 transition-all">
+                                        <i class="fa-solid fa-trash text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Add New Event Form -->
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-black uppercase tracking-widest text-gray-900">Add New Event</h4>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="col-span-2 space-y-2">
+                                <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Event Title *</label>
+                                <input type="text"
+                                       x-model="newEventTitle"
+                                       placeholder="Enter event title"
+                                       class="w-full bg-amber-50 border-2 border-amber-200 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold font-serif">
+                            </div>
+
+                            <div class="col-span-2 space-y-2">
+                                <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Description</label>
+                                <textarea
+                                    x-model="newEventDescription"
+                                    placeholder="Enter event description"
+                                    rows="2"
+                                    class="w-full bg-amber-50 border-2 border-amber-200 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-serif"></textarea>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Start Time</label>
+                                <input type="time"
+                                       x-model="newEventStartTime"
+                                       class="w-full bg-amber-50 border-2 border-amber-200 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold font-serif">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">End Time</label>
+                                <input type="time"
+                                       x-model="newEventEndTime"
+                                       class="w-full bg-amber-50 border-2 border-amber-200 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold font-serif">
+                            </div>
+
+                            <div class="col-span-2 space-y-2">
+                                <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Location</label>
+                                <input type="text"
+                                       x-model="newEventLocation"
+                                       placeholder="Enter location"
+                                       class="w-full bg-amber-50 border-2 border-amber-200 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-serif">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Category</label>
+                                <select x-model="newEventCategory"
+                                        class="w-full bg-amber-50 border-2 border-amber-200 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold font-serif">
+                                    <option value="personal">Personal</option>
+                                    <option value="work">Work</option>
+                                    <option value="health">Health</option>
+                                    <option value="travel">Travel</option>
+                                    <option value="education">Education</option>
+                                </select>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-[9px] font-black text-amber-600 uppercase tracking-widest ml-2 font-serif">Priority</label>
+                                <select x-model="newEventPriority"
+                                        class="w-full bg-amber-50 border-2 border-amber-200 text-amber-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-600 focus:border-transparent font-bold font-serif">
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button @click="createEvent()"
+                                :disabled="!newEventTitle"
+                                class="w-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 disabled:from-gray-400 disabled:to-gray-500 text-white py-4 rounded-xl font-black text-[11px] uppercase tracking-widest transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed">
+                            <i class="fa-solid fa-plus mr-2"></i>Add Event
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -269,6 +555,32 @@
                 currentMonthIndex: 0,
                 todayDateText: 'Loading...',
                 daysOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+
+                // Events
+                events: [],
+                filteredEvents: [],
+                eventDateMap: {}, // Map to store BS date -> events
+                showEventModal: false,
+                selectedDay: null,
+                selectedDate: null,
+                selectedDateText: '',
+                selectedDayEvents: [],
+                newEventTitle: '',
+                newEventDescription: '',
+                newEventLocation: '',
+                newEventStartTime: '',
+                newEventEndTime: '',
+                newEventCategory: 'personal',
+                newEventPriority: 'medium',
+
+                // Stats
+                stats: {},
+
+                // View and Filters
+                viewMode: 'month', // 'month' or 'list'
+                searchQuery: '',
+                filterCategory: '',
+                filterPriority: '',
 
                 // Today's BS date
                 todayBsYear: null,
@@ -463,8 +775,243 @@
                     }
                 },
 
+                // Event Management Methods
+                async loadEvents() {
+                    try {
+                        const res = await fetch('{{ url('/api/events') }}', {
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            this.events = data.events || [];
+                            this.filteredEvents = this.events;
+                            await this.buildEventDateMap();
+                        } else {
+                            console.error('Failed to load events:', data.error);
+                            this.events = [];
+                            this.filteredEvents = [];
+                        }
+                    } catch (e) {
+                        console.error('Failed to load events:', e);
+                        this.events = [];
+                        this.filteredEvents = [];
+                    }
+                },
+
+                // Build a map of BS dates to events for fast lookup
+                async buildEventDateMap() {
+                    this.eventDateMap = {};
+
+                    for (const event of this.events) {
+                        try {
+                            // Convert AD event date to BS
+                            const adDate = new Date(event.event_date);
+                            const year = adDate.getFullYear();
+                            const month = adDate.getMonth() + 1;
+                            const day = adDate.getDate();
+
+                            const res = await fetch(`{{ url('/api/ad-to-bs') }}/${year}/${month}/${day}`);
+                            const data = await res.json();
+
+                            if (data.success) {
+                                const bsDateKey = `${data.result.year}-${String(data.result.month).padStart(2, '0')}-${String(data.result.day).padStart(2, '0')}`;
+                                if (!this.eventDateMap[bsDateKey]) {
+                                    this.eventDateMap[bsDateKey] = [];
+                                }
+                                this.eventDateMap[bsDateKey].push(event);
+                            }
+                        } catch (e) {
+                            console.error('Error converting event date:', e);
+                        }
+                    }
+                },
+
+                async openEventModal(day) {
+                    if (!day) return;
+
+                    this.selectedDay = day;
+                    const monthIndex = this.currentMonthIndex + 1;
+                    const dateStr = `${this.currentYear}-${String(monthIndex).padStart(2, '0')}-${String(day.date).padStart(2, '0')}`;
+
+                    // Convert BS to AD for storage
+                    try {
+                        const res = await fetch(`{{ url('/api/bs-to-ad') }}/${this.currentYear}/${monthIndex}/${day.date}`);
+                        const data = await res.json();
+                        if (data.success) {
+                            this.selectedDate = `${data.result.year}-${String(data.result.month).padStart(2, '0')}-${String(data.result.day).padStart(2, '0')}`;
+                            this.selectedDateText = `BS ${dateStr} (AD ${this.selectedDate})`;
+                        } else {
+                            this.selectedDate = dateStr;
+                            this.selectedDateText = dateStr;
+                        }
+                    } catch(e) {
+                        this.selectedDate = dateStr;
+                        this.selectedDateText = dateStr;
+                    }
+
+                    this.selectedDayEvents = this.getDayEvents(day);
+                    this.showEventModal = true;
+                    this.newEventTitle = '';
+                    this.newEventDescription = '';
+                },
+
+                closeEventModal() {
+                    this.showEventModal = false;
+                    this.selectedDay = null;
+                    this.selectedDate = null;
+                    this.selectedDayEvents = [];
+                },
+
+                async createEvent() {
+                    if (!this.newEventTitle || !this.selectedDate) {
+                        return alert('Please enter event title');
+                    }
+
+                    try {
+                        const res = await fetch('{{ url('/api/events') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                title: this.newEventTitle,
+                                description: this.newEventDescription,
+                                location: this.newEventLocation,
+                                event_date: this.selectedDate,
+                                start_time: this.newEventStartTime,
+                                end_time: this.newEventEndTime,
+                                category: this.newEventCategory,
+                                priority: this.newEventPriority,
+                                event_type: 'manual'
+                            })
+                        });
+
+                        const data = await res.json();
+                        if (data.success) {
+                            await this.loadEvents();
+                            await this.loadStats();
+                            this.selectedDayEvents = this.getDayEvents(this.selectedDay);
+                            this.newEventTitle = '';
+                            this.newEventDescription = '';
+                            this.newEventLocation = '';
+                            this.newEventStartTime = '';
+                            this.newEventEndTime = '';
+                            this.newEventCategory = 'personal';
+                            this.newEventPriority = 'medium';
+                            alert('Event created successfully!');
+                        } else {
+                            alert('Failed to create event: ' + (data.error || 'Unknown error'));
+                        }
+                    } catch (e) {
+                        console.error('Error creating event:', e);
+                        alert('Error creating event');
+                    }
+                },
+
+                async deleteEvent(eventId) {
+                    if (!confirm('Are you sure you want to delete this event?')) {
+                        return;
+                    }
+
+                    try {
+                        const res = await fetch(`{{ url('/api/events') }}/${eventId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        });
+
+                        const data = await res.json();
+                        if (data.success) {
+                            await this.loadEvents();
+                            await this.loadStats();
+                            this.selectedDayEvents = this.getDayEvents(this.selectedDay);
+                            alert('Event deleted successfully!');
+                        } else {
+                            alert('Failed to delete event');
+                        }
+                    } catch (e) {
+                        console.error('Error deleting event:', e);
+                        alert('Error deleting event');
+                    }
+                },
+
+                hasEvents(day) {
+                    if (!day) return false;
+                    const monthIndex = this.currentMonthIndex + 1;
+                    const bsDateKey = `${this.currentYear}-${String(monthIndex).padStart(2, '0')}-${String(day.date).padStart(2, '0')}`;
+                    return this.eventDateMap[bsDateKey] && this.eventDateMap[bsDateKey].length > 0;
+                },
+
+                getDayEvents(day) {
+                    if (!day) return [];
+                    const monthIndex = this.currentMonthIndex + 1;
+                    const bsDateKey = `${this.currentYear}-${String(monthIndex).padStart(2, '0')}-${String(day.date).padStart(2, '0')}`;
+                    return this.eventDateMap[bsDateKey] || [];
+                },
+
+                getEventColorClass(event) {
+                    if (event.event_type === 'hotel') {
+                        return 'bg-amber-600 text-white';
+                    } else if (event.event_type === 'car') {
+                        return 'bg-yellow-600 text-white';
+                    } else {
+                        return 'bg-amber-500 text-white';
+                    }
+                },
+
+                async loadStats() {
+                    try {
+                        const res = await fetch('{{ url('/api/events/stats') }}', {
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            this.stats = data.stats;
+                        }
+                    } catch (e) {
+                        console.error('Failed to load stats:', e);
+                    }
+                },
+
+                async searchEvents() {
+                    this.filterEvents();
+                },
+
+                async filterEvents() {
+                    try {
+                        const params = new URLSearchParams();
+                        if (this.searchQuery) params.append('search', this.searchQuery);
+                        if (this.filterCategory) params.append('category', this.filterCategory);
+                        if (this.filterPriority) params.append('priority', this.filterPriority);
+
+                        const res = await fetch('{{ url('/api/events/search') }}?' + params.toString(), {
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            this.filteredEvents = data.events || [];
+                            // Also update the calendar view
+                            this.events = this.filteredEvents;
+                            await this.buildEventDateMap();
+                        }
+                    } catch (e) {
+                        console.error('Failed to filter events:', e);
+                    }
+                },
+
                 init() {
                     this.getTodayDate();
+                    this.loadEvents();
+                    this.loadStats();
+                    this.filteredEvents = this.events;
                 }
             }
         }

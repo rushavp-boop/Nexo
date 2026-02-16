@@ -7,7 +7,7 @@
     <nav class="flex bg-white/80 backdrop-blur-2xl p-1.5 md:p-2 rounded-[2rem] md:rounded-[2.5rem] border border-stone-200 w-full md:w-fit shadow-xl md:shadow-2xl mx-auto sticky top-20 md:top-6 z-40 overflow-x-auto">
         <template x-for="(tab, idx) in tabs" :key="idx">
             <button
-                @click="currentTab = tab.id"
+                @click="currentTab = tab.id; if(tab.id === 'market') fetchMarketPrices();"
                 :class="currentTab === tab.id ? 'bg-stone-900 text-white shadow-xl' : 'text-stone-500 hover:text-stone-900'"
                 class="px-4 sm:px-6 md:px-12 py-2.5 md:py-3.5 rounded-[1.5rem] md:rounded-[2rem] text-[9px] sm:text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] transition-all whitespace-nowrap flex-shrink-0">
                 <span x-text="tab.label"></span>
@@ -144,6 +144,14 @@
                         <p class="text-xl italic font-serif leading-relaxed opacity-90" x-text="analysisResult?.soilTips || 'Analyzing soil parameters...'"></p>
                     </div>
                     <div class="space-y-3">
+                        <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Fertilizers to be Used</p>
+                        <p class="text-xl italic font-serif leading-relaxed opacity-90" x-text="analysisResult?.fertilizersToBeUsed || 'Analyzing fertilizer plan...'"></p>
+                    </div>
+                    <div class="space-y-3">
+                        <p class="text-[10px] font-black text-amber-300 uppercase tracking-widest">Growth Protocol</p>
+                        <p class="text-xl italic font-serif leading-relaxed opacity-90" x-text="analysisResult?.growthProtocol || 'Building growth protocol...'"></p>
+                    </div>
+                    <div class="space-y-3">
                         <p class="text-[10px] font-black text-rose-500 uppercase tracking-widest">Climatic Mitigation</p>
                         <p class="text-xl italic font-serif leading-relaxed opacity-90" x-text="analysisResult?.climateRisk || 'Analyzing climate patterns...'"></p>
                     </div>
@@ -154,6 +162,75 @@
                 <i class="fa-solid fa-microchip text-7xl text-stone-200"></i>
                 <p class="text-xs font-black uppercase tracking-[0.3em] font-serif italic">Waiting for field parameters...</p>
             </div>
+        </div>
+    </div>
+
+    <!-- Market Prices Tab -->
+    <div x-show="currentTab === 'market'" class="space-y-8 md:space-y-12 animate-reveal">
+        <header class="space-y-4 md:space-y-6">
+            <span class="px-4 md:px-6 py-1.5 md:py-2 bg-orange-600 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-widest text-white">बजार दर</span>
+            <h3 class="text-3xl sm:text-4xl md:text-5xl italic font-bold tracking-tighter text-stone-900 leading-tight">
+                Market<br/><span class="text-orange-600">Prices Today</span>
+            </h3>
+            <p class="text-sm md:text-base text-stone-500 font-medium italic">Check live crop prices to plan your harvest timing and maximize profit.</p>
+        </header>
+
+        <!-- Search Box -->
+        <div class="relative w-full">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 md:left-6 top-1/2 -translate-y-1/2 text-stone-300 text-sm"></i>
+            <input
+                type="text"
+                x-model="marketSearch"
+                @input="searchMarketPrices()"
+                placeholder="खोज गर्नुहोस्... (e.g. Tomato, आलु, गहुँ)"
+                class="w-full pl-10 md:pl-14 pr-4 md:pr-6 py-3 md:py-4 bg-amber-50 border-2 border-amber-200 rounded-xl md:rounded-2xl text-[10px] md:text-[12px] font-bold uppercase tracking-wide md:tracking-widest focus:border-orange-600 outline-none transition-all placeholder:text-stone-300"
+            />
+        </div>
+
+        <!-- Loading State -->
+        <div x-show="pricesLoading" class="py-24 md:py-48 text-center space-y-6 md:space-y-8">
+            <div class="h-16 w-16 md:h-24 md:w-24 border-[3px] md:border-[4px] border-orange-600 border-t-transparent rounded-full animate-spin mx-auto shadow-xl md:shadow-2xl"></div>
+            <p class="text-[10px] md:text-[12px] font-black uppercase tracking-[0.4em] md:tracking-[0.8em] text-stone-400 italic">Fetching Market Data...</p>
+        </div>
+
+        <!-- Price Table -->
+        <div x-show="!pricesLoading && filteredMarketPrices.length > 0" class="overflow-x-auto border-2 border-amber-300 rounded-[2rem] shadow-lg">
+            <table class="w-full text-sm md:text-base">
+                <thead class="bg-gradient-to-r from-orange-600 to-amber-600 text-white">
+                    <tr>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-left font-black uppercase tracking-[0.15em]">Crop (English)</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-left font-black uppercase tracking-[0.15em]">Crop (Nepali)</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-right font-black uppercase tracking-[0.15em]">Min Price</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-right font-black uppercase tracking-[0.15em]">Max Price</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-right font-black uppercase tracking-[0.15em]">Avg Price</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-center font-black uppercase tracking-[0.15em]">Unit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="(price, idx) in filteredMarketPrices" :key="idx">
+                        <tr :class="idx % 2 === 0 ? 'bg-white' : 'bg-amber-50/40'" class="border-b border-amber-200 hover:bg-amber-100/60 transition-colors">
+                            <td class="px-4 md:px-6 py-3 md:py-4 font-bold text-stone-900" x-text="price.englishName"></td>
+                            <td class="px-4 md:px-6 py-3 md:py-4 font-bold text-orange-700 italic" x-text="price.nepaliName"></td>
+                            <td class="px-4 md:px-6 py-3 md:py-4 text-right text-rose-600 font-bold">Rs <span x-text="price.minPrice.toFixed(0)"></span></td>
+                            <td class="px-4 md:px-6 py-3 md:py-4 text-right text-orange-600 font-bold">Rs <span x-text="price.maxPrice.toFixed(0)"></span></td>
+                            <td class="px-4 md:px-6 py-3 md:py-4 text-right text-amber-700 font-black text-lg">Rs <span x-text="price.avgPrice.toFixed(0)"></span></td>
+                            <td class="px-4 md:px-6 py-3 md:py-4 text-center text-stone-600 text-sm font-semibold" x-text="price.unit"></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Empty State -->
+        <div x-show="!pricesLoading && filteredMarketPrices.length === 0 && marketSearch" class="bg-gradient-to-br from-amber-50 to-orange-50 p-8 md:p-12 rounded-[2rem] border-2 border-amber-300 text-center space-y-4">
+            <i class="fa-solid fa-search text-5xl text-amber-400"></i>
+            <p class="text-base md:text-lg font-bold italic text-amber-900">No crops found for "<span x-text="marketSearch"></span>"</p>
+            <p class="text-sm text-amber-800">Try searching: Tomato, Potato, Onion, Wheat, Rice, Ginger, etc.</p>
+        </div>
+
+        <!-- Last Updated -->
+        <div class="text-center text-[9px] md:text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+            Last updated: <span x-text="pricesLastUpdated"></span>
         </div>
     </div>
 
@@ -347,6 +424,7 @@ function agroApp() {
         tabs: [
             { id: 'seeds', label: 'Botanical Matrix' },
             { id: 'analysis', label: 'Field Scanner' },
+            { id: 'market', label: 'Market Prices' },
             { id: 'diseases', label: 'Pathogen DB' }
         ],
         currentTab: 'seeds',
@@ -358,6 +436,11 @@ function agroApp() {
         analysisResult: null,
         plants: [],
         diseases: [],
+        marketPrices: [],
+        filteredMarketPrices: [],
+        marketSearch: '',
+        pricesLoading: false,
+        pricesLastUpdated: '',
         // Detail states
         selectedPlant: null,
         selectedDisease: null,
@@ -368,7 +451,7 @@ function agroApp() {
             console.log('Agro app initializing...');
             this.loading = true;
             try {
-                // Fetch plants
+                // Fetch plants (100 max)
                 console.log('Fetching plants from {{ route("user.agro.plants") }}');
                 const plantsRes = await fetch("{{ route('user.agro.plants') }}?page=1", {
                     headers: {
@@ -412,6 +495,40 @@ function agroApp() {
             } finally {
                 this.loading = false;
             }
+        },
+
+        async fetchMarketPrices() {
+            this.pricesLoading = true;
+            try {
+                const res = await fetch("{{ route('user.agro.market-prices') }}", {
+                    headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    this.marketPrices = data.data || [];
+                    this.filteredMarketPrices = this.marketPrices;
+                    this.pricesLastUpdated = data.lastUpdated || new Date().toLocaleDateString();
+                    console.log('Market prices loaded:', this.marketPrices.length);
+                } else {
+                    console.error('Market prices API error:', res.status);
+                }
+            } catch (error) {
+                console.error('Error loading market prices:', error);
+            } finally {
+                this.pricesLoading = false;
+            }
+        },
+
+        searchMarketPrices() {
+            const searchTerm = this.marketSearch.toLowerCase();
+            if (!searchTerm) {
+                this.filteredMarketPrices = this.marketPrices;
+                return;
+            }
+            this.filteredMarketPrices = this.marketPrices.filter(price =>
+                price.englishName.toLowerCase().includes(searchTerm) ||
+                price.nepaliName.toLowerCase().includes(searchTerm)
+            );
         },
 
         get filteredPlants() {
@@ -460,6 +577,13 @@ function agroApp() {
             this.selectedDisease = disease;
         },
 
+        async onTabChange(tabId) {
+            this.currentTab = tabId;
+            if (tabId === 'market' && this.marketPrices.length === 0) {
+                await this.fetchMarketPrices();
+            }
+        },
+
         async runAnalysis() {
             if (!this.analysisLocation || !this.analysisCrop) {
                 alert('Please enter location and crop');
@@ -488,9 +612,44 @@ function agroApp() {
             } finally {
                 this.analyzing = false;
             }
+        },
+
+        async fetchMarketPrices() {
+            this.pricesLoading = true;
+            try {
+                const res = await fetch("{{ route('user.agro.market-prices') }}", {
+                    headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    this.marketPrices = data.data || [];
+                    this.filteredMarketPrices = this.marketPrices;
+                    this.pricesLastUpdated = data.lastUpdated || new Date().toLocaleDateString();
+                    console.log('Market prices loaded:', this.marketPrices.length);
+                } else {
+                    console.error('Market prices API error:', res.status);
+                }
+            } catch (error) {
+                console.error('Error loading market prices:', error);
+            } finally {
+                this.pricesLoading = false;
+            }
+        },
+
+        searchMarketPrices() {
+            const searchTerm = this.marketSearch.toLowerCase();
+            if (!searchTerm) {
+                this.filteredMarketPrices = this.marketPrices;
+                return;
+            }
+            this.filteredMarketPrices = this.marketPrices.filter(price =>
+                price.englishName.toLowerCase().includes(searchTerm) ||
+                price.nepaliName.toLowerCase().includes(searchTerm)
+            );
         }
     }
 }
+
 </script>
 
 <style>

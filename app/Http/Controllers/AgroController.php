@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\OpenAIService;
+use App\Models\Price;
 use Illuminate\Support\Facades\Http;
 
 class AgroController extends Controller
@@ -19,72 +20,74 @@ class AgroController extends Controller
     public function getPlants(Request $request)
     {
         try {
-            $page = $request->query('page', 1);
+            // Fetch multiple pages to get ~100 plants (API returns 30 per page)
+            $allPlants = collect();
 
-            $response = Http::withoutVerifying()
-                ->timeout(15)
-                ->get(self::PERENUAL_BASE_URL . '/v2/species-list', [
-                    'key' => self::PERENUAL_API_KEY,
-                    'page' => $page
-                ]);
+            for ($page = 1; $page <= 4; $page++) {
+                $response = Http::withoutVerifying()
+                    ->timeout(15)
+                    ->get(self::PERENUAL_BASE_URL . '/v2/species-list', [
+                        'key' => self::PERENUAL_API_KEY,
+                        'page' => $page
+                    ]);
 
-            if ($response->failed()) {
-                \Log::error('Perenual Plants API Error', ['status' => $response->status(), 'body' => $response->body()]);
-                return response()->json(['error' => 'Failed to fetch plants from API', 'status' => $response->status()], 500);
+                if ($response->failed()) {
+                    \Log::error('Perenual Plants API Error', ['status' => $response->status(), 'page' => $page]);
+                    break;
+                }
+
+                $data = $response->json();
+
+                if (!isset($data['data']) || empty($data['data'])) {
+                    break;
+                }
+
+                $plants = collect($data['data'])
+                    ->map(function($plant) {
+                        $id = $plant['id'] ?? null;
+                        $name = $plant['common_name'] ?? null;
+
+                        // scientific_name can be array or string
+                        $scientific_name = '';
+                        if (isset($plant['scientific_name'])) {
+                            if (is_array($plant['scientific_name'])) {
+                                $scientific_name = $plant['scientific_name'][0] ?? '';
+                            } else {
+                                $scientific_name = $plant['scientific_name'];
+                            }
+                        }
+
+                        $cycle = $plant['cycle'] ?? 'Unknown';
+                        $watering = $plant['watering'] ?? 'Moderate';
+
+                        // sunlight may be missing, string, or array
+                        $sunlight = 'Partial Shade';
+                        if (array_key_exists('sunlight', $plant)) {
+                            if (is_array($plant['sunlight'])) {
+                                $sunlight = $plant['sunlight'][0] ?? $sunlight;
+                            } elseif (!empty($plant['sunlight'])) {
+                                $sunlight = $plant['sunlight'];
+                            }
+                        }
+
+                        $image = data_get($plant, 'default_image.original_url');
+
+                        return [
+                            'id' => $id,
+                            'name' => $name ?? ($scientific_name ?: 'Unknown'),
+                            'scientific_name' => $scientific_name,
+                            'cycle' => $cycle,
+                            'watering' => $watering,
+                            'sunlight' => $sunlight,
+                            'image' => $image,
+                        ];
+                    })
+                    ->filter(fn($p) => !empty($p['name']));
+
+                $allPlants = $allPlants->merge($plants);
             }
 
-            $data = $response->json();
-
-            // Validate data structure
-            if (!isset($data['data'])) {
-                \Log::warning('Unexpected Perenual response structure', ['data' => $data]);
-                return response()->json(['error' => 'Invalid API response structure'], 500);
-            }
-
-            $plants = collect($data['data'] ?? [])
-                ->map(function($plant) {
-                    $id = $plant['id'] ?? null;
-                    $name = $plant['common_name'] ?? null;
-
-                    // scientific_name can be array or string
-                    $scientific_name = '';
-                    if (isset($plant['scientific_name'])) {
-                        if (is_array($plant['scientific_name'])) {
-                            $scientific_name = $plant['scientific_name'][0] ?? '';
-                        } else {
-                            $scientific_name = $plant['scientific_name'];
-                        }
-                    }
-
-                    $cycle = $plant['cycle'] ?? 'Unknown';
-                    $watering = $plant['watering'] ?? 'Moderate';
-
-                    // sunlight may be missing, string, or array
-                    $sunlight = 'Partial Shade';
-                    if (array_key_exists('sunlight', $plant)) {
-                        if (is_array($plant['sunlight'])) {
-                            $sunlight = $plant['sunlight'][0] ?? $sunlight;
-                        } elseif (!empty($plant['sunlight'])) {
-                            $sunlight = $plant['sunlight'];
-                        }
-                    }
-
-                    $image = data_get($plant, 'default_image.original_url');
-
-                    return [
-                        'id' => $id,
-                        'name' => $name ?? ($scientific_name ?: 'Unknown'),
-                        'scientific_name' => $scientific_name,
-                        'cycle' => $cycle,
-                        'watering' => $watering,
-                        'sunlight' => $sunlight,
-                        'image' => $image,
-                    ];
-                })
-                ->filter(fn($p) => !empty($p['name']))
-                ->values();
-
-            return response()->json($plants);
+            return response()->json($allPlants->values()->take(100));
         } catch (\Exception $e) {
             \Log::error('Get Plants Exception', ['error' => $e->getMessage()]);
             return response()->json(['error' => $e->getMessage()], 500);
@@ -108,6 +111,91 @@ class AgroController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function getMarketPrices(Request $request)
+    {
+        try {
+            $search = $request->query('search', '');
+
+            // Fetch prices from database (today's prices)
+            $query = Price::where('price_date', now()->format('Y-m-d'));
+
+            // If no prices for today, get the latest available prices
+            if ($query->count() === 0) {
+                $latestDate = Price::latest('price_date')->first()?->price_date;
+                if ($latestDate) {
+                    $query = Price::where('price_date', $latestDate);
+                }
+            }
+
+            $prices = $query->get()->map(function ($price) {
+                return [
+                    'nepaliName' => $price->nepali_name ?? $price->produce_name,
+                    'englishName' => $price->produce_name,
+                    'unit' => $price->unit ?? 'K.G.',
+                    'minPrice' => (float) $price->min_price,
+                    'maxPrice' => (float) $price->max_price,
+                    'avgPrice' => (float) $price->avg_price,
+                    'date' => $price->price_date->format('Y-m-d'),
+                ];
+            })->sortBy('englishName')->values();
+
+            // Filter by search if provided
+            if (!empty($search)) {
+                $searchLower = strtolower($search);
+                $prices = $prices->filter(function ($item) use ($searchLower) {
+                    return strpos(strtolower($item['englishName']), $searchLower) !== false ||
+                           strpos(strtolower($item['nepaliName']), $searchLower) !== false;
+                })->values();
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $prices,
+                'lastUpdated' => now()->format('Y-m-d H:i:s')
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Market Prices Error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Unable to fetch market prices',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    private function getCropNepaliName($englishName)
+    {
+        $translations = [
+            'Rice' => 'चावल',
+            'Wheat' => 'गहुँ',
+            'Maize' => 'मकै',
+            'Potato' => 'आलु',
+            'Tomato' => 'टमाटर',
+            'Onion' => 'प्याज',
+            'Garlic' => 'लसुन',
+            'Ginger' => 'अदुवा',
+            'Lentil' => 'दाल',
+            'Chickpea' => 'छोलाभटमास',
+            'Bean' => 'बाकुला',
+            'Carrot' => 'गाजर',
+            'Cabbage' => 'कोबी',
+            'Cauliflower' => 'फूलकोबी',
+            'Radish' => 'मूला',
+            'Spinach' => 'पालेnung',
+            'Mustard Greens' => 'सरसो को साग',
+            'Cucumber' => 'खीरा',
+            'Bottle Gourd' => 'लाउ',
+            'Bitter Gourd' => 'करेला',
+            'Okra' => 'भिंडी',
+            'Chilli' => 'खुर्सानी',
+            'Turmeric' => 'हलिमा',
+            'Coriander' => 'धनिया',
+            'Cumin' => 'जिरा',
+        ];
+        return $translations[$englishName] ?? $englishName;
     }
 
     public function getDiseases()

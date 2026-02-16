@@ -66,15 +66,15 @@
             </div>
 
             <!-- Results -->
-            <div x-show="result" class="bg-gradient-to-br from-white to-amber-50/30 border-3 border-amber-700 p-12 rounded-[3.5rem] shadow-2xl shadow-amber-700/20 animate-slideUp">
-                <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12 pb-8 border-b-2 border-amber-200">
+            <div x-show="result" class="bg-gradient-to-br from-white to-amber-50/30 border-2 md:border-3 border-amber-700 p-6 sm:p-8 md:p-12 rounded-2xl sm:rounded-3xl md:rounded-[3.5rem] shadow-xl md:shadow-2xl shadow-amber-700/20 animate-slideUp">
+                <div class="flex flex-col md:flex-row justify-between items-start gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8 md:mb-12 pb-4 sm:pb-6 md:pb-8 border-b-2 border-amber-200">
                     <div>
-                        <h4 class="text-4xl font-bold italic text-stone-900 tracking-tighter" x-text="result?.diagnosis"></h4>
-                        <p class="text-amber-700 font-bold italic uppercase tracking-[0.25em] text-[11px] mt-3">Urgency: <span class="text-amber-900 font-black" x-text="result?.urgency"></span></p>
+                        <h4 class="text-2xl sm:text-3xl md:text-4xl font-bold italic text-stone-900 tracking-tighter" x-text="result?.diagnosis"></h4>
+                        <p class="text-amber-700 font-bold italic uppercase tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em] text-[10px] md:text-[11px] mt-2 md:mt-3">Urgency: <span class="text-amber-900 font-black" x-text="result?.urgency"></span></p>
                     </div>
-                    <div class="bg-gradient-to-br from-amber-700 to-amber-600 px-8 py-5 rounded-2xl shadow-lg shadow-amber-700/30">
-                        <p class="text-[10px] font-bold italic text-amber-50 uppercase tracking-widest mb-2">Specialist</p>
-                        <p class="font-bold italic text-white text-sm" x-text="result?.specialist"></p>
+                    <div class="bg-gradient-to-br from-amber-700 to-amber-600 px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 rounded-xl md:rounded-2xl shadow-lg shadow-amber-700/30">
+                        <p class="text-[9px] md:text-[10px] font-bold italic text-amber-50 uppercase tracking-widest mb-1 md:mb-2">Specialist</p>
+                        <p class="font-bold italic text-white text-xs sm:text-sm" x-text="result?.specialist"></p>
                     </div>
                 </div>
 
@@ -97,9 +97,9 @@
         </div>
 
         <!-- Doctors Sidebar -->
-        <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-300 rounded-[3.5rem] p-12 h-fit space-y-8 shadow-xl shadow-amber-700/10">
-            <div class="pb-6 border-b-2 border-amber-300">
-                <h4 class="font-bold italic text-2xl text-stone-900 uppercase tracking-tighter">Recommended Doctors</h4>
+        <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-300 rounded-2xl sm:rounded-3xl md:rounded-[3.5rem] p-6 sm:p-8 md:p-12 h-fit space-y-6 md:space-y-8 shadow-xl shadow-amber-700/10">
+            <div class="pb-4 md:pb-6 border-b-2 border-amber-300">
+                <h4 class="font-bold italic text-xl sm:text-2xl text-stone-900 uppercase tracking-tighter">Recommended Doctors</h4>
             </div>
 
             <!-- Loading State -->
@@ -110,13 +110,13 @@
             </div>
 
             <!-- Doctors List -->
-            <div x-show="result && !loadingDoctors" class="space-y-5">
+            <div x-show="result && !loadingDoctors" class="space-y-4 md:space-y-5">
                 <template x-for="(doctor, idx) in doctors" :key="idx">
-                    <div class="p-6 rounded-2xl bg-white border-2 border-amber-200 hover:border-amber-700 hover:shadow-lg hover:shadow-amber-700/20 transition-all duration-300 shadow-sm group">
-                        <p class="font-bold italic text-stone-900 text-base group-hover:text-amber-700 group-hover:translate-x-1 transition-all duration-300" x-text="doctor.name || 'Doctor Name'"></p>
-                        <p class="text-[10px] font-bold italic text-amber-700 uppercase mt-2 tracking-widest opacity-90" x-text="(doctor.specialty || 'Specialty') + ' • ' + (doctor.hospital || 'Hospital')"></p>
-                        <div class="mt-4 pt-3 border-t border-amber-200">
-                            <p class="text-[10px] font-semibold italic text-amber-600" x-text="'Exp: ' + (doctor.experience || 'N/A') + ' | ' + (doctor.availability || 'Available')"></p>
+                    <div class="p-4 sm:p-5 md:p-6 rounded-xl md:rounded-2xl bg-white border-2 border-amber-200 hover:border-amber-700 hover:shadow-lg hover:shadow-amber-700/20 transition-all duration-300 shadow-sm group">
+                        <p class="font-bold italic text-stone-900 text-sm sm:text-base group-hover:text-amber-700 group-hover:translate-x-1 transition-all duration-300" x-text="doctor.name || 'Doctor Name'"></p>
+                        <p class="text-[9px] md:text-[10px] font-bold italic text-amber-700 uppercase mt-2 tracking-widest opacity-90" x-text="(doctor.specialty || 'Specialty') + ' • ' + (doctor.hospital || 'Hospital')"></p>
+                        <div class="mt-3 md:mt-4 pt-2 md:pt-3 border-t border-amber-200">
+                            <p class="text-[9px] md:text-[10px] font-semibold italic text-amber-600" x-text="'Exp: ' + (doctor.experience || 'N/A') + ' | ' + (doctor.availability || 'Available')"></p>
                         </div>
                     </div>
                 </template>
