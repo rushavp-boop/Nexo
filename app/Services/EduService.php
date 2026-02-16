@@ -19,6 +19,30 @@ class EduService
             ->make();
     }
 
+    /**
+     * Extract and parse JSON from API response.
+     * Handles markdown code blocks and other common formatting issues.
+     */
+    private static function parseJSON(string $content): ?array
+    {
+        // Remove markdown code blocks
+        if (preg_match('/```(?:json)?\s*([\s\S]*?)\s*```/', $content, $matches)) {
+            $content = trim($matches[1]);
+        }
+
+        // Attempt JSON decode
+        $result = json_decode($content, true);
+
+        if (!$result) {
+            Log::warning('JSON Parse Failure in EduService', [
+                'content' => substr($content, 0, 200),
+                'json_error' => json_last_error_msg()
+            ]);
+        }
+
+        return $result;
+    }
+
     public static function generateEduResponse(int $grade, string $subject, string $topic): array
     {
         $prompt = "You are a master teacher for the Nepal NEB curriculum.
@@ -64,7 +88,7 @@ Rules:
             ]);
 
             $content = $response->choices[0]->message->content;
-            $result = json_decode($content, true);
+            $result = self::parseJSON($content);
 
             if (
                 $result &&
@@ -177,8 +201,10 @@ PROMPT;
                 'max_tokens' => 2500
             ]);
 
-            return json_decode($res->choices[0]->message->content, true);
+            $result = self::parseJSON($res->choices[0]->message->content);
+            return $result ?: [];
         } catch (\Throwable $e) {
+            Log::error('Quiz Generation Error: ' . $e->getMessage());
             return [];
         }
     }
@@ -218,8 +244,10 @@ PROMPT;
                 'max_tokens' => 2500
             ]);
 
-            return json_decode($res->choices[0]->message->content, true);
+            $result = self::parseJSON($res->choices[0]->message->content);
+            return $result ?: [];
         } catch (\Throwable $e) {
+            Log::error('FlashCard Generation Error: ' . $e->getMessage());
             return [];
         }
     }

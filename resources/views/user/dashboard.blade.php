@@ -216,7 +216,7 @@
                             <div class="flex flex-col md:flex-row md:items-end gap-3 md:gap-5">
                                 <h1
                                     class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 bg-clip-text text-transparent leading-none hover:scale-105 transition-transform duration-700 cursor-default font-serif italic origin-left">
-                                    Namaste<span class="text-amber-700">.</span>
+                                    Namaskar<span class="text-amber-700">.</span>
                                 </h1>
                                 {{-- <div class="inline-flex items-center gap-3 px-6 py-3 bg-stone-900 text-white rounded-2xl shadow-2xl mb-2 hover:shadow-3xl hover:-translate-y-1 transition-all duration-500 group cursor-default">
                                 <span class="text-[9px] font-black uppercase tracking-[0.3em] opacity-70 group-hover:opacity-100 transition-opacity">Node:</span>

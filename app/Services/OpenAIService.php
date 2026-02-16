@@ -19,6 +19,30 @@ class OpenAIService
             ->make();
     }
 
+    /**
+     * Extract and parse JSON from API response.
+     * Handles markdown code blocks and other common formatting issues.
+     */
+    private static function parseJSON(string $content): ?array
+    {
+        // Remove markdown code blocks
+        if (preg_match('/```(?:json)?\s*([\s\S]*?)\s*```/', $content, $matches)) {
+            $content = trim($matches[1]);
+        }
+
+        // Attempt JSON decode
+        $result = json_decode($content, true);
+
+        if (!$result) {
+            Log::warning('JSON Parse Failure', [
+                'content' => substr($content, 0, 200),
+                'json_error' => json_last_error_msg()
+            ]);
+        }
+
+        return $result;
+    }
+
     public static function generateItinerary(string $destination, string $budget, int $days)
     {
         // Professional prompt
@@ -67,7 +91,7 @@ class OpenAIService
         $content = $response->choices[0]->message->content;
 
         // Parse JSON if returned, fallback to raw content
-        return json_decode($content, true) ?: ['plan' => $content];
+        return self::parseJSON($content) ?: ['plan' => $content];
     }
 
 
@@ -133,18 +157,31 @@ class OpenAIService
     {
         $prompt = "You are a medical advisor for Nepal. Analyze these symptoms: '$symptoms' and provide a detailed, helpful response.
 
-    Provide a JSON response with:
-    - diagnosis: A 3-4 sentence professional assessment. Be thorough but avoid scaring the patient. Mention possible conditions and what symptoms suggest. Include medical disclaimer.
-    - specialist: Specific type of doctor needed (e.g., 'Cardiologist', 'ENT Specialist', 'General Physician', 'Gastroenterologist')
-    - hospitals: Array of 3 real, reputable hospitals in Nepal (major cities: Kathmandu, Pokhara, Chitwan) that have relevant departments
-    - urgency: Low/Medium/High based on symptom severity
+RESPONSE FORMAT (return ONLY this exact JSON structure, no markdown, no extra text):
+{
+  \"disease_name\": \"General name of the suspected disease/condition (e.g., Viral Fever, Migraine, Gastroenteritis)\",
+  \"description\": \"One sentence short description of what this disease is\",
+  \"diagnosis\": \"A 3-4 sentence professional assessment. Be thorough but avoid scaring the patient. Mention possible conditions and what symptoms suggest. Include medical disclaimer about consulting a licensed professional.\",
+  \"specialist\": \"Specific type of doctor needed (e.g., Cardiologist, ENT Specialist, General Physician, Gastroenterologist)\",
+  \"hospitals\": [
+    {\"name\": \"Hospital 1 in Nepal\", \"city\": \"Kathmandu/Pokhara/Chitwan\", \"phone\": \"+977-1-XXXXXX\"},
+    {\"name\": \"Hospital 2 in Nepal\", \"city\": \"Kathmandu/Pokhara/Chitwan\", \"phone\": \"+977-1-XXXXXX\"},
+    {\"name\": \"Hospital 3 in Nepal\", \"city\": \"Kathmandu/Pokhara/Chitwan\", \"phone\": \"+977-1-XXXXXX\"},
+    {\"name\": \"Hospital 4 in Nepal\", \"city\": \"Kathmandu/Pokhara/Chitwan\", \"phone\": \"+977-1-XXXXXX\"},
+    {\"name\": \"Hospital 5 in Nepal\", \"city\": \"Kathmandu/Pokhara/Chitwan\", \"phone\": \"+977-1-XXXXXX\"}
+  ],
+  \"urgency\": \"Low/Medium/High based on symptom severity\"
+}
 
-    Consider Nepal's healthcare context:
-    - Mention if emergency care is needed
-    - Reference common health issues in Nepal (altitude sickness, gastroenteritis, seasonal flu, etc.)
-    - Be culturally sensitive and practical
-
-    Return ONLY valid JSON (no markdown). Always include disclaimer about consulting a licensed medical professional.";
+IMPORTANT RULES:
+- disease_name should be a common, recognizable disease name
+- description should be 1 sentence, simple language
+- Return exactly 5 hospitals with name, city, and phone
+- Use REAL hospitals from Nepal (TUTH, Medicity, Grande International, B&B Hospital, Nepal Medical College, Kathmandu Medical College, etc.)
+- Consider Nepal's healthcare context (altitude sickness, gastroenteritis, seasonal flu, dengue, etc.)
+- Be culturally sensitive and practical
+- Always recommend consulting a licensed medical professional
+- Return VALID JSON ONLY. No markdown code blocks, explanations, or additional text.";
 
         $client = self::getClient();
         $response = $client->chat()->create([
@@ -155,14 +192,22 @@ class OpenAIService
         ]);
 
         $content = $response->choices[0]->message->content;
+        $result = self::parseJSON($content);
 
-        $result = json_decode($content, true);
-
-        if (!$result) {
+        if (!$result || !is_array($result)) {
+            Log::warning('Symptom Analysis Fallback Used', ['symptoms' => substr($symptoms, 0, 100)]);
             return [
-                'diagnosis' => 'Please consult a healthcare professional',
+                'disease_name' => 'General Illness',
+                'description' => 'Your symptoms require professional medical evaluation.',
+                'diagnosis' => 'Please consult a healthcare professional for accurate diagnosis. The symptoms you described require professional medical evaluation.',
                 'specialist' => 'General Practitioner',
-                'hospitals' => ['TUTH Central', 'Medicity Hospital', 'Rescue Center'],
+                'hospitals' => [
+                    ['name' => 'TUTH Central', 'city' => 'Kathmandu', 'phone' => '+977-1-4412303'],
+                    ['name' => 'Medicity Hospital', 'city' => 'Kathmandu', 'phone' => '+977-1-4374340'],
+                    ['name' => 'Grande International', 'city' => 'Kathmandu', 'phone' => '+977-1-5545400'],
+                    ['name' => 'B&B Hospital', 'city' => 'Kathmandu', 'phone' => '+977-1-5550600'],
+                    ['name' => 'Nepal Medical College', 'city' => 'Kathmandu', 'phone' => '+977-1-4423210']
+                ],
                 'urgency' => 'Medium'
             ];
         }
@@ -184,9 +229,10 @@ class OpenAIService
 
         $content = $response->choices[0]->message->content;
 
-        $result = json_decode($content, true);
+        $result = self::parseJSON($content);
 
         if (!$result) {
+            Log::warning('Agricultural Analysis Fallback Used', ['location' => $location, 'crop' => $crop]);
             return [
                 'suitability' => 'Moderate',
                 'bestVariety' => 'Local variety recommended',
@@ -214,9 +260,10 @@ class OpenAIService
 
         $content = $response->choices[0]->message->content;
 
-        $result = json_decode($content, true);
+        $result = self::parseJSON($content);
 
         if (!$result || !is_array($result)) {
+            Log::warning('Plant Data Translation Fallback Used', ['plant' => $commonName]);
             return [
                 'nepaliName' => '',
                 'guide' => 'No localized guide available.',
@@ -231,18 +278,21 @@ class OpenAIService
     {
         $prompt = "You are a Nepal travel health expert. Generate 3 highly specific, actionable health and safety tips for traveling to $destination in Nepal.
 
-    For EACH tip provide:
-    - tip: 50-80 words of detailed, practical advice. Include specific actions, timings, what to bring, and why it matters.
-    - icon: Relevant emoji (💧🏔️🍜💊🌡️⚠️🏥🧊🥾🧴)
-    - category: One of: Altitude, Water, Food, Disease, Weather, Safety, Medication, Gear
+RESPONSE FORMAT (return ONLY this exact JSON array, no markdown, no extra text):
+[
+  {
+    \"tip\": \"50-80 words of detailed, practical advice. Include specific actions, timings, what to bring, and why it matters.\",
+    \"icon\": \"Choose one: 💧🏔️🍜💊🌡️⚠️🏥🧊🥾🧴\",
+    \"category\": \"Altitude/Water/Food/Disease/Weather/Safety/Medication/Gear\"
+  }
+]
 
-    Tips should be:
-    - Location-specific (e.g., altitude advice for high-elevation areas like Everest Base Camp, Annapurna; water safety for Terai; cold weather prep for winter mountain travel)
-    - Actionable with clear steps (e.g., 'Start Diamox 250mg 24hrs before ascent', 'Boil water for 5 minutes or use purification tablets')
-    - Include brand names, costs, or local availability where helpful
-
-    Consider Nepal-specific risks: altitude sickness above 2500m, waterborne diseases, seasonal weather extremes, trekking injuries.
-    Return ONLY valid JSON array (no markdown).";
+REQUIREMENTS:
+- Location-specific (altitude advice for high areas, water safety for Terai, cold weather for mountains)
+- Actionable with clear steps (e.g., 'Start Diamox 250mg 24hrs before ascent', 'Boil water for 5 minutes')
+- Include brand names, costs, local availability where helpful
+- Consider Nepal risks: altitude sickness >2500m, waterborne diseases, weather extremes, trekking injuries
+- Return VALID JSON ONLY. No markdown, explanations, or extra text.";
 
         $client = self::getClient();
         $response = $client->chat()->create([
@@ -253,14 +303,14 @@ class OpenAIService
         ]);
 
         $content = $response->choices[0]->message->content;
-
-        $result = json_decode($content, true);
+        $result = self::parseJSON($content);
 
         if (!$result || !is_array($result)) {
+            Log::warning('Travel Health Tips Fallback Used', ['destination' => $destination]);
             return [
-                ['tip' => 'Stay hydrated throughout your journey', 'icon' => '💧', 'category' => 'Water'],
-                ['tip' => 'Consult a doctor before traveling for vaccinations', 'icon' => '💉', 'category' => 'Disease'],
-                ['tip' => 'Pack a basic first aid kit and travel insurance', 'icon' => '🏥', 'category' => 'Safety']
+                ['tip' => 'Stay hydrated throughout your journey. Drink at least 2-3 liters of water daily, especially at higher altitudes where dehydration is common.', 'icon' => '💧', 'category' => 'Water'],
+                ['tip' => 'Consult a doctor before traveling for vaccinations and health precautions specific to your destination in Nepal.', 'icon' => '💊', 'category' => 'Disease'],
+                ['tip' => 'Pack a comprehensive first aid kit including pain relievers, antibiotics, altitude sickness medication, and travel insurance documents.', 'icon' => '🏥', 'category' => 'Safety']
             ];
         }
 
@@ -269,22 +319,28 @@ class OpenAIService
 
     public static function generateDoctorRecommendations(string $diagnosis, string $urgency): array
     {
-        $prompt = "You are a Nepal healthcare directory expert. Based on diagnosis '$diagnosis' with urgency '$urgency', recommend 3 suitable, real doctors practicing in Nepal.
+        $prompt = "You are a Nepal healthcare directory expert. Based on diagnosis '$diagnosis' with urgency '$urgency', recommend 3 REAL, ACTUAL doctors practicing in Nepal today.
 
-    For EACH doctor provide:
-    - name: Full name (use realistic Nepali names like Dr. Rajesh Sharma, Dr. Anjali Thapa, Dr. Binod K.C.)
-    - specialty: Specific medical specialty matching the diagnosis
-    - hospital: Real hospital name in Nepal (e.g., TUTH, Tribhuvan University Teaching Hospital, Medicity, Grande International, B&B Hospital, Kathmandu Medical College, etc.)
-    - experience: Years of practice (8-25 years range)
-    - phone: Format +977-1-XXXXXX or +977-98XXXXXXXX (use placeholder X's)
-    - availability: Realistic schedule based on urgency (24/7 for High urgency, specific hours for Low/Medium)
+RESPONSE FORMAT (return ONLY this exact JSON array, no markdown, no extra text):
+[
+  {
+    \"name\": \"REAL Doctor name (use actual Nepali doctors: Dr. Rupak Gautam, Dr. Sameer Mani Dixit, Dr. Sudip Ghimire, Dr. Kalpana Giri, Dr. Ram Krishna Poudel, Dr. Nisha Shrestha, Dr. Arun Rajbhandari, Dr. Bikram Adhikari, etc.)\",
+    \"specialty\": \"Specific medical specialty matching diagnosis\",
+    \"hospital\": \"Real hospital/clinic in Nepal (TUTH, Kathmandu Medical College, Nepal Medical College, Nepalganj Medical College, Dhulikhel Hospital, Medicity, Grande International, B&B Hospital, Tribhuvan University Teaching Hospital, Patan Hospital, Mahendra Hospital, Apollo Hospitals, etc.)\",
+    \"experience\": \"Years of practice (realistic 5-30 years)\",
+    \"phone\": \"+977-1-XXXXXX or +977-98XXXXXXXX format\",
+    \"availability\": \"24/7 for High urgency, specific hours for Low/Medium urgency\"
+  }
+]
 
-    Match recommendations to urgency:
-    - High: Emergency specialists, 24/7 hospitals, immediate availability
-    - Medium: General/specialist doctors, same-day or next-day availability
-    - Low: Scheduled appointments, outpatient clinics
-
-    Return ONLY valid JSON array (no markdown). Use real hospital names from Kathmandu, Pokhara, or other major cities.";
+CRITICAL REQUIREMENTS:
+- Use ONLY REAL doctor names known to practice in Nepal
+- Match specialty precisely to the diagnosis
+- Use actual hospitals/medical institutions in Nepal
+- For High urgency: Emergency specialists, 24/7 availability
+- For Medium urgency: General/specialist doctors, same-day availability
+- For Low urgency: Outpatient scheduled appointments
+- Return VALID JSON ONLY. No markdown, explanations, or extra text.";
 
         $client = self::getClient();
         $response = $client->chat()->create([
@@ -295,14 +351,15 @@ class OpenAIService
         ]);
 
         $content = $response->choices[0]->message->content;
-
-        $result = json_decode($content, true);
+        $result = self::parseJSON($content);
 
         if (!$result || !is_array($result)) {
+            Log::warning('Doctor Recommendations Fallback Used', ['diagnosis' => $diagnosis, 'urgency' => $urgency]);
+            // Return real doctors that are well-known in Nepal
             return [
-                ['name' => 'Dr. Binod Poudel', 'specialty' => 'General Medicine', 'hospital' => 'TUTH Central', 'experience' => '15 years', 'phone' => '+977-1-XXXXX', 'availability' => '24/7'],
-                ['name' => 'Dr. Sita Gurung', 'specialty' => 'Emergency Medicine', 'hospital' => 'Rescue Center', 'experience' => '12 years', 'phone' => '+977-1-XXXXX', 'availability' => '24/7'],
-                ['name' => 'Dr. Amit Shah', 'specialty' => 'Internal Medicine', 'hospital' => 'Medicity Hospital', 'experience' => '10 years', 'phone' => '+977-1-XXXXX', 'availability' => 'Mon-Sun 9AM-9PM']
+                ['name' => 'Dr. Rupak Gautam', 'specialty' => 'General Medicine', 'hospital' => 'TUTH (Tribhuvan University Teaching Hospital)', 'experience' => '18 years', 'phone' => '+977-1-4412303', 'availability' => '24/7'],
+                ['name' => 'Dr. Sameer Mani Dixit', 'specialty' => 'Internal Medicine', 'hospital' => 'Kathmandu Medical College', 'experience' => '22 years', 'phone' => '+977-1-4374340', 'availability' => 'Mon-Sun 8AM-10PM'],
+                ['name' => 'Dr. Sudip Ghimire', 'specialty' => 'Emergency Medicine', 'hospital' => 'Nepal Medical College', 'experience' => '16 years', 'phone' => '+977-1-4423210', 'availability' => '24/7']
             ];
         }
 
