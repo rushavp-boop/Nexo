@@ -555,9 +555,4 @@
             }
         }
     }
-</script>                    this.desc = 'Unavailable';
-                }
-            }
-        }
-    }
 </script>

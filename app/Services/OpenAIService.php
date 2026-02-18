@@ -82,7 +82,7 @@ class OpenAIService
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4o',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -97,60 +97,62 @@ class OpenAIService
 
     public static function searchHotels(string $destination)
     {
-        $prompt = "You are a Nepal tourism expert. List 5 real, verified hotels in $destination, Nepal. Use actual hotel names from Google Maps or Booking.com.
+        $prompt = "You are a Nepal tourism expert. List 5 real, verified hotels in $destination, Nepal.
 
-    For EACH hotel provide:
-    - name: Actual hotel name (verify it exists in $destination)
-    - rating: Real rating (4.0-5.0) based on common review platforms
-    - location: Specific area/neighborhood in $destination with nearby landmarks
-    - amenities: Array of 4-6 realistic amenities (WiFi, Hot Water, Restaurant, Mountain View, Airport Pickup, Parking, etc.)
-    - pricePerNight: Realistic price in Nepali Rupees based on actual Nepal hotel rates
+CRITICAL: Return ONLY valid JSON array. NO markdown. NO explanations. NO code blocks.
 
-    Price guidelines for Nepal:
-    - Budget hotels: Rs 1200-2500/night
-    - Mid-range: Rs 2500-5500/night
-    - Luxury: Rs 5500-15000+/night
+Each hotel MUST have: name, rating, location, amenities (array), pricePerNight
 
-    Include a mix of price ranges. Return ONLY valid JSON array (no markdown, no extra text).
-    Example: [{\"name\":\"Hotel Himalaya\",\"rating\":4.5,\"location\":\"Kupondole, near Jawalakhel\",\"amenities\":[\"WiFi\",\"Restaurant\",\"Spa\",\"Garden\"],\"pricePerNight\":4200}]";
+Format example:
+[{\"name\":\"Hotel Name\",\"rating\":4.5,\"location\":\"Area\",\"amenities\":[\"WiFi\",\"Restaurant\"],\"pricePerNight\":3500}]
 
-        $client = self::getClient();
-        $response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'user', 'content' => $prompt],
-            ],
-        ]);
+Hotels for $destination:
+- Use REAL hotel names that actually exist in $destination
+- Ratings: 4.0-5.0 stars
+- Location: Specific neighborhood with landmarks
+- Amenities: 4-6 items (WiFi, Hot Water, Restaurant, Mountain View, Airport Pickup, Parking, etc.)
+- Price: Budget Rs 1200-2500, Mid-range Rs 2500-5500, Luxury Rs 5500-15000/night
 
-        $content = $response->choices[0]->message->content;
+Include variety of prices. Return ONLY JSON array:";
 
-        $result = json_decode($content, true);
+        try {
+            $client = self::getClient();
+            $response = $client->chat()->create([
+                'model' => 'gpt-4o',
+                'messages' => [
+                    ['role' => 'user', 'content' => $prompt],
+                ],
+            ]);
 
-        if (!$result || !is_array($result)) {
-            return [
-                ['name' => 'Hotel Himalaya', 'rating' => 4.5, 'location' => 'Thamel', 'amenities' => ['WiFi', 'Restaurant', 'Spa'], 'pricePerNight' => 3500],
-                ['name' => 'Kathmandu Guest House', 'rating' => 4.2, 'location' => 'Thamel', 'amenities' => ['WiFi', 'Breakfast', 'Gym'], 'pricePerNight' => 2800],
-            ];
+            $content = $response->choices[0]->message->content;
+
+            // Try to parse JSON with better error handling
+            $result = self::parseJSON($content);
+
+            if ($result && is_array($result) && count($result) > 0) {
+                // Validate structure
+                $valid = true;
+                foreach ($result as $hotel) {
+                    if (!isset($hotel['name'], $hotel['rating'], $hotel['location'], $hotel['amenities'], $hotel['pricePerNight'])) {
+                        $valid = false;
+                        break;
+                    }
+                }
+                if ($valid) {
+                    return $result;
+                }
+            }
+
+            Log::warning('Hotel Search: Invalid response format', ['destination' => $destination, 'content' => substr($content, 0, 200)]);
+        } catch (\Exception $e) {
+            Log::error('Hotel Search API Error: ' . $e->getMessage());
         }
 
-        return $result;
-    }
-
-    public static function searchCars(string $destination)
-    {
-        $prompt = "List 5 cars available for rent in $destination with name, type, price per day, specs, and image URL in JSON format.";
-
-        $client = self::getClient();
-        $response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'user', 'content' => $prompt],
-            ],
-        ]);
-
-        $content = $response->choices[0]->message->content;
-
-        return json_decode($content, true) ?: [];
+        // Fallback data
+        return [
+            ['name' => 'Hotel Himalaya', 'rating' => 4.5, 'location' => 'Thamel', 'amenities' => ['WiFi', 'Restaurant', 'Spa'], 'pricePerNight' => 3500],
+            ['name' => 'Kathmandu Guest House', 'rating' => 4.2, 'location' => 'Thamel', 'amenities' => ['WiFi', 'Breakfast', 'Gym'], 'pricePerNight' => 2800],
+        ];
     }
 
     public static function analyzeSymptoms(string $symptoms): array
@@ -185,7 +187,7 @@ IMPORTANT RULES:
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4o',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -221,7 +223,7 @@ IMPORTANT RULES:
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4o',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -252,7 +254,7 @@ IMPORTANT RULES:
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4o',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -296,7 +298,7 @@ REQUIREMENTS:
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4o',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -324,9 +326,9 @@ REQUIREMENTS:
 RESPONSE FORMAT (return ONLY this exact JSON array, no markdown, no extra text):
 [
   {
-    \"name\": \"REAL Doctor name (use actual Nepali doctors: Dr. Rupak Gautam, Dr. Sameer Mani Dixit, Dr. Sudip Ghimire, Dr. Kalpana Giri, Dr. Ram Krishna Poudel, Dr. Nisha Shrestha, Dr. Arun Rajbhandari, Dr. Bikram Adhikari, etc.)\",
+    \"name\": \"REAL Doctor name (use actual Nepali doctors: Dr. Rupak Gautam, Dr. Sameer Mani Dixit, Dr. Sudip Ghimire, Dr. Kalpana Giri, Dr. Ram Krishna Poudel, Dr. Nisha Shrestha, Dr. Arun Rajbhandari, Dr. Bikram Adhikari, etc.) NOTE THAT THESE ARE REFRENCE NAMES.\",
     \"specialty\": \"Specific medical specialty matching diagnosis\",
-    \"hospital\": \"Real hospital/clinic in Nepal (TUTH, Kathmandu Medical College, Nepal Medical College, Nepalganj Medical College, Dhulikhel Hospital, Medicity, Grande International, B&B Hospital, Tribhuvan University Teaching Hospital, Patan Hospital, Mahendra Hospital, Apollo Hospitals, etc.)\",
+    \"hospital\": \"Real hospital/clinic in Nepal (TUTH, Kathmandu Medical College, Nepal Medical College, Nepalganj Medical College, Dhulikhel Hospital, Medicity, Grande International, B&B Hospital, Tribhuvan University Teaching Hospital, Patan Hospital, Mahendra Hospital, Apollo Hospitals, etc.) NOTE THAT THESE ARE REFRENCE HOSPITALS, REAL HOSPITALS SHOULD BE GIVEN.\",
     \"experience\": \"Years of practice (realistic 5-30 years)\",
     \"phone\": \"+977-1-XXXXXX or +977-98XXXXXXXX format\",
     \"availability\": \"24/7 for High urgency, specific hours for Low/Medium urgency\"
@@ -344,7 +346,7 @@ CRITICAL REQUIREMENTS:
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4o',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -417,7 +419,7 @@ Keep responses relevant to the Nexo platform and its features. However, if the u
 
         try {
             $response = $client->chat()->create([
-                'model' => 'gpt-3.5-turbo',
+                'model' => 'gpt-4o',
                 'messages' => $chatMessages,
                 'temperature' => 0.7,
                 'max_tokens' => 800,
@@ -438,3 +440,4 @@ Keep responses relevant to the Nexo platform and its features. However, if the u
         }
     }
 }
+

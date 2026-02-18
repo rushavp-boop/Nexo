@@ -3,7 +3,7 @@
 @section('title', 'NEXO Calender')
 
 @section('content')
-    <div x-data="calendarApp()" class="space-y-8 md:space-y-12 pb-10 md:pb-20">
+    <div x-data="calendarApp()" @init="await init()" class="space-y-8 md:space-y-12 pb-10 md:pb-20">
 
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
@@ -667,7 +667,7 @@
                     }
 
                     // Check if this day matches today's BS date
-                    const monthIndex = this.currentMonthIndex + 1; // Month index starts at 0, BS months start at 1
+                    const monthIndex = this.currentMonthIndex + 1;
                     return this.currentYear === this.todayBsYear &&
                            monthIndex === this.todayBsMonth &&
                            day.date === this.todayBsDay;
@@ -678,6 +678,8 @@
                     try {
                         const res = await fetch('{{ url('/api/todaydate') }}');
                         const data = await res.json();
+                        console.log('API Raw Response:', data);
+
                         if (data.success) {
                             this.todayDateText = `AD: ${data.ad.formatted} | BS: ${data.bs.formatted}`;
 
@@ -686,92 +688,109 @@
                             this.todayBsMonth = data.bs.month;
                             this.todayBsDay = data.bs.day;
 
+                            console.log('Stored BS Date:', {
+                                year: this.todayBsYear,
+                                month: this.todayBsMonth,
+                                day: this.todayBsDay
+                            });
+
+                            console.log('Calendar data keys:', Object.keys(this.calendar));
+                            const monthNames = Object.keys(this.calendar);
+                            console.log('Month at index 10:', monthNames[10]);
+                            console.log('All months:', monthNames);
+
                             // Auto-navigate to current month if we're viewing the current year
                             if (this.currentYear === this.todayBsYear) {
                                 this.currentMonthIndex = this.todayBsMonth - 1;
+                                console.log('Set currentMonthIndex to:', this.currentMonthIndex);
+                                console.log('Current month name:', this.currentMonthName);
                             }
                         } else {
                             this.todayDateText = 'Failed to fetch date';
                         }
                     } catch (e) {
                         this.todayDateText = 'Error fetching date';
-                        console.error(e);
+                        console.error('Error fetching today date:', e);
                     }
                 },
 
                 async convertBsToAd() {
                     if (!this.bsYear || !this.bsMonth || !this.bsDay) {
-                        return alert('Please fill all BS date fields');
+                        this.bsToAdResult = 'Please fill all fields';
+                        return;
                     }
                     this.bsToAdResult = 'Converting...';
                     try {
                         const res = await fetch(`{{ url('/api/bs-to-ad') }}/${this.bsYear}/${this.bsMonth}/${this.bsDay}`);
                         const data = await res.json();
-                        if (data.success) {
+                        if (data.success && data.result) {
                             this.bsToAdResult = `${data.result.year}-${String(data.result.month).padStart(2, '0')}-${String(data.result.day).padStart(2, '0')}`;
                         } else {
-                            this.bsToAdResult = 'Conversion failed';
+                            this.bsToAdResult = '❌ Conversion Error - Using Fallback';
                         }
                     } catch (e) {
-                        this.bsToAdResult = 'Error';
                         console.error(e);
+                        this.bsToAdResult = '⚠️ Network Error - Using Fallback';
                     }
                 },
 
                 async convertAdToBs() {
                     if (!this.adYear || !this.adMonth || !this.adDay) {
-                        return alert('Please fill all AD date fields');
+                        this.adToBsResult = 'Please fill all fields';
+                        return;
                     }
                     this.adToBsResult = 'Converting...';
                     try {
                         const res = await fetch(`{{ url('/api/ad-to-bs') }}/${this.adYear}/${this.adMonth}/${this.adDay}`);
                         const data = await res.json();
-                        if (data.success) {
+                        if (data.success && data.result) {
                             this.adToBsResult = `${data.result.year}-${String(data.result.month).padStart(2, '0')}-${String(data.result.day).padStart(2, '0')}`;
                         } else {
-                            this.adToBsResult = 'Conversion failed';
+                            this.adToBsResult = '❌ Conversion Error - Using Fallback';
                         }
                     } catch (e) {
-                        this.adToBsResult = 'Error';
                         console.error(e);
+                        this.adToBsResult = '⚠️ Network Error - Using Fallback';
                     }
                 },
 
                 async calculateAgeBs() {
                     if (!this.ageBsYear || !this.ageBsMonth || !this.ageBsDay) {
-                        return alert('Please fill all birthdate fields');
+                        this.ageBsResult = 'Please fill all birthdate fields';
+                        return;
                     }
                     this.ageBsResult = 'Calculating...';
                     try {
                         const res = await fetch(`{{ url('/api/calculateage/bs') }}/${this.ageBsYear}/${this.ageBsMonth}/${this.ageBsDay}`);
                         const data = await res.json();
-                        if (data.success) {
-                            this.ageBsResult = data.age.formatted;
+                        if (data.success && data.age) {
+                            this.ageBsResult = data.age.formatted || `${data.age.years} years old`;
                         } else {
-                            this.ageBsResult = 'Calculation failed';
+                            this.ageBsResult = '❌ Calculation Error';
                         }
                     } catch (e) {
-                        this.ageBsResult = 'Error';
                         console.error(e);
+                        this.ageBsResult = '⚠️ Network Error';
                     }
                 },
 
                 async calculateAgeAd() {
                     if (!this.ageAdYear || !this.ageAdMonth || !this.ageAdDay) {
-                        return alert('Please fill all birthdate fields');
+                        this.ageAdResult = 'Please fill all birthdate fields';
+                        return;
                     }
                     this.ageAdResult = 'Calculating...';
                     try {
                         const res = await fetch(`{{ url('/api/calculateage/ad') }}/${this.ageAdYear}/${this.ageAdMonth}/${this.ageAdDay}`);
                         const data = await res.json();
-                        if (data.success) {
-                            this.ageAdResult = data.age.formatted;
+                        if (data.success && data.age) {
+                            this.ageAdResult = data.age.formatted || `${data.age.years} years old`;
                         } else {
-                            this.ageAdResult = 'Calculation failed';
+                            this.ageAdResult = '❌ Calculation Error';
                         }
                     } catch (e) {
-                        this.ageAdResult = 'Error';
                         console.error(e);
+                        this.ageAdResult = '⚠️ Network Error';
                     }
                 },
 
@@ -812,18 +831,36 @@
                             const month = adDate.getMonth() + 1;
                             const day = adDate.getDate();
 
-                            const res = await fetch(`{{ url('/api/ad-to-bs') }}/${year}/${month}/${day}`);
-                            const data = await res.json();
+                            try {
+                                const res = await fetch(`{{ url('/api/ad-to-bs') }}/${year}/${month}/${day}`);
+                                const data = await res.json();
 
-                            if (data.success) {
-                                const bsDateKey = `${data.result.year}-${String(data.result.month).padStart(2, '0')}-${String(data.result.day).padStart(2, '0')}`;
+                                if (data.success && data.result) {
+                                    const bsDateKey = `${data.result.year}-${String(data.result.month).padStart(2, '0')}-${String(data.result.day).padStart(2, '0')}`;
+                                    if (!this.eventDateMap[bsDateKey]) {
+                                        this.eventDateMap[bsDateKey] = [];
+                                    }
+                                    this.eventDateMap[bsDateKey].push(event);
+                                } else {
+                                    // Fallback: use approximate conversion
+                                    const bsYear = year + 56;
+                                    const bsDateKey = `${bsYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                                    if (!this.eventDateMap[bsDateKey]) {
+                                        this.eventDateMap[bsDateKey] = [];
+                                    }
+                                    this.eventDateMap[bsDateKey].push(event);
+                                }
+                            } catch (e) {
+                                // Fallback: use approximate conversion
+                                const bsYear = year + 56;
+                                const bsDateKey = `${bsYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                                 if (!this.eventDateMap[bsDateKey]) {
                                     this.eventDateMap[bsDateKey] = [];
                                 }
                                 this.eventDateMap[bsDateKey].push(event);
                             }
                         } catch (e) {
-                            console.error('Error converting event date:', e);
+                            console.error('Error processing event date:', e);
                         }
                     }
                 },
@@ -839,16 +876,20 @@
                     try {
                         const res = await fetch(`{{ url('/api/bs-to-ad') }}/${this.currentYear}/${monthIndex}/${day.date}`);
                         const data = await res.json();
-                        if (data.success) {
+                        if (data.success && data.result) {
                             this.selectedDate = `${data.result.year}-${String(data.result.month).padStart(2, '0')}-${String(data.result.day).padStart(2, '0')}`;
                             this.selectedDateText = `BS ${dateStr} (AD ${this.selectedDate})`;
                         } else {
-                            this.selectedDate = dateStr;
-                            this.selectedDateText = dateStr;
+                            // Fallback
+                            const adYear = this.currentYear - 56;
+                            this.selectedDate = `${adYear}-${String(monthIndex).padStart(2, '0')}-${String(day.date).padStart(2, '0')}`;
+                            this.selectedDateText = `BS ${dateStr}`;
                         }
                     } catch(e) {
-                        this.selectedDate = dateStr;
-                        this.selectedDateText = dateStr;
+                        // Fallback
+                        const adYear = this.currentYear - 56;
+                        this.selectedDate = `${adYear}-${String(monthIndex).padStart(2, '0')}-${String(day.date).padStart(2, '0')}`;
+                        this.selectedDateText = `BS ${dateStr}`;
                     }
 
                     this.selectedDayEvents = this.getDayEvents(day);
@@ -1007,8 +1048,8 @@
                     }
                 },
 
-                init() {
-                    this.getTodayDate();
+                async init() {
+                    await this.getTodayDate();
                     this.loadEvents();
                     this.loadStats();
                     this.filteredEvents = this.events;

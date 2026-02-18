@@ -63,7 +63,7 @@ Return ONLY valid JSON in the following structure:
     {
       \"question\": \"string\",
       \"options\": [\"string\", \"string\", \"string\", \"string\"],
-      \"correct_answer\": \"string\"
+      \"correct_answer\": 0
     }
   ],
   \"followUpSuggestions\": [\"string\"]
@@ -72,14 +72,18 @@ Return ONLY valid JSON in the following structure:
 Rules:
 - Exactly 5 questions
 - Options must be meaningful (not Option A/B)
-- correct_answer MUST match one of the options
+- correct_answer MUST be the index (0, 1, 2, or 3) of the correct option
+  - If option 1 is correct: correct_answer = 0
+  - If option 2 is correct: correct_answer = 1
+  - If option 3 is correct: correct_answer = 2
+  - If option 4 is correct: correct_answer = 3
 - No markdown
 - No explanation outside JSON";
 
         try {
             $client = self::getClient();
             $response = $client->chat()->create([
-                'model' => 'gpt-3.5-turbo',
+                'model' => 'gpt-4o',
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt],
                 ],
@@ -128,7 +132,7 @@ Rules:
         try {
             $client = self::getClient();
             $response = $client->chat()->create([
-                'model' => 'gpt-3.5-turbo',
+                'model' => 'gpt-4o',
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt],
                 ],
@@ -171,32 +175,35 @@ Rules:
     public static function generateQuiz(int $grade, string $topic): array
     {
         $prompt = <<<PROMPT
-Generate 25 multiple-choice quiz questions that get harder as progressed more.
+Generate 25 multiple-choice quiz questions that get harder as you progress. Grade: {$grade}, Topic: {$topic}
 
-Grade: {$grade}
-Topic: {$topic}
+CRITICAL REQUIREMENTS:
+- Questions must be from NEB Nepal curriculum (grade 3-10)
+- Exactly 4 options per question
+- Set correct_answer to the INDEX of the correct option (0, 1, 2, or 3)
+- Increasing difficulty throughout
+- Ensure each question is distinct and tests understanding
 
-Rules:
-- Dynamic Increased Difficulty
-- NEB aligned (from grade 3-10).
-- STRICLY GIVE QUESTIONS FROM NEPAL CURRICULUM ONLY.
-- Each question has 4 options
-- Clearly indicate correct answer
-
-Return STRICT JSON:
-
+Return ONLY this exact JSON format (no markdown, no extra text):
 [
- {
-  "question": "string",
-  "options": ["A","B","C","D"],
-  "answer": "A"
- }
+  {
+    "question": "Clear question text",
+    "options": ["First option text", "Second option text", "Third option text", "Fourth option text"],
+    "correct_answer": 0
+  }
 ]
+
+IMPORTANT:
+- correct_answer MUST be a number (0-3) NOT a letter
+- If option 1 is correct, correct_answer=0
+- If option 2 is correct, correct_answer=1
+- If option 3 is correct, correct_answer=2
+- If option 4 is correct, correct_answer=3
 PROMPT;
 
         try {
             $res = self::getClient()->chat()->create([
-                'model' => 'gpt-3.5-turbo',
+                'model' => 'gpt-4o',
                 'messages' => [['role' => 'user', 'content' => $prompt]],
                 'max_tokens' => 2500
             ]);
@@ -239,7 +246,7 @@ PROMPT;
 
         try {
             $res = self::getClient()->chat()->create([
-                'model' => 'gpt-3.5-turbo',
+                'model' => 'gpt-4o',
                 'messages' => [['role' => 'user', 'content' => $prompt]],
                 'max_tokens' => 2500
             ]);
@@ -252,3 +259,4 @@ PROMPT;
         }
     }
 }
+

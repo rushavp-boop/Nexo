@@ -610,7 +610,7 @@
                                     <p class="text-[10px] md:text-xs uppercase tracking-widest text-emerald-400 font-bold mb-2">
                                         Correct Answer
                                     </p>
-                                    <p class="text-base sm:text-lg text-amber-200 font-bold italic" x-text="q.correct_answer"></p>
+                                    <p class="text-base sm:text-lg text-amber-200 font-bold italic" x-text="typeof q.correct_answer === 'number' ? q.options[q.correct_answer] : q.correct_answer"></p>
                                 </div>
 
                             </div>
@@ -943,7 +943,11 @@
 
                 // Quiz Methods
                 getCorrectAnswerIndex(question) {
-                    // Convert letter answer (A, B, C, D) to index (0, 1, 2, 3)
+                    // Handle new format: correct_answer as index (0, 1, 2, 3)
+                    if (typeof question.correct_answer === 'number') {
+                        return question.correct_answer;
+                    }
+                    // Fallback for old format: letter answer (A, B, C, D)
                     const letterToIndex = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
                     return letterToIndex[question.answer?.toUpperCase()] ?? -1;
                 },
