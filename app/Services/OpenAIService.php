@@ -82,7 +82,7 @@ class OpenAIService
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-4o',
+            'model' => 'gpt-4.1',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -118,7 +118,7 @@ Include variety of prices. Return ONLY JSON array:";
         try {
             $client = self::getClient();
             $response = $client->chat()->create([
-                'model' => 'gpt-4o',
+                'model' => 'gpt-4.1',
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt],
                 ],
@@ -187,7 +187,7 @@ IMPORTANT RULES:
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-4o',
+            'model' => 'gpt-4.1',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -223,7 +223,7 @@ IMPORTANT RULES:
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-4o',
+            'model' => 'gpt-4.1',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -254,7 +254,7 @@ IMPORTANT RULES:
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-4o',
+            'model' => 'gpt-4.1',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -298,7 +298,7 @@ REQUIREMENTS:
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-4o',
+            'model' => 'gpt-4.1',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -346,7 +346,7 @@ CRITICAL REQUIREMENTS:
 
         $client = self::getClient();
         $response = $client->chat()->create([
-            'model' => 'gpt-4o',
+            'model' => 'gpt-4.1',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -419,7 +419,7 @@ Keep responses relevant to the Nexo platform and its features. However, if the u
 
         try {
             $response = $client->chat()->create([
-                'model' => 'gpt-4o',
+                'model' => 'gpt-4.1',
                 'messages' => $chatMessages,
                 'temperature' => 0.7,
                 'max_tokens' => 800,

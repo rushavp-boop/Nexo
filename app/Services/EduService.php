@@ -83,7 +83,7 @@ Rules:
         try {
             $client = self::getClient();
             $response = $client->chat()->create([
-                'model' => 'gpt-4o',
+                'model' => 'gpt-4.1',
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt],
                 ],
@@ -132,7 +132,7 @@ Rules:
         try {
             $client = self::getClient();
             $response = $client->chat()->create([
-                'model' => 'gpt-4o',
+                'model' => 'gpt-4.1',
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt],
                 ],
@@ -203,7 +203,7 @@ PROMPT;
 
         try {
             $res = self::getClient()->chat()->create([
-                'model' => 'gpt-4o',
+                'model' => 'gpt-4.1',
                 'messages' => [['role' => 'user', 'content' => $prompt]],
                 'max_tokens' => 2500
             ]);
@@ -246,7 +246,7 @@ PROMPT;
 
         try {
             $res = self::getClient()->chat()->create([
-                'model' => 'gpt-4o',
+                'model' => 'gpt-4.1',
                 'messages' => [['role' => 'user', 'content' => $prompt]],
                 'max_tokens' => 2500
             ]);
