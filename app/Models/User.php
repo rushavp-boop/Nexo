@@ -76,4 +76,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(NexoPaisaTransaction::class);
     }
+
+    public function medicalRecords()
+    {
+        return $this->hasMany(MedicalRecord::class);
+    }
 }

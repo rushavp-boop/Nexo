@@ -3,13 +3,58 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\MedicalRecord;
 use App\Services\OpenAIService;
 
 class HealthController extends Controller
 {
     public function index()
     {
-        return view('user.health');
+        $medicalRecordsCount = MedicalRecord::where('user_id', Auth::id())->count();
+        return view('user.health', compact('medicalRecordsCount'));
+    }
+
+    public function medicalRecordsIndex()
+    {
+        $records = MedicalRecord::where('user_id', Auth::id())
+            ->latest()
+            ->paginate(10);
+
+        return view('user.medical-records-index', compact('records'));
+    }
+
+    public function medicalRecordsCreate()
+    {
+        return view('user.medical-records-create');
+    }
+
+    public function medicalRecordsStore(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'record_date' => 'nullable|date',
+            'notes' => 'nullable|string|max:2000',
+            'prescription' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ]);
+
+        $file = $request->file('prescription');
+        $storedPath = $file->store('medical-records', 'public');
+
+        MedicalRecord::create([
+            'user_id' => Auth::id(),
+            'title' => $validated['title'],
+            'record_date' => $validated['record_date'] ?? null,
+            'notes' => $validated['notes'] ?? null,
+            'prescription_file_path' => $storedPath,
+            'original_file_name' => $file->getClientOriginalName(),
+            'mime_type' => $file->getClientMimeType(),
+            'file_size' => $file->getSize(),
+        ]);
+
+        return redirect()
+            ->route('user.medical-records.index')
+            ->with('success', 'Medical record uploaded successfully.');
     }
 
     public function check(Request $request)

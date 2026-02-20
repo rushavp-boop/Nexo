@@ -72,6 +72,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/health/check', [HealthController::class, 'check'])->name('user.health.check');
         Route::get('/health/travel-tips', [HealthController::class, 'getTravelTips'])->name('user.health.travel-tips');
         Route::get('/health/doctors', [HealthController::class, 'getDoctors'])->name('user.health.doctors');
+        Route::get('/health/medical-records', [HealthController::class, 'medicalRecordsIndex'])->name('user.medical-records.index');
+        Route::get('/health/medical-records/create', [HealthController::class, 'medicalRecordsCreate'])->name('user.medical-records.create');
+        Route::post('/health/medical-records', [HealthController::class, 'medicalRecordsStore'])->name('user.medical-records.store');
 
         // Education Module
         Route::get('/education', [EducationController::class, 'index'])->name('user.education');

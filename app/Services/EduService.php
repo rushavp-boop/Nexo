@@ -127,7 +127,7 @@ Rules:
 
     public static function eduFollowUp(string $context, string $question): string
     {
-        $prompt = "Based on this lesson context: \"{$context}\", answer this student follow-up question: \"{$question}\". Keep the explanation simple, encouraging, and accurate to the NEB syllabus. Provide a helpful and educational response.";
+        $prompt = "Based on this lesson context: \"{$context}\", answer this student follow-up question: \"{$question}\". Keep the explanation simple, encouraging, and accurate to the NEB syllabus. Provide a response that would actually help students prepare for exams.";
 
         try {
             $client = self::getClient();

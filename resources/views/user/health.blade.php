@@ -10,6 +10,33 @@
         </h2>
     </div>
 
+    <!-- Medical Records Quick Access -->
+    <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 md:border-3 border-amber-300 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3.5rem] p-5 sm:p-6 md:p-8 shadow-md sm:shadow-lg animate-slideDown">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div>
+                <p class="text-[10px] md:text-xs font-bold italic text-amber-900 uppercase tracking-widest">Health Vault</p>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold italic text-stone-900 tracking-tighter mt-2">Medical Records</h3>
+                <p class="text-sm md:text-base text-stone-700 font-medium italic mt-2">Securely upload and manage your prescriptions.</p>
+                <p class="text-xs md:text-sm text-amber-700 font-bold italic mt-3 uppercase tracking-wider">
+                    Total Records: {{ $medicalRecordsCount ?? 0 }}
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <a href="{{ route('user.medical-records.index') }}"
+                   class="inline-flex items-center justify-center gap-2 px-5 py-3 border-2 border-stone-300 text-stone-900 font-bold italic rounded-xl hover:bg-stone-50 transition-all">
+                    <i class="fa-solid fa-eye"></i>
+                    View Records
+                </a>
+                <a href="{{ route('user.medical-records.create') }}"
+                   class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-stone-900 hover:bg-amber-700 text-white font-bold italic rounded-xl transition-all">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Record
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Travel Info Card (Only show if destination exists) -->
     <div x-show="destination" class="bg-stone-900 rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[3.5rem] p-4 sm:p-6 md:p-8 lg:p-12 text-stone-50 shadow-lg sm:shadow-xl md:shadow-2xl relative overflow-hidden group animate-slideDown">
         <div class="relative z-10">
