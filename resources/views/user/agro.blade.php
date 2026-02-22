@@ -234,6 +234,25 @@
             <p class="text-sm text-amber-800">Try searching: Tomato, Potato, Onion, Wheat, Rice, Ginger, etc.</p>
         </div>
 
+        <!-- Price Change Summary -->
+        <div x-show="!pricesLoading && priceChanges.length > 0" class="bg-gradient-to-br from-white to-amber-50 p-6 md:p-8 rounded-[2rem] border-2 border-amber-200 space-y-4">
+            <h4 class="text-sm md:text-base font-black uppercase tracking-widest text-stone-800">Price Change Summary</h4>
+            <div class="space-y-3">
+                <template x-for="(change, idx) in priceChanges" :key="`${change.englishName}-${idx}`">
+                    <p class="text-sm md:text-base font-semibold text-stone-700">
+                        Price of <span class="font-black text-stone-900" x-text="change.englishName"></span>
+                        has
+                        <span :class="change.direction === 'increased' ? 'text-rose-600' : 'text-emerald-600'" class="font-black" x-text="change.direction"></span>
+                        by <span class="font-black" x-text="`${Number(change.changePercent).toFixed(2)}%`"></span>
+                    </p>
+                </template>
+            </div>
+        </div>
+
+        <div x-show="!pricesLoading && priceChanges.length === 0 && filteredMarketPrices.length > 0" class="bg-amber-50 border-2 border-amber-200 rounded-[1.5rem] p-4 md:p-6 text-sm font-semibold text-amber-900">
+            No crop price increases or decreases compared to the previous recorded date.
+        </div>
+
         <!-- Last Updated -->
         <div class="text-center text-[9px] md:text-[10px] font-bold text-stone-400 uppercase tracking-widest">
             Last updated: <span x-text="pricesLastUpdated"></span>
@@ -444,6 +463,7 @@ function agroApp() {
         diseases: [],
         marketPrices: [],
         filteredMarketPrices: [],
+        priceChanges: [],
         marketSearch: '',
         pricesLoading: false,
         pricesLastUpdated: '',
@@ -513,6 +533,7 @@ function agroApp() {
                     const data = await res.json();
                     this.marketPrices = data.data || [];
                     this.filteredMarketPrices = this.marketPrices;
+                    this.priceChanges = data.priceChanges || [];
                     this.pricesLastUpdated = data.lastUpdated || new Date().toLocaleDateString();
                     console.log('Market prices loaded:', this.marketPrices.length);
                 } else {
@@ -630,6 +651,7 @@ function agroApp() {
                     const data = await res.json();
                     this.marketPrices = data.data || [];
                     this.filteredMarketPrices = this.marketPrices;
+                    this.priceChanges = data.priceChanges || [];
                     this.pricesLastUpdated = data.lastUpdated || new Date().toLocaleDateString();
                     console.log('Market prices loaded:', this.marketPrices.length);
                 } else {

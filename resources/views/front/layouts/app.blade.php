@@ -48,7 +48,7 @@
 
             <!-- Logo -->
             <a href="{{ url('/') }}" class="flex items-center gap-2 md:gap-3 group">
-                <img src="{{ asset('Nexo_logo.png') }}" alt="NEXA.GLOBAL Logo"
+                <img src="{{ asset('Nexo_logo.png') }}" alt="NEXO.GLOBAL Logo"
                     class="h-20 w-14 md:h-30 md:w-20 object-contain transition-transform duration-300 group-hover:scale-105">
                 <span class="font-serif italic font-bold tracking-tight text-base md:text-lg">
                     NEXO.GLOBAL
@@ -110,13 +110,13 @@
 
                 <p class="mt-4 md:mt-6 text-base md:text-lg opacity-80">
                     Whether you’re a student, educator, policymaker,
-                    developer, or organization — we’d love to hear from you.
+                    developer, or organization, we’d love to hear from you.
                 </p>
             </div>
 
             <div class="space-y-4 md:space-y-6 text-sm">
                 <p><i class="fa-solid fa-location-dot mr-3"></i> Kathmandu, Nepal</p>
-                <p><i class="fa-solid fa-envelope mr-3"></i> hello@nexa.global</p>
+                <p><i class="fa-solid fa-envelope mr-3"></i> hello@nexo.global</p>
                 <p><i class="fa-solid fa-phone mr-3"></i> +977 98XXXXXXXX</p>
                 <p class="opacity-60">
                     We respect privacy. No spam. No noise.
@@ -128,7 +128,7 @@
 
     <!-- ================= FOOTER ================= -->
     <footer class="bg-amber-950 text-white/60 py-6 md:py-10 text-center text-xs md:text-sm">
-        © {{ date('Y') }} NEXA.GLOBAL · Crafted with care in Nepal 🇳🇵
+        © {{ date('Y') }} NEXO.GLOBAL · Crafted with care in Nepal 🇳🇵
     </footer>
 
     <!-- Toastr JS -->

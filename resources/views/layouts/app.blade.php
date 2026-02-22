@@ -136,6 +136,8 @@
 
     {{-- Font Awesome CDN is already included above --}}
 
+    @stack('styles')
+
 </head>
 <body class="bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100" x-data="{ mobileMenuOpen: false }">
 
@@ -156,6 +158,8 @@
     <div :class="mobileMenuOpen ? 'blur-sm' : ''" class="transition-all duration-300">
         @include('partials.footer')
     </div>
+
+    @stack('scripts')
 
 </body>
 </html>

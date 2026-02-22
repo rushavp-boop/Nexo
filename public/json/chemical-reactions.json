@@ -1,0 +1,2002 @@
+[
+  {
+    "id": 1,
+    "type": "Combustion",
+    "equation": "2H₂ + O₂ → 2H₂O",
+    "name": "Combustion of Hydrogen",
+    "description": "Hydrogen burns in oxygen to form water",
+    "grade": "5-7"
+  },
+  {
+    "id": 2,
+    "type": "Combustion",
+    "equation": "CH₄ + 2O₂ → CO₂ + 2H₂O",
+    "name": "Combustion of Methane",
+    "description": "Natural gas (methane) burns in oxygen",
+    "grade": "7-9"
+  },
+  {
+    "id": 3,
+    "type": "Combustion",
+    "equation": "C₃H₈ + 5O₂ → 3CO₂ + 4H₂O",
+    "name": "Combustion of Propane",
+    "description": "Propane gas burns completely in oxygen",
+    "grade": "8-10"
+  },
+  {
+    "id": 4,
+    "type": "Synthesis",
+    "equation": "2Na + Cl₂ → 2NaCl",
+    "name": "Formation of Sodium Chloride",
+    "description": "Sodium metal reacts with chlorine gas to form table salt",
+    "grade": "6-8"
+  },
+  {
+    "id": 5,
+    "type": "Synthesis",
+    "equation": "2Mg + O₂ → 2MgO",
+    "name": "Burning of Magnesium",
+    "description": "Magnesium ribbon burns in air with bright white light",
+    "grade": "5-7"
+  },
+  {
+    "id": 6,
+    "type": "Synthesis",
+    "equation": "N₂ + 3H₂ → 2NH₃",
+    "name": "Haber Process",
+    "description": "Industrial production of ammonia",
+    "grade": "9-10"
+  },
+  {
+    "id": 7,
+    "type": "Decomposition",
+    "equation": "2H₂O → 2H₂ + O₂",
+    "name": "Electrolysis of Water",
+    "description": "Water breaks down into hydrogen and oxygen gases",
+    "grade": "6-8"
+  },
+  {
+    "id": 8,
+    "type": "Decomposition",
+    "equation": "2HgO → 2Hg + O₂",
+    "name": "Decomposition of Mercury Oxide",
+    "description": "Heating red mercury oxide produces liquid mercury",
+    "grade": "7-9"
+  },
+  {
+    "id": 9,
+    "type": "Decomposition",
+    "equation": "CaCO₃ → CaO + CO₂",
+    "name": "Thermal Decomposition of Limestone",
+    "description": "Heating limestone produces quicklime and carbon dioxide",
+    "grade": "8-10"
+  },
+  {
+    "id": 10,
+    "type": "Decomposition",
+    "equation": "2KClO₃ → 2KCl + 3O₂",
+    "name": "Decomposition of Potassium Chlorate",
+    "description": "Used to produce oxygen gas in laboratories",
+    "grade": "8-10"
+  },
+  {
+    "id": 11,
+    "type": "Single Displacement",
+    "equation": "Zn + 2HCl → ZnCl₂ + H₂",
+    "name": "Zinc and Hydrochloric Acid",
+    "description": "Zinc displaces hydrogen from acid producing hydrogen gas",
+    "grade": "7-9"
+  },
+  {
+    "id": 12,
+    "type": "Single Displacement",
+    "equation": "Mg + H₂SO₄ → MgSO₄ + H₂",
+    "name": "Magnesium and Sulfuric Acid",
+    "description": "Magnesium reacts with dilute sulfuric acid",
+    "grade": "7-9"
+  },
+  {
+    "id": 13,
+    "type": "Single Displacement",
+    "equation": "Fe + CuSO₄ → FeSO₄ + Cu",
+    "name": "Iron Displacing Copper",
+    "description": "Iron displaces copper from copper sulfate solution",
+    "grade": "8-10"
+  },
+  {
+    "id": 14,
+    "type": "Single Displacement",
+    "equation": "Zn + CuSO₄ → ZnSO₄ + Cu",
+    "name": "Zinc Displacing Copper",
+    "description": "More reactive zinc displaces less reactive copper",
+    "grade": "7-9"
+  },
+  {
+    "id": 15,
+    "type": "Double Displacement",
+    "equation": "NaCl + AgNO₃ → AgCl + NaNO₃",
+    "name": "Silver Chloride Precipitation",
+    "description": "White precipitate of silver chloride forms",
+    "grade": "8-10"
+  },
+  {
+    "id": 16,
+    "type": "Double Displacement",
+    "equation": "BaCl₂ + H₂SO₄ → BaSO₄ + 2HCl",
+    "name": "Barium Sulfate Precipitation",
+    "description": "White precipitate of barium sulfate forms",
+    "grade": "9-10"
+  },
+  {
+    "id": 17,
+    "type": "Neutralization",
+    "equation": "HCl + NaOH → NaCl + H₂O",
+    "name": "Acid-Base Neutralization",
+    "description": "Hydrochloric acid neutralizes sodium hydroxide",
+    "grade": "7-9"
+  },
+  {
+    "id": 18,
+    "type": "Neutralization",
+    "equation": "H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O",
+    "name": "Sulfuric Acid Neutralization",
+    "description": "Sulfuric acid reacts with sodium hydroxide",
+    "grade": "8-10"
+  },
+  {
+    "id": 19,
+    "type": "Neutralization",
+    "equation": "CH₃COOH + NaOH → CH₃COONa + H₂O",
+    "name": "Acetic Acid Neutralization",
+    "description": "Vinegar (acetic acid) reacts with caustic soda",
+    "grade": "7-9"
+  },
+  {
+    "id": 20,
+    "type": "Oxidation",
+    "equation": "4Fe + 3O₂ → 2Fe₂O₃",
+    "name": "Rusting of Iron",
+    "description": "Iron oxidizes to form rust (iron oxide)",
+    "grade": "6-8"
+  },
+  {
+    "id": 21,
+    "type": "Oxidation",
+    "equation": "2Cu + O₂ → 2CuO",
+    "name": "Oxidation of Copper",
+    "description": "Copper turns black when heated in air",
+    "grade": "7-9"
+  },
+  {
+    "id": 22,
+    "type": "Reduction",
+    "equation": "CuO + H₂ → Cu + H₂O",
+    "name": "Reduction of Copper Oxide",
+    "description": "Hydrogen reduces copper oxide to copper metal",
+    "grade": "8-10"
+  },
+  {
+    "id": 23,
+    "type": "Reduction",
+    "equation": "Fe₂O₃ + 3CO → 2Fe + 3CO₂",
+    "name": "Extraction of Iron",
+    "description": "Carbon monoxide reduces iron ore in blast furnace",
+    "grade": "9-10"
+  },
+  {
+    "id": 24,
+    "type": "Photosynthesis",
+    "equation": "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂",
+    "name": "Photosynthesis",
+    "description": "Plants convert carbon dioxide and water into glucose",
+    "grade": "5-8"
+  },
+  {
+    "id": 25,
+    "type": "Respiration",
+    "equation": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O",
+    "name": "Cellular Respiration",
+    "description": "Glucose is oxidized to release energy in living cells",
+    "grade": "6-9"
+  },
+  {
+    "id": 26,
+    "type": "Combustion",
+    "equation": "C + O₂ → CO₂",
+    "name": "Combustion of Carbon",
+    "description": "Carbon burns in excess oxygen to form carbon dioxide",
+    "grade": "5-7"
+  },
+  {
+    "id": 27,
+    "type": "Combustion",
+    "equation": "2C + O₂ → 2CO",
+    "name": "Incomplete Combustion of Carbon",
+    "description": "Carbon burns in limited oxygen to form carbon monoxide",
+    "grade": "7-9"
+  },
+  {
+    "id": 28,
+    "type": "Combustion",
+    "equation": "S + O₂ → SO₂",
+    "name": "Combustion of Sulfur",
+    "description": "Sulfur burns with blue flame to form sulfur dioxide",
+    "grade": "6-8"
+  },
+  {
+    "id": 29,
+    "type": "Synthesis",
+    "equation": "SO₂ + H₂O → H₂SO₃",
+    "name": "Formation of Sulfurous Acid",
+    "description": "Sulfur dioxide dissolves in water to form acid",
+    "grade": "8-10"
+  },
+  {
+    "id": 30,
+    "type": "Synthesis",
+    "equation": "SO₃ + H₂O → H₂SO₄",
+    "name": "Formation of Sulfuric Acid",
+    "description": "Sulfur trioxide dissolves in water",
+    "grade": "9-10"
+  },
+  {
+    "id": 31,
+    "type": "Synthesis",
+    "equation": "CO₂ + H₂O → H₂CO₃",
+    "name": "Formation of Carbonic Acid",
+    "description": "Carbon dioxide dissolves in water to form weak acid",
+    "grade": "7-9"
+  },
+  {
+    "id": 32,
+    "type": "Decomposition",
+    "equation": "H₂CO₃ → H₂O + CO₂",
+    "name": "Decomposition of Carbonic Acid",
+    "description": "Carbonic acid breaks down releasing carbon dioxide",
+    "grade": "7-9"
+  },
+  {
+    "id": 33,
+    "type": "Decomposition",
+    "equation": "2Pb(NO₃)₂ → 2PbO + 4NO₂ + O₂",
+    "name": "Decomposition of Lead Nitrate",
+    "description": "Heating lead nitrate produces brown fumes",
+    "grade": "9-10"
+  },
+  {
+    "id": 34,
+    "type": "Decomposition",
+    "equation": "2NaHCO₃ → Na₂CO₃ + H₂O + CO₂",
+    "name": "Decomposition of Baking Soda",
+    "description": "Heating baking soda produces carbon dioxide",
+    "grade": "7-9"
+  },
+  {
+    "id": 35,
+    "type": "Decomposition",
+    "equation": "NH₄Cl → NH₃ + HCl",
+    "name": "Decomposition of Ammonium Chloride",
+    "description": "Heating produces ammonia and hydrogen chloride gases",
+    "grade": "9-10"
+  },
+  {
+    "id": 36,
+    "type": "Single Displacement",
+    "equation": "2Al + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂",
+    "name": "Aluminum and Sulfuric Acid",
+    "description": "Aluminum dissolves in dilute sulfuric acid",
+    "grade": "8-10"
+  },
+  {
+    "id": 37,
+    "type": "Single Displacement",
+    "equation": "2Na + 2H₂O → 2NaOH + H₂",
+    "name": "Sodium Reacts with Water",
+    "description": "Sodium reacts vigorously with water",
+    "grade": "7-9"
+  },
+  {
+    "id": 38,
+    "type": "Single Displacement",
+    "equation": "Ca + 2H₂O → Ca(OH)₂ + H₂",
+    "name": "Calcium Reacts with Water",
+    "description": "Calcium reacts with cold water producing hydrogen",
+    "grade": "7-9"
+  },
+  {
+    "id": 39,
+    "type": "Single Displacement",
+    "equation": "Mg + 2HNO₃ → Mg(NO₃)₂ + H₂",
+    "name": "Magnesium and Nitric Acid",
+    "description": "Magnesium reacts with dilute nitric acid",
+    "grade": "8-10"
+  },
+  {
+    "id": 40,
+    "type": "Single Displacement",
+    "equation": "Cl₂ + 2KBr → 2KCl + Br₂",
+    "name": "Chlorine Displaces Bromine",
+    "description": "More reactive halogen displaces less reactive one",
+    "grade": "9-10"
+  },
+  {
+    "id": 41,
+    "type": "Double Displacement",
+    "equation": "Pb(NO₃)₂ + 2KI → PbI₂ + 2KNO₃",
+    "name": "Lead Iodide Precipitation",
+    "description": "Yellow precipitate of lead iodide forms",
+    "grade": "9-10"
+  },
+  {
+    "id": 42,
+    "type": "Double Displacement",
+    "equation": "Na₂CO₃ + CaCl₂ → CaCO₃ + 2NaCl",
+    "name": "Calcium Carbonate Precipitation",
+    "description": "White precipitate of calcium carbonate forms",
+    "grade": "8-10"
+  },
+  {
+    "id": 43,
+    "type": "Double Displacement",
+    "equation": "FeCl₃ + 3NaOH → Fe(OH)₃ + 3NaCl",
+    "name": "Iron Hydroxide Precipitation",
+    "description": "Brown precipitate of iron hydroxide forms",
+    "grade": "9-10"
+  },
+  {
+    "id": 44,
+    "type": "Double Displacement",
+    "equation": "CuSO₄ + 2NaOH → Cu(OH)₂ + Na₂SO₄",
+    "name": "Copper Hydroxide Precipitation",
+    "description": "Blue precipitate of copper hydroxide forms",
+    "grade": "8-10"
+  },
+  {
+    "id": 45,
+    "type": "Neutralization",
+    "equation": "HNO₃ + KOH → KNO₃ + H₂O",
+    "name": "Nitric Acid Neutralization",
+    "description": "Nitric acid neutralizes potassium hydroxide",
+    "grade": "8-10"
+  },
+  {
+    "id": 46,
+    "type": "Neutralization",
+    "equation": "2HCl + Ca(OH)₂ → CaCl₂ + 2H₂O",
+    "name": "Calcium Hydroxide Neutralization",
+    "description": "Hydrochloric acid reacts with slaked lime",
+    "grade": "7-9"
+  },
+  {
+    "id": 47,
+    "type": "Neutralization",
+    "equation": "H₃PO₄ + 3NaOH → Na₃PO₄ + 3H₂O",
+    "name": "Phosphoric Acid Neutralization",
+    "description": "Phosphoric acid neutralizes sodium hydroxide",
+    "grade": "9-10"
+  },
+  {
+    "id": 48,
+    "type": "Redox",
+    "equation": "Zn + Cu²⁺ → Zn²⁺ + Cu",
+    "name": "Zinc-Copper Redox",
+    "description": "Zinc is oxidized while copper ion is reduced",
+    "grade": "9-10"
+  },
+  {
+    "id": 49,
+    "type": "Redox",
+    "equation": "2Fe²⁺ + Cl₂ → 2Fe³⁺ + 2Cl⁻",
+    "name": "Iron(II) Oxidation",
+    "description": "Chlorine oxidizes iron(II) to iron(III)",
+    "grade": "9-10"
+  },
+  {
+    "id": 50,
+    "type": "Redox",
+    "equation": "MnO₂ + 4HCl → MnCl₂ + Cl₂ + 2H₂O",
+    "name": "Manganese Dioxide Redox",
+    "description": "Laboratory preparation of chlorine gas",
+    "grade": "9-10"
+  },
+  {
+    "id": 51,
+    "type": "Synthesis",
+    "equation": "CaO + H₂O → Ca(OH)₂",
+    "name": "Slaking of Lime",
+    "description": "Quicklime reacts with water producing slaked lime",
+    "grade": "6-8"
+  },
+  {
+    "id": 52,
+    "type": "Synthesis",
+    "equation": "P₄ + 5O₂ → P₄O₁₀",
+    "name": "Combustion of Phosphorus",
+    "description": "White phosphorus burns in oxygen",
+    "grade": "8-10"
+  },
+  {
+    "id": 53,
+    "type": "Synthesis",
+    "equation": "2Na + 2H₂O → 2NaOH + H₂",
+    "name": "Formation of Sodium Hydroxide",
+    "description": "Sodium metal reacts violently with water",
+    "grade": "7-9"
+  },
+  {
+    "id": 54,
+    "type": "Combustion",
+    "equation": "2C₂H₆ + 7O₂ → 4CO₂ + 6H₂O",
+    "name": "Combustion of Ethane",
+    "description": "Ethane burns completely in oxygen",
+    "grade": "9-10"
+  },
+  {
+    "id": 55,
+    "type": "Combustion",
+    "equation": "C₂H₅OH + 3O₂ → 2CO₂ + 3H₂O",
+    "name": "Combustion of Ethanol",
+    "description": "Alcohol burns with blue flame",
+    "grade": "8-10"
+  },
+  {
+    "id": 56,
+    "type": "Fermentation",
+    "equation": "C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂",
+    "name": "Alcoholic Fermentation",
+    "description": "Yeast converts sugar to alcohol and carbon dioxide",
+    "grade": "8-10"
+  },
+  {
+    "id": 57,
+    "type": "Decomposition",
+    "equation": "2H₂O₂ → 2H₂O + O₂",
+    "name": "Decomposition of Hydrogen Peroxide",
+    "description": "Hydrogen peroxide breaks down releasing oxygen",
+    "grade": "7-9"
+  },
+  {
+    "id": 58,
+    "type": "Decomposition",
+    "equation": "2AgCl → 2Ag + Cl₂",
+    "name": "Photochemical Decomposition",
+    "description": "Silver chloride decomposes in sunlight",
+    "grade": "9-10"
+  },
+  {
+    "id": 59,
+    "type": "Decomposition",
+    "equation": "2FeSO₄ → Fe₂O₃ + SO₂ + SO₃",
+    "name": "Decomposition of Iron Sulfate",
+    "description": "Green vitriol decomposes on heating",
+    "grade": "9-10"
+  },
+  {
+    "id": 60,
+    "type": "Precipitation",
+    "equation": "Ca(OH)₂ + CO₂ → CaCO₃ + H₂O",
+    "name": "Limewater Test",
+    "description": "Carbon dioxide turns limewater milky",
+    "grade": "6-8"
+  },
+  {
+    "id": 61,
+    "type": "Synthesis",
+    "equation": "NH₃ + HCl → NH₄Cl",
+    "name": "Formation of Ammonium Chloride",
+    "description": "Ammonia and hydrogen chloride form white smoke",
+    "grade": "8-10"
+  },
+  {
+    "id": 62,
+    "type": "Synthesis",
+    "equation": "NH₃ + H₂O → NH₄OH",
+    "name": "Formation of Ammonium Hydroxide",
+    "description": "Ammonia dissolves in water forming alkaline solution",
+    "grade": "7-9"
+  },
+  {
+    "id": 63,
+    "type": "Single Displacement",
+    "equation": "2Al + Fe₂O₃ → Al₂O₃ + 2Fe",
+    "name": "Thermit Reaction",
+    "description": "Aluminum reduces iron oxide producing intense heat",
+    "grade": "9-10"
+  },
+  {
+    "id": 64,
+    "type": "Single Displacement",
+    "equation": "Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag",
+    "name": "Copper Displaces Silver",
+    "description": "Copper wire placed in silver nitrate solution",
+    "grade": "8-10"
+  },
+  {
+    "id": 65,
+    "type": "Neutralization",
+    "equation": "Mg(OH)₂ + 2HCl → MgCl₂ + 2H₂O",
+    "name": "Milk of Magnesia Reaction",
+    "description": "Antacid neutralizes stomach acid",
+    "grade": "7-9"
+  },
+  {
+    "id": 66,
+    "type": "Neutralization",
+    "equation": "Al(OH)₃ + 3HCl → AlCl₃ + 3H₂O",
+    "name": "Aluminum Hydroxide Neutralization",
+    "description": "Another antacid reaction",
+    "grade": "8-10"
+  },
+  {
+    "id": 67,
+    "type": "Esterification",
+    "equation": "CH₃COOH + C₂H₅OH → CH₃COOC₂H₅ + H₂O",
+    "name": "Formation of Ethyl Acetate",
+    "description": "Acetic acid reacts with ethanol to form ester",
+    "grade": "9-10"
+  },
+  {
+    "id": 68,
+    "type": "Saponification",
+    "equation": "C₁₇H₃₅COONa + H₂O → Soap",
+    "name": "Soap Formation",
+    "description": "Fat reacts with sodium hydroxide to make soap",
+    "grade": "9-10"
+  },
+  {
+    "id": 69,
+    "type": "Oxidation",
+    "equation": "2KI + Cl₂ → 2KCl + I₂",
+    "name": "Oxidation of Iodide",
+    "description": "Chlorine oxidizes potassium iodide",
+    "grade": "9-10"
+  },
+  {
+    "id": 70,
+    "type": "Synthesis",
+    "equation": "2H₂ + O₂ → 2H₂O",
+    "name": "Water Formation",
+    "description": "Hydrogen and oxygen combine to form water",
+    "grade": "5-7"
+  },
+  {
+    "id": 71,
+    "type": "Double Displacement",
+    "equation": "NaOH + NH₄Cl → NaCl + NH₃ + H₂O",
+    "name": "Ammonia Liberation",
+    "description": "Heating ammonium salts with alkali releases ammonia",
+    "grade": "8-10"
+  },
+  {
+    "id": 72,
+    "type": "Synthesis",
+    "equation": "3Fe + 2O₂ → Fe₃O₄",
+    "name": "Formation of Magnetic Iron Oxide",
+    "description": "Iron reacts with limited oxygen",
+    "grade": "8-10"
+  },
+  {
+    "id": 73,
+    "type": "Combustion",
+    "equation": "4P + 5O₂ → 2P₂O₅",
+    "name": "Combustion of Red Phosphorus",
+    "description": "Phosphorus burns in excess oxygen",
+    "grade": "8-10"
+  },
+  {
+    "id": 74,
+    "type": "Precipitation",
+    "equation": "2NaOH + CuSO₄ → Cu(OH)₂ + Na₂SO₄",
+    "name": "Copper Hydroxide Formation",
+    "description": "Blue gelatinous precipitate forms",
+    "grade": "8-10"
+  },
+  {
+    "id": 75,
+    "type": "Synthesis",
+    "equation": "Zn + S → ZnS",
+    "name": "Formation of Zinc Sulfide",
+    "description": "Direct combination of zinc and sulfur",
+    "grade": "7-9"
+  },
+  {
+    "id": 76,
+    "type": "Reduction",
+    "equation": "ZnO + C → Zn + CO",
+    "name": "Reduction of Zinc Oxide",
+    "description": "Carbon reduces zinc oxide to zinc metal",
+    "grade": "9-10"
+  },
+  {
+    "id": 77,
+    "type": "Combustion",
+    "equation": "CS₂ + 3O₂ → CO₂ + 2SO₂",
+    "name": "Combustion of Carbon Disulfide",
+    "description": "Carbon disulfide burns with blue flame",
+    "grade": "9-10"
+  },
+  {
+    "id": 78,
+    "type": "Double Displacement",
+    "equation": "K₂CO₃ + 2HCl → 2KCl + H₂O + CO₂",
+    "name": "Carbonate and Acid Reaction",
+    "description": "Carbonate reacts with acid producing effervescence",
+    "grade": "7-9"
+  },
+  {
+    "id": 79,
+    "type": "Double Displacement",
+    "equation": "Na₂SO₃ + 2HCl → 2NaCl + H₂O + SO₂",
+    "name": "Sulfite and Acid Reaction",
+    "description": "Produces pungent sulfur dioxide gas",
+    "grade": "8-10"
+  },
+  {
+    "id": 80,
+    "type": "Decomposition",
+    "equation": "(NH₄)₂Cr₂O₇ → N₂ + Cr₂O₃ + 4H₂O",
+    "name": "Ammonium Dichromate Volcano",
+    "description": "Spectacular decomposition reaction",
+    "grade": "9-10"
+  },
+  {
+    "id": 81,
+    "type": "Synthesis",
+    "equation": "2NO + O₂ → 2NO₂",
+    "name": "Formation of Nitrogen Dioxide",
+    "description": "Colorless NO turns brown in air",
+    "grade": "9-10"
+  },
+  {
+    "id": 82,
+    "type": "Displacement",
+    "equation": "Pb + 2HCl → PbCl₂ + H₂",
+    "name": "Lead and Hydrochloric Acid",
+    "description": "Lead dissolves slowly in concentrated HCl",
+    "grade": "9-10"
+  },
+  {
+    "id": 83,
+    "type": "Redox",
+    "equation": "2KMnO₄ + 16HCl → 2KCl + 2MnCl₂ + 5Cl₂ + 8H₂O",
+    "name": "Laboratory Preparation of Chlorine",
+    "description": "Potassium permanganate oxidizes hydrochloric acid",
+    "grade": "9-10"
+  },
+  {
+    "id": 84,
+    "type": "Synthesis",
+    "equation": "4Al + 3O₂ → 2Al₂O₃",
+    "name": "Oxidation of Aluminum",
+    "description": "Aluminum forms protective oxide layer",
+    "grade": "7-9"
+  },
+  {
+    "id": 85,
+    "type": "Combustion",
+    "equation": "2C₄H₁₀ + 13O₂ → 8CO₂ + 10H₂O",
+    "name": "Combustion of Butane",
+    "description": "Lighter fuel burns completely",
+    "grade": "9-10"
+  },
+  {
+    "id": 86,
+    "type": "Synthesis",
+    "equation": "SO₂ + ½O₂ → SO₃",
+    "name": "Contact Process Step",
+    "description": "Key step in sulfuric acid manufacturing",
+    "grade": "9-10"
+  },
+  {
+    "id": 87,
+    "type": "Neutralization",
+    "equation": "NaHCO₃ + HCl → NaCl + H₂O + CO₂",
+    "name": "Baking Soda and Acid",
+    "description": "Produces effervescence - used in baking",
+    "grade": "6-8"
+  },
+  {
+    "id": 88,
+    "type": "Precipitation",
+    "equation": "AgNO₃ + HCl → AgCl + HNO₃",
+    "name": "Test for Chloride Ions",
+    "description": "White curdy precipitate confirms chloride",
+    "grade": "8-10"
+  },
+  {
+    "id": 89,
+    "type": "Combustion",
+    "equation": "2C₈H₁₈ + 25O₂ → 16CO₂ + 18H₂O",
+    "name": "Combustion of Octane",
+    "description": "Gasoline component burns in car engines",
+    "grade": "9-10"
+  },
+  {
+    "id": 90,
+    "type": "Decomposition",
+    "equation": "Cu(NO₃)₂ → CuO + 2NO₂ + ½O₂",
+    "name": "Decomposition of Copper Nitrate",
+    "description": "Produces toxic brown nitrogen dioxide gas",
+    "grade": "9-10"
+  },
+  {
+    "id": 91,
+    "type": "Synthesis",
+    "equation": "2K + Cl₂ → 2KCl",
+    "name": "Formation of Potassium Chloride",
+    "description": "Potassium burns in chlorine gas",
+    "grade": "7-9"
+  },
+  {
+    "id": 92,
+    "type": "Redox",
+    "equation": "Zn + 2AgCl → ZnCl₂ + 2Ag",
+    "name": "Reduction of Silver Chloride",
+    "description": "Zinc reduces silver chloride to silver metal",
+    "grade": "9-10"
+  },
+  {
+    "id": 93,
+    "type": "Synthesis",
+    "equation": "BaO + H₂O → Ba(OH)₂",
+    "name": "Formation of Barium Hydroxide",
+    "description": "Barium oxide reacts with water",
+    "grade": "8-10"
+  },
+  {
+    "id": 94,
+    "type": "Displacement",
+    "equation": "Mg + 2HNO₃ → Mg(NO₃)₂ + H₂",
+    "name": "Magnesium and Dilute Nitric Acid",
+    "description": "Produces hydrogen gas bubbles",
+    "grade": "8-10"
+  },
+  {
+    "id": 95,
+    "type": "Combustion",
+    "equation": "2Mg + CO₂ → 2MgO + C",
+    "name": "Magnesium Burns in CO₂",
+    "description": "Demonstrates oxidation-reduction",
+    "grade": "8-10"
+  },
+  {
+    "id": 96,
+    "type": "Synthesis",
+    "equation": "Cl₂ + H₂ → 2HCl",
+    "name": "Formation of Hydrogen Chloride",
+    "description": "Explosive reaction in bright light",
+    "grade": "8-10"
+  },
+  {
+    "id": 97,
+    "type": "Precipitation",
+    "equation": "FeCl₃ + 3KSCN → Fe(SCN)₃ + 3KCl",
+    "name": "Blood Red Complex Formation",
+    "description": "Test for iron(III) ions - deep red color",
+    "grade": "9-10"
+  },
+  {
+    "id": 98,
+    "type": "Neutralization",
+    "equation": "CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂",
+    "name": "Marble and Acid Reaction",
+    "description": "Marble chips react with acid producing CO₂",
+    "grade": "7-9"
+  },
+  {
+    "id": 99,
+    "type": "Oxidation",
+    "equation": "2H₂S + 3O₂ → 2H₂O + 2SO₂",
+    "name": "Combustion of Hydrogen Sulfide",
+    "description": "Toxic gas burns with blue flame",
+    "grade": "9-10"
+  },
+  {
+    "id": 100,
+    "type": "Synthesis",
+    "equation": "N₂ + O₂ → 2NO",
+    "name": "Formation of Nitric Oxide",
+    "description": "High temperature reaction in lightning",
+    "grade": "9-10"
+  },
+  {
+    "id": 101,
+    "type": "Decomposition",
+    "equation": "Mg(HCO₃)₂ → MgCO₃ + H₂O + CO₂",
+    "name": "Temporary Hardness Removal",
+    "description": "Boiling water removes temporary hardness",
+    "grade": "8-10"
+  },
+  {
+    "id": 102,
+    "type": "Redox",
+    "equation": "Cu + 4HNO₃ → Cu(NO₃)₂ + 2NO₂ + 2H₂O",
+    "name": "Copper and Concentrated Nitric Acid",
+    "description": "Copper dissolves producing brown fumes",
+    "grade": "10"
+  },
+  {
+    "id": 103,
+    "type": "Synthesis",
+    "equation": "PCl₃ + 3H₂O → H₃PO₃ + 3HCl",
+    "name": "Hydrolysis of Phosphorus Trichloride",
+    "description": "Violent reaction with water",
+    "grade": "10"
+  },
+  {
+    "id": 104,
+    "type": "Combustion",
+    "equation": "2C₆H₆ + 15O₂ → 12CO₂ + 6H₂O",
+    "name": "Combustion of Benzene",
+    "description": "Aromatic compound burns with sooty flame",
+    "grade": "10"
+  },
+  {
+    "id": 105,
+    "type": "Synthesis",
+    "equation": "CaCl₂ + Na₂CO₃ → CaCO₃ + 2NaCl",
+    "name": "Precipitation of Calcium Carbonate",
+    "description": "Used to soften hard water",
+    "grade": "8-10"
+  },
+  {
+    "id": 106,
+    "type": "Preparation",
+    "equation": "2NH4Cl + Ca(OH)2 -> CaCl2 + 2NH3 + 2H2O",
+    "name": "Ammonia Preparation (Lab Method)",
+    "description": "Ammonia is prepared by heating ammonium chloride with slaked lime.",
+    "grade": "9-10"
+  },
+  {
+    "id": 107,
+    "type": "Preparation",
+    "equation": "NH4Cl + NaOH -> NH3 + NaCl + H2O",
+    "name": "Ammonia Preparation from Ammonium Salt",
+    "description": "Ammonium salt reacts with sodium hydroxide to liberate ammonia gas.",
+    "grade": "9-10"
+  },
+  {
+    "id": 108,
+    "type": "Preparation",
+    "equation": "N2 + 3H2 <-> 2NH3",
+    "name": "Ammonia Preparation (Haber Process)",
+    "description": "Industrial synthesis of ammonia from nitrogen and hydrogen.",
+    "grade": "9-10"
+  },
+  {
+    "id": 109,
+    "type": "Preparation",
+    "equation": "NH4NO2 -> N2 + 2H2O",
+    "name": "Nitrogen Preparation from Ammonium Nitrite",
+    "description": "Nitrogen gas is obtained by decomposition of ammonium nitrite.",
+    "grade": "9-10"
+  },
+  {
+    "id": 110,
+    "type": "Preparation",
+    "equation": "NH4Cl + NaNO2 -> N2 + NaCl + 2H2O",
+    "name": "Nitrogen Preparation (In situ Ammonium Nitrite)",
+    "description": "Nitrogen is generated by warming ammonium chloride and sodium nitrite.",
+    "grade": "9-10"
+  },
+  {
+    "id": 111,
+    "type": "Preparation",
+    "equation": "4NH3 + 3O2 -> 2N2 + 6H2O",
+    "name": "Nitrogen Preparation from Ammonia Oxidation",
+    "description": "Controlled oxidation of ammonia can produce nitrogen.",
+    "grade": "9-10"
+  },
+  {
+    "id": 112,
+    "type": "Preparation",
+    "equation": "Zn + 2HCl -> ZnCl2 + H2",
+    "name": "Hydrogen Preparation (Zn + HCl)",
+    "description": "Hydrogen gas is prepared by reacting zinc with dilute hydrochloric acid.",
+    "grade": "7-9"
+  },
+  {
+    "id": 113,
+    "type": "Preparation",
+    "equation": "Zn + H2SO4 -> ZnSO4 + H2",
+    "name": "Hydrogen Preparation (Zn + H2SO4)",
+    "description": "Hydrogen is evolved from zinc and dilute sulfuric acid.",
+    "grade": "7-9"
+  },
+  {
+    "id": 114,
+    "type": "Preparation",
+    "equation": "2Na + 2H2O -> 2NaOH + H2",
+    "name": "Hydrogen Preparation from Sodium and Water",
+    "description": "Highly reactive metals displace hydrogen from water.",
+    "grade": "8-10"
+  },
+  {
+    "id": 115,
+    "type": "Preparation",
+    "equation": "2KClO3 -> 2KCl + 3O2",
+    "name": "Oxygen Preparation (KClO3 Decomposition)",
+    "description": "Oxygen is prepared by heating potassium chlorate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 116,
+    "type": "Preparation",
+    "equation": "2H2O2 -> 2H2O + O2",
+    "name": "Oxygen Preparation (Hydrogen Peroxide)",
+    "description": "Catalytic decomposition of hydrogen peroxide gives oxygen.",
+    "grade": "7-9"
+  },
+  {
+    "id": 117,
+    "type": "Preparation",
+    "equation": "2KMnO4 -> K2MnO4 + MnO2 + O2",
+    "name": "Oxygen Preparation (Potassium Permanganate)",
+    "description": "Heating KMnO4 liberates oxygen gas.",
+    "grade": "9-10"
+  },
+  {
+    "id": 118,
+    "type": "Preparation",
+    "equation": "CaCO3 + 2HCl -> CaCl2 + CO2 + H2O",
+    "name": "Carbon Dioxide Preparation (Marble Chips)",
+    "description": "Carbon dioxide is prepared by reacting marble chips with acid.",
+    "grade": "7-9"
+  },
+  {
+    "id": 119,
+    "type": "Preparation",
+    "equation": "NaCl + H2SO4 -> NaHSO4 + HCl",
+    "name": "Hydrogen Chloride Preparation",
+    "description": "Hydrogen chloride gas is prepared using sodium chloride and sulfuric acid.",
+    "grade": "9-10"
+  },
+  {
+    "id": 120,
+    "type": "Preparation",
+    "equation": "MnO2 + 4HCl -> MnCl2 + Cl2 + 2H2O",
+    "name": "Chlorine Preparation (MnO2 Method)",
+    "description": "Chlorine is prepared by oxidation of concentrated HCl.",
+    "grade": "9-10"
+  },
+  {
+    "id": 121,
+    "type": "Preparation",
+    "equation": "CaC2 + 2H2O -> C2H2 + Ca(OH)2",
+    "name": "Acetylene Preparation",
+    "description": "Acetylene gas is produced by reacting calcium carbide with water.",
+    "grade": "9-10"
+  },
+  {
+    "id": 122,
+    "type": "Preparation",
+    "equation": "FeS + 2HCl -> FeCl2 + H2S",
+    "name": "Hydrogen Sulfide Preparation",
+    "description": "Hydrogen sulfide is prepared from ferrous sulfide and acid.",
+    "grade": "9-10"
+  },
+  {
+    "id": 123,
+    "type": "Preparation",
+    "equation": "Na2SO3 + H2SO4 -> Na2SO4 + SO2 + H2O",
+    "name": "Sulfur Dioxide Preparation",
+    "description": "SO2 gas is prepared by acidification of sodium sulfite.",
+    "grade": "9-10"
+  },
+  {
+    "id": 124,
+    "type": "Preparation",
+    "equation": "NH4NO3 -> N2O + 2H2O",
+    "name": "Nitrous Oxide Preparation",
+    "description": "Gentle heating of ammonium nitrate gives nitrous oxide.",
+    "grade": "9-10"
+  },
+  {
+    "id": 125,
+    "type": "Preparation",
+    "equation": "Cu + 4HNO3 -> Cu(NO3)2 + 2NO2 + 2H2O",
+    "name": "Nitrogen Dioxide Preparation",
+    "description": "Copper with concentrated nitric acid produces NO2.",
+    "grade": "9-10"
+  },
+  {
+    "id": 126,
+    "type": "Preparation",
+    "equation": "3Cu + 8HNO3 -> 3Cu(NO3)2 + 2NO + 4H2O",
+    "name": "Nitric Oxide Preparation",
+    "description": "Copper with dilute nitric acid gives nitric oxide.",
+    "grade": "9-10"
+  },
+  {
+    "id": 127,
+    "type": "Preparation",
+    "equation": "2NH3 + H2SO4 -> (NH4)2SO4",
+    "name": "Ammonium Sulfate Preparation",
+    "description": "Neutralization method to prepare ammonium sulfate.",
+    "grade": "9-10"
+  },
+  {
+    "id": 128,
+    "type": "Preparation",
+    "equation": "NH3 + HNO3 -> NH4NO3",
+    "name": "Ammonium Nitrate Preparation",
+    "description": "Ammonia reacts with nitric acid to form ammonium nitrate.",
+    "grade": "9-10"
+  },
+  {
+    "id": 129,
+    "type": "Preparation",
+    "equation": "CaO + H2O -> Ca(OH)2",
+    "name": "Slaked Lime Preparation",
+    "description": "Calcium hydroxide is prepared by adding water to quicklime.",
+    "grade": "7-9"
+  },
+  {
+    "id": 130,
+    "type": "Preparation",
+    "equation": "Ca(OH)2 + CO2 -> CaCO3 + H2O",
+    "name": "Calcium Carbonate Preparation",
+    "description": "Passing CO2 through limewater precipitates calcium carbonate.",
+    "grade": "7-9"
+  },
+  {
+    "id": 131,
+    "type": "Single Displacement",
+    "equation": "Mg + 2HCl -> MgCl2 + H2",
+    "name": "Mg with Hydrochloric Acid",
+    "description": "Mg displaces hydrogen from hydrochloric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 132,
+    "type": "Single Displacement",
+    "equation": "Al + 6HCl -> 2AlCl3 + 3H2",
+    "name": "Al with Hydrochloric Acid",
+    "description": "Al displaces hydrogen from hydrochloric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 133,
+    "type": "Single Displacement",
+    "equation": "Fe + 2HCl -> FeCl2 + H2",
+    "name": "Fe with Hydrochloric Acid",
+    "description": "Fe displaces hydrogen from hydrochloric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 134,
+    "type": "Single Displacement",
+    "equation": "Zn + 2HCl -> ZnCl2 + H2",
+    "name": "Zn with Hydrochloric Acid",
+    "description": "Zn displaces hydrogen from hydrochloric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 135,
+    "type": "Single Displacement",
+    "equation": "Ni + 2HCl -> NiCl2 + H2",
+    "name": "Ni with Hydrochloric Acid",
+    "description": "Ni displaces hydrogen from hydrochloric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 136,
+    "type": "Single Displacement",
+    "equation": "Sn + 2HCl -> SnCl2 + H2",
+    "name": "Sn with Hydrochloric Acid",
+    "description": "Sn displaces hydrogen from hydrochloric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 137,
+    "type": "Single Displacement",
+    "equation": "Pb + 2HCl -> PbCl2 + H2",
+    "name": "Pb with Hydrochloric Acid",
+    "description": "Pb displaces hydrogen from hydrochloric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 138,
+    "type": "Single Displacement",
+    "equation": "Ca + 2HCl -> CaCl2 + H2",
+    "name": "Ca with Hydrochloric Acid",
+    "description": "Ca displaces hydrogen from hydrochloric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 139,
+    "type": "Single Displacement",
+    "equation": "Na + 2HCl -> 2NaCl + H2",
+    "name": "Na with Hydrochloric Acid",
+    "description": "Na displaces hydrogen from hydrochloric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 140,
+    "type": "Single Displacement",
+    "equation": "K + 2HCl -> 2KCl + H2",
+    "name": "K with Hydrochloric Acid",
+    "description": "K displaces hydrogen from hydrochloric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 141,
+    "type": "Single Displacement",
+    "equation": "Mg + H2SO4 -> MgSO4 + H2",
+    "name": "Mg with Sulfuric Acid",
+    "description": "Mg displaces hydrogen from dilute sulfuric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 142,
+    "type": "Single Displacement",
+    "equation": "Fe + H2SO4 -> FeSO4 + H2",
+    "name": "Fe with Sulfuric Acid",
+    "description": "Fe displaces hydrogen from dilute sulfuric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 143,
+    "type": "Single Displacement",
+    "equation": "Zn + H2SO4 -> ZnSO4 + H2",
+    "name": "Zn with Sulfuric Acid",
+    "description": "Zn displaces hydrogen from dilute sulfuric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 144,
+    "type": "Single Displacement",
+    "equation": "Al + 3H2SO4 -> Al2(SO4)3 + 3H2",
+    "name": "Al with Sulfuric Acid",
+    "description": "Al displaces hydrogen from dilute sulfuric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 145,
+    "type": "Single Displacement",
+    "equation": "Ni + H2SO4 -> NiSO4 + H2",
+    "name": "Ni with Sulfuric Acid",
+    "description": "Ni displaces hydrogen from dilute sulfuric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 146,
+    "type": "Single Displacement",
+    "equation": "Sn + H2SO4 -> SnSO4 + H2",
+    "name": "Sn with Sulfuric Acid",
+    "description": "Sn displaces hydrogen from dilute sulfuric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 147,
+    "type": "Single Displacement",
+    "equation": "Pb + H2SO4 -> PbSO4 + H2",
+    "name": "Pb with Sulfuric Acid",
+    "description": "Pb displaces hydrogen from dilute sulfuric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 148,
+    "type": "Single Displacement",
+    "equation": "Ca + H2SO4 -> CaSO4 + H2",
+    "name": "Ca with Sulfuric Acid",
+    "description": "Ca displaces hydrogen from dilute sulfuric acid.",
+    "grade": "8-10"
+  },
+  {
+    "id": 149,
+    "type": "Gas Evolution",
+    "equation": "Na2CO3 + 2HCl -> chloride + CO2 + H2O",
+    "name": "Na2CO3 with Hydrochloric Acid",
+    "description": "Carbonate reacts with acid producing carbon dioxide.",
+    "grade": "7-9"
+  },
+  {
+    "id": 150,
+    "type": "Gas Evolution",
+    "equation": "Na2CO3 + H2SO4 -> sulfate + CO2 + H2O",
+    "name": "Na2CO3 with Sulfuric Acid",
+    "description": "Carbonate reacts with sulfuric acid releasing carbon dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 151,
+    "type": "Gas Evolution",
+    "equation": "K2CO3 + 2HCl -> chloride + CO2 + H2O",
+    "name": "K2CO3 with Hydrochloric Acid",
+    "description": "Carbonate reacts with acid producing carbon dioxide.",
+    "grade": "7-9"
+  },
+  {
+    "id": 152,
+    "type": "Gas Evolution",
+    "equation": "K2CO3 + H2SO4 -> sulfate + CO2 + H2O",
+    "name": "K2CO3 with Sulfuric Acid",
+    "description": "Carbonate reacts with sulfuric acid releasing carbon dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 153,
+    "type": "Gas Evolution",
+    "equation": "CaCO3 + 2HCl -> chloride + CO2 + H2O",
+    "name": "CaCO3 with Hydrochloric Acid",
+    "description": "Carbonate reacts with acid producing carbon dioxide.",
+    "grade": "7-9"
+  },
+  {
+    "id": 154,
+    "type": "Gas Evolution",
+    "equation": "CaCO3 + H2SO4 -> sulfate + CO2 + H2O",
+    "name": "CaCO3 with Sulfuric Acid",
+    "description": "Carbonate reacts with sulfuric acid releasing carbon dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 155,
+    "type": "Gas Evolution",
+    "equation": "MgCO3 + 2HCl -> chloride + CO2 + H2O",
+    "name": "MgCO3 with Hydrochloric Acid",
+    "description": "Carbonate reacts with acid producing carbon dioxide.",
+    "grade": "7-9"
+  },
+  {
+    "id": 156,
+    "type": "Gas Evolution",
+    "equation": "MgCO3 + H2SO4 -> sulfate + CO2 + H2O",
+    "name": "MgCO3 with Sulfuric Acid",
+    "description": "Carbonate reacts with sulfuric acid releasing carbon dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 157,
+    "type": "Gas Evolution",
+    "equation": "ZnCO3 + 2HCl -> chloride + CO2 + H2O",
+    "name": "ZnCO3 with Hydrochloric Acid",
+    "description": "Carbonate reacts with acid producing carbon dioxide.",
+    "grade": "7-9"
+  },
+  {
+    "id": 158,
+    "type": "Gas Evolution",
+    "equation": "ZnCO3 + H2SO4 -> sulfate + CO2 + H2O",
+    "name": "ZnCO3 with Sulfuric Acid",
+    "description": "Carbonate reacts with sulfuric acid releasing carbon dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 159,
+    "type": "Gas Evolution",
+    "equation": "FeCO3 + 2HCl -> chloride + CO2 + H2O",
+    "name": "FeCO3 with Hydrochloric Acid",
+    "description": "Carbonate reacts with acid producing carbon dioxide.",
+    "grade": "7-9"
+  },
+  {
+    "id": 160,
+    "type": "Gas Evolution",
+    "equation": "FeCO3 + H2SO4 -> sulfate + CO2 + H2O",
+    "name": "FeCO3 with Sulfuric Acid",
+    "description": "Carbonate reacts with sulfuric acid releasing carbon dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 161,
+    "type": "Gas Evolution",
+    "equation": "CuCO3 + 2HCl -> chloride + CO2 + H2O",
+    "name": "CuCO3 with Hydrochloric Acid",
+    "description": "Carbonate reacts with acid producing carbon dioxide.",
+    "grade": "7-9"
+  },
+  {
+    "id": 162,
+    "type": "Gas Evolution",
+    "equation": "CuCO3 + H2SO4 -> sulfate + CO2 + H2O",
+    "name": "CuCO3 with Sulfuric Acid",
+    "description": "Carbonate reacts with sulfuric acid releasing carbon dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 163,
+    "type": "Gas Evolution",
+    "equation": "PbCO3 + 2HCl -> chloride + CO2 + H2O",
+    "name": "PbCO3 with Hydrochloric Acid",
+    "description": "Carbonate reacts with acid producing carbon dioxide.",
+    "grade": "7-9"
+  },
+  {
+    "id": 164,
+    "type": "Gas Evolution",
+    "equation": "PbCO3 + H2SO4 -> sulfate + CO2 + H2O",
+    "name": "PbCO3 with Sulfuric Acid",
+    "description": "Carbonate reacts with sulfuric acid releasing carbon dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 165,
+    "type": "Gas Evolution",
+    "equation": "Na2SO3 + 2HCl -> chloride + SO2 + H2O",
+    "name": "Na2SO3 with Hydrochloric Acid",
+    "description": "Sulfite and acid reaction releases sulfur dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 166,
+    "type": "Gas Evolution",
+    "equation": "K2SO3 + 2HCl -> chloride + SO2 + H2O",
+    "name": "K2SO3 with Hydrochloric Acid",
+    "description": "Sulfite and acid reaction releases sulfur dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 167,
+    "type": "Gas Evolution",
+    "equation": "CaSO3 + 2HCl -> chloride + SO2 + H2O",
+    "name": "CaSO3 with Hydrochloric Acid",
+    "description": "Sulfite and acid reaction releases sulfur dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 168,
+    "type": "Gas Evolution",
+    "equation": "MgSO3 + 2HCl -> chloride + SO2 + H2O",
+    "name": "MgSO3 with Hydrochloric Acid",
+    "description": "Sulfite and acid reaction releases sulfur dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 169,
+    "type": "Gas Evolution",
+    "equation": "ZnSO3 + 2HCl -> chloride + SO2 + H2O",
+    "name": "ZnSO3 with Hydrochloric Acid",
+    "description": "Sulfite and acid reaction releases sulfur dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 170,
+    "type": "Gas Evolution",
+    "equation": "FeSO3 + 2HCl -> chloride + SO2 + H2O",
+    "name": "FeSO3 with Hydrochloric Acid",
+    "description": "Sulfite and acid reaction releases sulfur dioxide.",
+    "grade": "8-10"
+  },
+  {
+    "id": 171,
+    "type": "Neutralization",
+    "equation": "NaOH + HCl -> chloride + H2O",
+    "name": "Neutralization of NaOH with HCl",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 172,
+    "type": "Neutralization",
+    "equation": "NaOH + H2SO4 -> sulfate + H2O",
+    "name": "Neutralization of NaOH with H2SO4",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 173,
+    "type": "Neutralization",
+    "equation": "NaOH + HNO3 -> nitrate + H2O",
+    "name": "Neutralization of NaOH with HNO3",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 174,
+    "type": "Neutralization",
+    "equation": "KOH + HCl -> chloride + H2O",
+    "name": "Neutralization of KOH with HCl",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 175,
+    "type": "Neutralization",
+    "equation": "KOH + H2SO4 -> sulfate + H2O",
+    "name": "Neutralization of KOH with H2SO4",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 176,
+    "type": "Neutralization",
+    "equation": "KOH + HNO3 -> nitrate + H2O",
+    "name": "Neutralization of KOH with HNO3",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 177,
+    "type": "Neutralization",
+    "equation": "Ca(OH)2 + HCl -> chloride + H2O",
+    "name": "Neutralization of Ca(OH)2 with HCl",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 178,
+    "type": "Neutralization",
+    "equation": "Ca(OH)2 + H2SO4 -> sulfate + H2O",
+    "name": "Neutralization of Ca(OH)2 with H2SO4",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 179,
+    "type": "Neutralization",
+    "equation": "Ca(OH)2 + HNO3 -> nitrate + H2O",
+    "name": "Neutralization of Ca(OH)2 with HNO3",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 180,
+    "type": "Neutralization",
+    "equation": "Mg(OH)2 + HCl -> chloride + H2O",
+    "name": "Neutralization of Mg(OH)2 with HCl",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 181,
+    "type": "Neutralization",
+    "equation": "Mg(OH)2 + H2SO4 -> sulfate + H2O",
+    "name": "Neutralization of Mg(OH)2 with H2SO4",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 182,
+    "type": "Neutralization",
+    "equation": "Mg(OH)2 + HNO3 -> nitrate + H2O",
+    "name": "Neutralization of Mg(OH)2 with HNO3",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 183,
+    "type": "Neutralization",
+    "equation": "Al(OH)3 + HCl -> chloride + H2O",
+    "name": "Neutralization of Al(OH)3 with HCl",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 184,
+    "type": "Neutralization",
+    "equation": "Al(OH)3 + H2SO4 -> sulfate + H2O",
+    "name": "Neutralization of Al(OH)3 with H2SO4",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 185,
+    "type": "Neutralization",
+    "equation": "Al(OH)3 + HNO3 -> nitrate + H2O",
+    "name": "Neutralization of Al(OH)3 with HNO3",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 186,
+    "type": "Neutralization",
+    "equation": "Zn(OH)2 + HCl -> chloride + H2O",
+    "name": "Neutralization of Zn(OH)2 with HCl",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 187,
+    "type": "Neutralization",
+    "equation": "Zn(OH)2 + H2SO4 -> sulfate + H2O",
+    "name": "Neutralization of Zn(OH)2 with H2SO4",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 188,
+    "type": "Neutralization",
+    "equation": "Zn(OH)2 + HNO3 -> nitrate + H2O",
+    "name": "Neutralization of Zn(OH)2 with HNO3",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 189,
+    "type": "Neutralization",
+    "equation": "Fe(OH)2 + HCl -> chloride + H2O",
+    "name": "Neutralization of Fe(OH)2 with HCl",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 190,
+    "type": "Neutralization",
+    "equation": "Fe(OH)2 + H2SO4 -> sulfate + H2O",
+    "name": "Neutralization of Fe(OH)2 with H2SO4",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 191,
+    "type": "Neutralization",
+    "equation": "Fe(OH)2 + HNO3 -> nitrate + H2O",
+    "name": "Neutralization of Fe(OH)2 with HNO3",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 192,
+    "type": "Neutralization",
+    "equation": "Fe(OH)3 + HCl -> chloride + H2O",
+    "name": "Neutralization of Fe(OH)3 with HCl",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 193,
+    "type": "Neutralization",
+    "equation": "Fe(OH)3 + H2SO4 -> sulfate + H2O",
+    "name": "Neutralization of Fe(OH)3 with H2SO4",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 194,
+    "type": "Neutralization",
+    "equation": "Fe(OH)3 + HNO3 -> nitrate + H2O",
+    "name": "Neutralization of Fe(OH)3 with HNO3",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 195,
+    "type": "Neutralization",
+    "equation": "Cu(OH)2 + HCl -> chloride + H2O",
+    "name": "Neutralization of Cu(OH)2 with HCl",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 196,
+    "type": "Neutralization",
+    "equation": "Cu(OH)2 + H2SO4 -> sulfate + H2O",
+    "name": "Neutralization of Cu(OH)2 with H2SO4",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 197,
+    "type": "Neutralization",
+    "equation": "Cu(OH)2 + HNO3 -> nitrate + H2O",
+    "name": "Neutralization of Cu(OH)2 with HNO3",
+    "description": "Acid-base neutralization forms salt and water.",
+    "grade": "7-10"
+  },
+  {
+    "id": 198,
+    "type": "Single Displacement",
+    "equation": "Zn + CuSO4 -> ZnSO4 + Cu",
+    "name": "Displacement: Zn and CuSO4",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 199,
+    "type": "Single Displacement",
+    "equation": "Fe + CuSO4 -> FeSO4 + Cu",
+    "name": "Displacement: Fe and CuSO4",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 200,
+    "type": "Single Displacement",
+    "equation": "Mg + CuSO4 -> MgSO4 + Cu",
+    "name": "Displacement: Mg and CuSO4",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 201,
+    "type": "Single Displacement",
+    "equation": "Cu + 2AgNO3 -> Cu(NO3)2 + 2Ag",
+    "name": "Displacement: Cu and 2AgNO3",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 202,
+    "type": "Single Displacement",
+    "equation": "Fe + Pb(NO3)2 -> Fe(NO3)2 + Pb",
+    "name": "Displacement: Fe and Pb(NO3)2",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 203,
+    "type": "Single Displacement",
+    "equation": "Zn + 2AgNO3 -> Zn(NO3)2 + 2Ag",
+    "name": "Displacement: Zn and 2AgNO3",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 204,
+    "type": "Single Displacement",
+    "equation": "Al + 3AgNO3 -> Al(NO3)3 + 3Ag",
+    "name": "Displacement: Al and 3AgNO3",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 205,
+    "type": "Single Displacement",
+    "equation": "Mg + FeSO4 -> MgSO4 + Fe",
+    "name": "Displacement: Mg and FeSO4",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 206,
+    "type": "Single Displacement",
+    "equation": "Zn + FeSO4 -> ZnSO4 + Fe",
+    "name": "Displacement: Zn and FeSO4",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 207,
+    "type": "Single Displacement",
+    "equation": "Cl2 + 2KBr -> 2KCl + Br2",
+    "name": "Displacement: Cl2 and 2KBr",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 208,
+    "type": "Single Displacement",
+    "equation": "Cl2 + 2KI -> 2KCl + I2",
+    "name": "Displacement: Cl2 and 2KI",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 209,
+    "type": "Single Displacement",
+    "equation": "Br2 + 2KI -> 2KBr + I2",
+    "name": "Displacement: Br2 and 2KI",
+    "description": "A more reactive element displaces a less reactive element.",
+    "grade": "8-10"
+  },
+  {
+    "id": 210,
+    "type": "Double Displacement",
+    "equation": "AgNO3 + NaCl -> AgCl + NaNO3",
+    "name": "Precipitation: AgNO3 and NaCl",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 211,
+    "type": "Double Displacement",
+    "equation": "AgNO3 + KBr -> AgBr + KNO3",
+    "name": "Precipitation: AgNO3 and KBr",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 212,
+    "type": "Double Displacement",
+    "equation": "AgNO3 + KI -> AgI + KNO3",
+    "name": "Precipitation: AgNO3 and KI",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 213,
+    "type": "Double Displacement",
+    "equation": "BaCl2 + Na2SO4 -> BaSO4 + 2NaCl",
+    "name": "Precipitation: BaCl2 and Na2SO4",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 214,
+    "type": "Double Displacement",
+    "equation": "Pb(NO3)2 + 2KI -> PbI2 + 2KNO3",
+    "name": "Precipitation: Pb(NO3)2 and 2KI",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 215,
+    "type": "Double Displacement",
+    "equation": "Pb(NO3)2 + Na2SO4 -> PbSO4 + 2NaNO3",
+    "name": "Precipitation: Pb(NO3)2 and Na2SO4",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 216,
+    "type": "Double Displacement",
+    "equation": "CaCl2 + Na2CO3 -> CaCO3 + 2NaCl",
+    "name": "Precipitation: CaCl2 and Na2CO3",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 217,
+    "type": "Double Displacement",
+    "equation": "CuSO4 + 2NaOH -> Cu(OH)2 + Na2SO4",
+    "name": "Precipitation: CuSO4 and 2NaOH",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 218,
+    "type": "Double Displacement",
+    "equation": "FeCl3 + 3NaOH -> Fe(OH)3 + 3NaCl",
+    "name": "Precipitation: FeCl3 and 3NaOH",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 219,
+    "type": "Double Displacement",
+    "equation": "FeSO4 + 2NaOH -> Fe(OH)2 + Na2SO4",
+    "name": "Precipitation: FeSO4 and 2NaOH",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 220,
+    "type": "Double Displacement",
+    "equation": "ZnSO4 + 2NaOH -> Zn(OH)2 + Na2SO4",
+    "name": "Precipitation: ZnSO4 and 2NaOH",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 221,
+    "type": "Double Displacement",
+    "equation": "AlCl3 + 3NaOH -> Al(OH)3 + 3NaCl",
+    "name": "Precipitation: AlCl3 and 3NaOH",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 222,
+    "type": "Double Displacement",
+    "equation": "MgSO4 + 2NaOH -> Mg(OH)2 + Na2SO4",
+    "name": "Precipitation: MgSO4 and 2NaOH",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 223,
+    "type": "Double Displacement",
+    "equation": "CuSO4 + Na2CO3 -> CuCO3 + Na2SO4",
+    "name": "Precipitation: CuSO4 and Na2CO3",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 224,
+    "type": "Double Displacement",
+    "equation": "FeCl2 + Na2CO3 -> FeCO3 + 2NaCl",
+    "name": "Precipitation: FeCl2 and Na2CO3",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 225,
+    "type": "Double Displacement",
+    "equation": "ZnSO4 + Na2CO3 -> ZnCO3 + Na2SO4",
+    "name": "Precipitation: ZnSO4 and Na2CO3",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 226,
+    "type": "Double Displacement",
+    "equation": "BaCl2 + Na2CO3 -> BaCO3 + 2NaCl",
+    "name": "Precipitation: BaCl2 and Na2CO3",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 227,
+    "type": "Double Displacement",
+    "equation": "CaCl2 + Na2SO4 -> CaSO4 + 2NaCl",
+    "name": "Precipitation: CaCl2 and Na2SO4",
+    "description": "Double displacement reaction producing a precipitate.",
+    "grade": "8-10"
+  },
+  {
+    "id": 228,
+    "type": "Combustion",
+    "equation": "CH4 + 2O2 -> CO2 + 2H2O",
+    "name": "Combustion of CH4",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 229,
+    "type": "Combustion",
+    "equation": "C2H6 + 3.5O2 -> 2CO2 + 3H2O",
+    "name": "Combustion of C2H6",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 230,
+    "type": "Combustion",
+    "equation": "C3H8 + 5O2 -> 3CO2 + 4H2O",
+    "name": "Combustion of C3H8",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 231,
+    "type": "Combustion",
+    "equation": "C4H10 + 6.5O2 -> 4CO2 + 5H2O",
+    "name": "Combustion of C4H10",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 232,
+    "type": "Combustion",
+    "equation": "C2H5OH + 3O2 -> 2CO2 + 3H2O",
+    "name": "Combustion of C2H5OH",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 233,
+    "type": "Combustion",
+    "equation": "CH3OH + 1.5O2 -> CO2 + 2H2O",
+    "name": "Combustion of CH3OH",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 234,
+    "type": "Combustion",
+    "equation": "C6H6 + 7.5O2 -> 6CO2 + 3H2O",
+    "name": "Combustion of C6H6",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 235,
+    "type": "Combustion",
+    "equation": "H2 + 0.5O2 -> H2O",
+    "name": "Combustion of H2",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 236,
+    "type": "Combustion",
+    "equation": "CO + 0.5O2 -> CO2",
+    "name": "Combustion of CO",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 237,
+    "type": "Combustion",
+    "equation": "S + O2 -> SO2",
+    "name": "Combustion of S",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 238,
+    "type": "Combustion",
+    "equation": "P4 + 5O2 -> P4O10",
+    "name": "Combustion of P4",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 239,
+    "type": "Combustion",
+    "equation": "2Mg + O2 -> 2MgO",
+    "name": "Combustion of 2Mg",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 240,
+    "type": "Combustion",
+    "equation": "4Fe + 3O2 -> 2Fe2O3",
+    "name": "Combustion of 4Fe",
+    "description": "Substance reacts with oxygen releasing heat.",
+    "grade": "7-10"
+  },
+  {
+    "id": 241,
+    "type": "Decomposition",
+    "equation": "CaCO3 -> CaO + CO2",
+    "name": "Decomposition of CaCO3",
+    "description": "Single compound breaks into simpler substances.",
+    "grade": "8-10"
+  },
+  {
+    "id": 242,
+    "type": "Decomposition",
+    "equation": "MgCO3 -> MgO + CO2",
+    "name": "Decomposition of MgCO3",
+    "description": "Single compound breaks into simpler substances.",
+    "grade": "8-10"
+  },
+  {
+    "id": 243,
+    "type": "Decomposition",
+    "equation": "ZnCO3 -> ZnO + CO2",
+    "name": "Decomposition of ZnCO3",
+    "description": "Single compound breaks into simpler substances.",
+    "grade": "8-10"
+  },
+  {
+    "id": 244,
+    "type": "Decomposition",
+    "equation": "CuCO3 -> CuO + CO2",
+    "name": "Decomposition of CuCO3",
+    "description": "Single compound breaks into simpler substances.",
+    "grade": "8-10"
+  },
+  {
+    "id": 245,
+    "type": "Decomposition",
+    "equation": "2KClO3 -> 2KCl + 3O2",
+    "name": "Decomposition of 2KClO3",
+    "description": "Single compound breaks into simpler substances.",
+    "grade": "8-10"
+  },
+  {
+    "id": 246,
+    "type": "Decomposition",
+    "equation": "2NaHCO3 -> Na2CO3 + H2O + CO2",
+    "name": "Decomposition of 2NaHCO3",
+    "description": "Single compound breaks into simpler substances.",
+    "grade": "8-10"
+  },
+  {
+    "id": 247,
+    "type": "Decomposition",
+    "equation": "2H2O2 -> 2H2O + O2",
+    "name": "Decomposition of 2H2O2",
+    "description": "Single compound breaks into simpler substances.",
+    "grade": "8-10"
+  },
+  {
+    "id": 248,
+    "type": "Decomposition",
+    "equation": "2AgCl -> 2Ag + Cl2",
+    "name": "Decomposition of 2AgCl",
+    "description": "Single compound breaks into simpler substances.",
+    "grade": "8-10"
+  },
+  {
+    "id": 249,
+    "type": "Decomposition",
+    "equation": "2AgBr -> 2Ag + Br2",
+    "name": "Decomposition of 2AgBr",
+    "description": "Single compound breaks into simpler substances.",
+    "grade": "8-10"
+  },
+  {
+    "id": 250,
+    "type": "Decomposition",
+    "equation": "2Pb(NO3)2 -> 2PbO + 4NO2 + O2",
+    "name": "Decomposition of 2Pb(NO3)2",
+    "description": "Single compound breaks into simpler substances.",
+    "grade": "8-10"
+  }
+]

@@ -16,7 +16,7 @@
                 Welcome Admin, {{ $username }}
             </div>
             <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-serif italic font-bold tracking-tight leading-none">
-                NEXA Admin Hub
+                NEXO Admin Hub
             </h2>
             <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-stone-600 font-medium max-w-2xl leading-relaxed">
                 Manage the platform, monitor nodes, and control system settings.

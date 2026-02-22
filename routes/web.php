@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/plan', [TravelController::class, 'plan'])->name('user.travel.plan');
         Route::post('/hotels', [TravelController::class, 'hotels'])->name('user.travel.hotels');
         Route::post('/user/travel/cars', [TravelController::class, 'cars'])->name('user.travel.cars');
+        Route::get('/travel/itineraries', [TravelController::class, 'itineraries'])->name('user.travel.itineraries');
+        Route::delete('/travel/itineraries/{itinerary}', [TravelController::class, 'deleteItinerary'])->name('user.travel.itineraries.delete');
         Route::get('/travel/car-booking', [TravelController::class, 'carBooking'])->name('user.travel.carBooking');
         Route::post('/travel/car-payment', [TravelController::class, 'carPayment'])->name('user.travel.carPayment');
         Route::get('/travel/hotel-booking', [TravelController::class, 'hotelBooking'])->name('user.travel.hotelBooking');
@@ -75,6 +77,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/health/medical-records', [HealthController::class, 'medicalRecordsIndex'])->name('user.medical-records.index');
         Route::get('/health/medical-records/create', [HealthController::class, 'medicalRecordsCreate'])->name('user.medical-records.create');
         Route::post('/health/medical-records', [HealthController::class, 'medicalRecordsStore'])->name('user.medical-records.store');
+        Route::delete('/health/medical-records/{record}', [HealthController::class, 'medicalRecordsDestroy'])->name('user.medical-records.destroy');
 
         // Education Module
         Route::get('/education', [EducationController::class, 'index'])->name('user.education');

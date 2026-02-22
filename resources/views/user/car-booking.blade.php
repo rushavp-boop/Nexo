@@ -145,6 +145,8 @@
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest',
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             },
                             body: JSON.stringify({
@@ -155,16 +157,29 @@
                             })
                         });
 
-                        const data = await response.json();
+                        const raw = await response.text();
+                        let data = null;
+
+                        try {
+                            data = raw ? JSON.parse(raw) : null;
+                        } catch (e) {
+                            if (response.status === 401 || response.status === 419) {
+                                throw new Error('Your session expired. Please refresh the page and try again.');
+                            }
+                            throw new Error('Unexpected server response. Please try again.');
+                        }
+
+                        if (!response.ok) {
+                            throw new Error(data?.message || `Payment request failed (${response.status})`);
+                        }
 
                         if (data.status === 'success') {
-                            // Save event to calendar
-                            await this.saveToCalendar(data.bookingId);
-
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Rental Successful!',
-                                html: 'Your car rental has been confirmed<br><small>Event added to calendar</small>',
+                                html: data.emailSent
+                                    ? 'Your car rental has been confirmed<br><small>Calendar synced and receipt emailed</small>'
+                                    : 'Your car rental has been confirmed<br><small>Calendar synced (email could not be sent)</small>',
                                 confirmButtonText: 'Great!'
                             });
                             // Show receipt

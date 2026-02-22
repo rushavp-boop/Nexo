@@ -16,7 +16,7 @@
 
             <p class="text-base md:text-lg text-amber-700 opacity-80">
                 We believe conversations shape futures.
-                Reach out — thoughtfully, freely, humanly.
+                Reach out thoughtfully, freely, and humanly.
             </p>
 
             <div class="space-y-4 md:space-y-6">
@@ -36,7 +36,7 @@
                     </div>
                     <div>
                         <p class="text-xs uppercase tracking-widest opacity-60">Email</p>
-                        <p class="font-semibold">hello@nexa.global</p>
+                        <p class="font-semibold">hello@nexo.global</p>
                     </div>
                 </div>
 

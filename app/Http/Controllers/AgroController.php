@@ -118,18 +118,27 @@ class AgroController extends Controller
         try {
             $search = $request->query('search', '');
 
-            // Fetch prices from database (today's prices)
-            $query = Price::where('price_date', now()->format('Y-m-d'));
+            $today = now()->format('Y-m-d');
+            $currentDate = Price::where('price_date', $today)->exists()
+                ? $today
+                : Price::max('price_date');
 
-            // If no prices for today, get the latest available prices
-            if ($query->count() === 0) {
-                $latestDate = Price::latest('price_date')->first()?->price_date;
-                if ($latestDate) {
-                    $query = Price::where('price_date', $latestDate);
-                }
+            if (!$currentDate) {
+                return response()->json([
+                    'success' => true,
+                    'data' => [],
+                    'priceChanges' => [],
+                    'lastUpdated' => now()->format('Y-m-d H:i:s')
+                ]);
             }
 
-            $prices = $query->get()->map(function ($price) {
+            $currentPrices = Price::where('price_date', $currentDate)->get();
+            $previousDate = Price::where('price_date', '<', $currentDate)->max('price_date');
+            $previousPrices = $previousDate
+                ? Price::where('price_date', $previousDate)->get()->keyBy(fn($price) => strtolower(trim($price->produce_name)))
+                : collect();
+
+            $prices = $currentPrices->map(function ($price) {
                 return [
                     'nepaliName' => $price->nepali_name ?? $price->produce_name,
                     'englishName' => $price->produce_name,
@@ -141,10 +150,49 @@ class AgroController extends Controller
                 ];
             })->sortBy('englishName')->values();
 
+            $priceChanges = $currentPrices->map(function ($currentPrice) use ($previousPrices) {
+                $key = strtolower(trim($currentPrice->produce_name));
+                $previous = $previousPrices->get($key);
+
+                if (!$previous) {
+                    return null;
+                }
+
+                $previousAvg = (float) $previous->avg_price;
+                $currentAvg = (float) $currentPrice->avg_price;
+
+                if ($previousAvg <= 0) {
+                    return null;
+                }
+
+                $delta = $currentAvg - $previousAvg;
+                if (abs($delta) < 0.0001) {
+                    return null;
+                }
+
+                $percent = abs(($delta / $previousAvg) * 100);
+
+                return [
+                    'englishName' => $currentPrice->produce_name,
+                    'nepaliName' => $currentPrice->nepali_name ?? $currentPrice->produce_name,
+                    'direction' => $delta > 0 ? 'increased' : 'decreased',
+                    'changePercent' => round($percent, 2),
+                    'currentAvgPrice' => $currentAvg,
+                    'previousAvgPrice' => $previousAvg,
+                    'currentDate' => $currentPrice->price_date->format('Y-m-d'),
+                    'previousDate' => $previous->price_date->format('Y-m-d'),
+                ];
+            })->filter()->sortByDesc('changePercent')->values();
+
             // Filter by search if provided
             if (!empty($search)) {
                 $searchLower = strtolower($search);
                 $prices = $prices->filter(function ($item) use ($searchLower) {
+                    return strpos(strtolower($item['englishName']), $searchLower) !== false ||
+                           strpos(strtolower($item['nepaliName']), $searchLower) !== false;
+                })->values();
+
+                $priceChanges = $priceChanges->filter(function ($item) use ($searchLower) {
                     return strpos(strtolower($item['englishName']), $searchLower) !== false ||
                            strpos(strtolower($item['nepaliName']), $searchLower) !== false;
                 })->values();
@@ -153,6 +201,7 @@ class AgroController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $prices,
+                'priceChanges' => $priceChanges,
                 'lastUpdated' => now()->format('Y-m-d H:i:s')
             ]);
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\MedicalRecord;
 use App\Services\OpenAIService;
 
@@ -55,6 +56,28 @@ class HealthController extends Controller
         return redirect()
             ->route('user.medical-records.index')
             ->with('success', 'Medical record uploaded successfully.');
+    }
+
+    public function medicalRecordsDestroy(Request $request, MedicalRecord $record)
+    {
+        if ((int) $record->user_id !== (int) Auth::id()) {
+            abort(403);
+        }
+
+        if (!empty($record->prescription_file_path) && Storage::disk('public')->exists($record->prescription_file_path)) {
+            Storage::disk('public')->delete($record->prescription_file_path);
+        }
+
+        $record->delete();
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Medical record deleted successfully.',
+            ]);
+        }
+
+        return redirect()->route('user.profile')->with('success', 'Medical record deleted successfully.');
     }
 
     public function check(Request $request)

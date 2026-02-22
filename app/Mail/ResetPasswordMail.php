@@ -19,7 +19,7 @@ class ResetPasswordMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Reset Your NEXA Password')
+        return $this->subject('Reset Your NEXO Password')
                     ->view('emails.reset-password')
                     ->with(['url' => $this->url]);
     }

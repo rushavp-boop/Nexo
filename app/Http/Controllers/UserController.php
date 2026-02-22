@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\CarBooking;
 use App\Models\HotelBooking;
 use App\Models\NexoPaisaTransaction;
+use App\Models\MedicalRecord;
+use App\Models\TravelItinerary;
 
 class UserController extends Controller
 {
@@ -19,11 +21,13 @@ class UserController extends Controller
         $carBookings = $user->carBookings()->with('car')->latest()->get();
         $hotelBookings = $user->hotelBookings()->latest()->get();
         $transactions = $user->nexoPaisaTransactions()->latest()->paginate(10);
+        $itineraries = $user->travelItineraries()->latest()->get();
+        $medicalRecords = $user->medicalRecords()->latest()->get();
 
         // Calculate transaction summary
         $totalLoaded = $user->nexoPaisaTransactions()->where('type', 'load')->sum('amount');
         $totalSpent = $user->nexoPaisaTransactions()->where('type', 'spend')->sum('amount');
 
-        return view('user.profile', compact('user', 'carBookings', 'hotelBookings', 'transactions', 'totalLoaded', 'totalSpent'));
+        return view('user.profile', compact('user', 'carBookings', 'hotelBookings', 'transactions', 'totalLoaded', 'totalSpent', 'itineraries', 'medicalRecords'));
     }
 }

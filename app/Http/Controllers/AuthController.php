@@ -41,7 +41,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('user.dashboard')->with('success', 'Registration successful! Welcome to NEXA!');
+        return redirect()->route('user.dashboard')->with('success', 'Registration successful! Welcome to NEXO!');
     }
 
     // Show login form

@@ -24,9 +24,9 @@
         </h1>
 
         <p class="text-base sm:text-lg md:text-xl text-amber-700 max-w-3xl mx-auto leading-relaxed">
-            NEXA.Global is a people-first digital ecosystem designed for Nepal —
-            respecting geography, culture, and community while unlocking
-            modern innovation.
+            NEXO.Global is a people-first digital ecosystem built for Nepal,
+            shaped by local geography, culture, and communities,
+            and focused on practical innovation that improves everyday life.
         </p>
 
         <div class="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 pt-4 md:pt-6">
@@ -53,12 +53,12 @@
 
         <p class="text-lg text-amber-700 leading-relaxed">
             From the plains of the Terai to the Himalayan highlands,
-            digital systems must adapt — not demand adaptation.
+            digital systems should adapt to people and place.
         </p>
 
         <p class="text-lg text-amber-700 leading-relaxed">
-            We design technology that works with people,
-            languages, infrastructure, and realities of Nepal.
+            We build technology that works with local languages,
+            real infrastructure conditions, and the lived realities of Nepal.
         </p>
     </div>
 
@@ -77,7 +77,7 @@
             An Integrated National Ecosystem
         </h2>
         <p class="mt-4 text-lg text-amber-700">
-            Built module by module — connected by purpose.
+            Built one module at a time and unified by a shared purpose.
         </p>
     </div>
 
@@ -85,10 +85,10 @@
 
         @php
             $systems = [
-                ['Education','Smarter learning for every child','fa-graduation-cap'],
-                ['Health','Accessible, predictive care','fa-heart-pulse'],
-                ['Agriculture','Empowering farmers with data','fa-leaf'],
-                ['Mobility','Reliable logistics across terrain','fa-mountain-sun'],
+                ['Education','Personalized learning pathways for every student','fa-graduation-cap'],
+                ['Health','Accessible and proactive care for every community','fa-heart-pulse'],
+                ['Agriculture','Data-informed support that helps farmers make confident decisions','fa-leaf'],
+                ['Mobility','Dependable travel and logistics across every terrain','fa-mountain-sun'],
             ];
         @endphp
 

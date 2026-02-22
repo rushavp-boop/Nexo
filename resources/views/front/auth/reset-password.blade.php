@@ -1,6 +1,6 @@
 @extends('front.layouts.app')
 
-@section('title', 'Reset Password · NEXA.GLOBAL')
+@section('title', 'Reset Password · NEXO.GLOBAL')
 
 @section('content')
 <div class="min-h-[70vh] md:min-h-[80vh] flex items-center justify-center px-4 md:px-6 py-12 md:py-16">

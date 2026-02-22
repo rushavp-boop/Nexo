@@ -81,4 +81,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(MedicalRecord::class);
     }
+
+    public function travelItineraries()
+    {
+        return $this->hasMany(TravelItinerary::class);
+    }
 }

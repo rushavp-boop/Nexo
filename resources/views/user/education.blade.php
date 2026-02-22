@@ -15,7 +15,7 @@
 
             <nav
                 class="flex bg-amber-100 p-1.5 rounded-xl md:rounded-[1.5rem] border border-black/5 w-full md:w-fit shadow-inner overflow-x-auto no-scrollbar">
-                <template x-for="m in ['Hub','Library','AI Lab']" :key="m">
+                <template x-for="m in ['Hub','Library','Chem Lab','AI Lab']" :key="m">
                     <button @click="setMode(m)" :class="mode === m ? 'bg-amber-800 text-white' : 'bg-amber-50'"
                         class="px-4 sm:px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[10px] md:text-xs font-bold uppercase whitespace-nowrap" x-text="m"></button>
                 </template>
@@ -390,9 +390,369 @@
             </div>
         </div>
 
+        <!-- CHEM LAB -->
+        <div x-show="mode === 'Chem Lab'" class="space-y-14">
+
+            <section class="space-y-6" x-data="chemLabApp()">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-4xl font-bold italic tracking-tight text-amber-900">
+                        <i class="fa-solid fa-flask mr-3"></i>Interactive Chemistry Lab
+                    </h3>
+                    <button @click="showLab = !showLab"
+                        class="px-6 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all"
+                        :class="showLab ? 'bg-amber-700 text-white' : 'bg-amber-100 text-amber-900'">
+                        <i class="fa-solid" :class="showLab ? 'fa-chevron-up' : 'fa-flask-vial'"></i>
+                        <span class="ml-2" x-text="showLab ? 'Close Lab' : 'Open Lab'"></span>
+                    </button>
+                </div>
+
+                <div x-show="showLab" x-transition class="space-y-6">
+                    <!-- Lab Mode Switcher -->
+                    <div class="flex gap-4 flex-wrap">
+                        <button @click="labMode = 'experiment'"
+                            :class="labMode === 'experiment' ? 'bg-amber-700 text-white' : 'bg-white text-amber-900'"
+                            class="px-6 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all">
+                            <i class="fa-solid fa-flask mr-2"></i>Experiment Bench
+                        </button>
+                        <button @click="labMode = 'periodic'"
+                            :class="labMode === 'periodic' ? 'bg-amber-700 text-white' : 'bg-white text-amber-900'"
+                            class="px-6 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all">
+                            <i class="fa-solid fa-atom mr-2"></i>Periodic Table
+                        </button>
+                        <button @click="labMode = 'reactions'"
+                            :class="labMode === 'reactions' ? 'bg-amber-700 text-white' : 'bg-white text-amber-900'"
+                            class="px-6 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all">
+                            <i class="fa-solid fa-book-open mr-2"></i>Reaction Library
+                        </button>
+                    </div>
+
+                    <!-- EXPERIMENT BENCH -->
+                    <div x-show="labMode === 'experiment'" class="bg-white rounded-3xl shadow-2xl p-8">
+                        <div class="mb-6">
+                            <h4 class="text-2xl font-bold text-amber-900 mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-vials"></i> Virtual Lab Bench
+                            </h4>
+                            <p class="text-gray-600">Select chemicals from the cabinet and mix them to see reactions!</p>
+                        </div>
+
+                        <!-- Chemical Cabinet -->
+                        <div class="mb-8">
+                            <h5 class="font-bold text-amber-800 mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-cabinet-filing"></i> Chemical Cabinet
+                            </h5>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                                <template x-for="chemical in chemicals" :key="chemical.formula">
+                                    <button @click="addToBeaker(chemical)"
+                                        class="p-4 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-all text-center border-2"
+                                        :class="chemical.color">
+                                        <div class="text-2xl mb-2" x-text="chemical.icon"></div>
+                                        <div class="font-bold text-sm" x-text="chemical.name"></div>
+                                        <div class="text-xs opacity-75 font-mono" x-text="chemical.formula"></div>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Lab Bench -->
+                        <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 border-4 border-amber-300">
+                            <h5 class="font-bold text-amber-900 mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-beaker"></i> Reaction Beaker
+                            </h5>
+
+                            <!-- Beaker Contents -->
+                            <div class="bg-white rounded-xl p-6 mb-4 min-h-[200px] border-4 border-amber-200 relative overflow-hidden">
+                                <div x-show="beakerContents.length === 0" class="text-center text-gray-400 py-12">
+                                    <i class="fa-solid fa-flask text-6xl mb-4 opacity-20"></i>
+                                    <p class="font-semibold">Empty - Add chemicals to begin</p>
+                                </div>
+
+                                <div x-show="beakerContents.length > 0" class="space-y-2">
+                                    <template x-for="(item, idx) in beakerContents" :key="idx">
+                                        <div class="flex items-center justify-between p-3 rounded-lg bg-amber-50">
+                                            <div class="flex items-center gap-3">
+                                                <span class="text-2xl" x-text="item.icon"></span>
+                                                <div>
+                                                    <div class="font-bold" x-text="item.name"></div>
+                                                    <div class="text-xs font-mono text-gray-600" x-text="item.formula"></div>
+                                                </div>
+                                            </div>
+                                            <button @click="removeFromBeaker(idx)" class="text-red-600 hover:text-red-800">
+                                                <i class="fa-solid fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <!-- Reaction Animation -->
+                                <div x-show="isReacting" class="absolute inset-0 flex items-center justify-center bg-white/90 backdrop-blur-sm">
+                                    <div class="text-center animate-pulse">
+                                        <i class="fa-solid fa-atom-simple text-6xl text-orange-600 animate-spin"></i>
+                                        <p class="mt-4 font-bold text-amber-900">Reaction in progress...</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex gap-4">
+                                <button @click="performReaction()" :disabled="beakerContents.length < 2"
+                                    class="flex-1 bg-gradient-to-r from-orange-600 to-orange-500 text-white py-4 rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                                    <i class="fa-solid fa-play mr-2"></i>Perform Reaction
+                                </button>
+                                <button @click="clearBeaker()"
+                                    class="px-6 py-4 bg-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-300 transition-all">
+                                    <i class="fa-solid fa-trash mr-2"></i>Clear
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Reaction Result -->
+                        <div x-show="reactionResult" x-transition class="mt-6 p-6 rounded-xl" :class="reactionResult?.type === 'success' ? 'bg-green-50 border-2 border-green-300' : 'bg-red-50 border-2 border-red-300'">
+                            <div class="flex items-start gap-4">
+                                <i class="fa-solid text-3xl" :class="reactionResult?.type === 'success' ? 'fa-circle-check text-green-600' : 'fa-circle-xmark text-red-600'"></i>
+                                <div class="flex-1">
+                                    <h5 class="font-bold text-lg mb-2" :class="reactionResult?.type === 'success' ? 'text-green-900' : 'text-red-900'" x-text="reactionResult?.title"></h5>
+                                    <div x-show="reactionResult?.type === 'success'" class="space-y-2">
+                                        <div class="bg-white p-4 rounded-lg font-mono text-lg font-bold text-center text-amber-900" x-html="reactionResult?.equation"></div>
+                                        <p class="text-gray-700" x-text="reactionResult?.description"></p>
+                                        <div class="flex gap-2 mt-3">
+                                            <span class="px-3 py-1 bg-orange-600 text-white text-xs font-bold rounded-full" x-text="reactionResult?.reactionType"></span>
+                                            <span class="px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full" x-text="'Grade ' + reactionResult?.grade"></span>
+                                        </div>
+                                    </div>
+                                    <p x-show="reactionResult?.type !== 'success'" class="text-gray-700" x-text="reactionResult?.message"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PERIODIC TABLE -->
+                    <div x-show="labMode === 'periodic'" class="bg-white rounded-3xl shadow-2xl p-8">
+                        <h4 class="text-2xl font-bold text-amber-900 mb-6 flex items-center gap-2">
+                            <i class="fa-solid fa-atom"></i> Interactive Periodic Table
+                        </h4>
+
+                        <!-- Search and Filter -->
+                        <div class="mb-6 space-y-4">
+                            <input x-model="searchElement" @input="filterElements()"
+                                placeholder="Search by name, symbol, or atomic number..."
+                                class="w-full px-6 py-4 rounded-xl border-2 border-amber-200 focus:border-amber-700 focus:ring-4 focus:ring-amber-700/10 transition-all outline-none font-semibold">
+
+                            <div class="flex flex-wrap gap-2">
+                                <button @click="categoryFilter = ''; filterElements()"
+                                    :class="categoryFilter === '' ? 'bg-amber-700 text-white' : 'bg-gray-200 text-gray-700'"
+                                    class="px-4 py-2 rounded-lg font-semibold text-sm hover:scale-105 transition">All</button>
+                                <template x-for="cat in categories" :key="cat">
+                                    <button @click="categoryFilter = cat; filterElements()"
+                                        :class="categoryFilter === cat ? 'bg-amber-700 text-white' : 'bg-gray-200 text-gray-700'"
+                                        class="px-4 py-2 rounded-lg font-semibold text-sm hover:scale-105 transition capitalize"
+                                        x-text="cat.replace('-', ' ')"></button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Elements Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
+                            <template x-for="element in filteredElements" :key="element.number">
+                                <button @click="selectElement(element)"
+                                    :class="getElementColor(element.category)"
+                                    class="relative p-3 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 text-left border-2">
+                                    <div class="text-xs font-bold opacity-70" x-text="element.number"></div>
+                                    <div class="text-2xl font-black my-1" x-text="element.symbol"></div>
+                                    <div class="text-xs font-semibold truncate" x-text="element.name"></div>
+                                    <div class="text-xs opacity-70" x-text="element.atomicMass"></div>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Element Detail Modal with 3D Electron Structure -->
+                    <div x-show="selectedElement" x-transition.opacity
+                        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+                        @click="selectedElement = null" style="display: none;">
+                        <div @click.stop class="bg-white rounded-3xl p-8 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto" x-show="selectedElement">
+                            <template x-if="selectedElement">
+                                <div>
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div>
+                                            <div class="text-sm text-gray-600 mb-1">Atomic Number <span class="font-bold text-amber-700" x-text="selectedElement.number"></span></div>
+                                            <h3 class="text-4xl md:text-5xl font-black text-amber-900 mb-2" x-text="selectedElement.name"></h3>
+                                            <div class="text-2xl font-bold text-amber-700" x-text="selectedElement.symbol"></div>
+                                        </div>
+                                        <button @click="selectedElement = null" class="text-gray-400 hover:text-gray-600 text-2xl">
+                                            <i class="fa-solid fa-times"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- 2D Electron Structure (BYJU's Style with Revolving Electrons) -->
+                                    <div class="bg-gradient-to-br from-blue-50 via-purple-50 to-orange-50 rounded-3xl p-10 mb-6 flex flex-col items-center justify-center min-h-[450px] border-3 border-purple-200 shadow-2xl space-y-6">
+                                        <h4 class="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-orange-600 bg-clip-text text-transparent">Electron Configuration Structure</h4>
+
+                                        <div class="electron-structure-container" :data-element="selectedElement.number">
+                                            <!-- Element Symbol (Center) -->
+                                            <div class="nucleus">
+                                                <div class="nucleus-core">
+                                                    <span class="text-white font-bold text-lg" x-text="selectedElement.symbol"></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Electron Shells with orbiting electrons -->
+                                            <template x-for="shell in getElectronShells(selectedElement)" :key="shell.n">
+                                                <div class="shell-container" :style="`--shell-radius: ${shell.radius}px; --shell-n: ${shell.n}; --shell-speed: ${(8 - shell.n * 0.5)}s;`">
+                                                    <!-- Orbital Ring (rotates) -->
+                                                    <div class="shell-ring" :class="shell.isValence ? 'shell-ring-valence' : 'shell-ring-inner'"></div>
+
+                                                    <!-- Shell Label -->
+                                                    <div class="shell-label" x-text="`${shell.label}`"></div>
+
+                                                    <!-- Electron Count Badge -->
+                                                    <div class="electron-count-badge" x-text="shell.count + ' e⁻'"></div>
+
+                                                    <!-- Electrons orbiting this shell -->
+                                                    <div class="electrons-orbit-group">
+                                                        <template x-for="(electron, idx) in shell.electrons" :key="idx">
+                                                            <div class="electron-orbit-wrapper" :style="`--orbit-angle: ${electron * 360 / shell.count}deg;`">
+                                                                <div class="electron-dot" :class="shell.isValence ? 'electron-dot-valence' : 'electron-dot-inner'"></div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+
+                                        <!-- Legend & Info -->
+                                        <div class="flex flex-col gap-4 items-center">
+                                            <div class="flex gap-8 justify-center text-sm font-semibold">
+                                                <div class="flex items-center gap-2">
+                                                    <div class="w-3 h-3 rounded-full bg-blue-500 shadow-lg animate-pulse"></div>
+                                                    <span class="text-blue-800">Inner Electrons</span>
+                                                </div>
+                                                <div class="flex items-center gap-2">
+                                                    <div class="w-3 h-3 rounded-full bg-amber-500 shadow-lg animate-pulse"></div>
+                                                    <span class="text-amber-800">Valence Electrons</span>
+                                                </div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 italic" x-show="selectedElement">
+                                                <span x-text="`${selectedElement.name} (${selectedElement.symbol}) - Atomic Number: ${selectedElement.number}`"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Element Properties -->
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                                        <div class="bg-amber-50 p-4 rounded-xl border-2 border-amber-200">
+                                            <div class="text-xs text-amber-700 font-bold uppercase mb-1">Atomic Mass</div>
+                                            <div class="text-2xl font-black text-amber-900" x-text="selectedElement.atomicMass"></div>
+                                        </div>
+                                        <div class="bg-amber-50 p-4 rounded-xl border-2 border-amber-200">
+                                            <div class="text-xs text-amber-700 font-bold uppercase mb-1">Category</div>
+                                            <div class="text-sm font-bold text-amber-900 capitalize" x-text="selectedElement.category.replace('-', ' ')"></div>
+                                        </div>
+                                        <div class="bg-amber-50 p-4 rounded-xl border-2 border-amber-200">
+                                            <div class="text-xs text-amber-700 font-bold uppercase mb-1">Group</div>
+                                            <div class="text-2xl font-black text-amber-900" x-text="selectedElement.group"></div>
+                                        </div>
+                                        <div class="bg-amber-50 p-4 rounded-xl border-2 border-amber-200">
+                                            <div class="text-xs text-amber-700 font-bold uppercase mb-1">Period</div>
+                                            <div class="text-2xl font-black text-amber-900" x-text="selectedElement.period"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-gray-50 p-4 rounded-xl border-2 border-gray-200">
+                                        <div class="text-xs text-gray-700 font-bold uppercase mb-2">Electron Configuration</div>
+                                        <div class="text-lg font-mono font-semibold text-gray-900" x-html="selectedElement.electronConfig"></div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                                        <div class="bg-amber-50 p-4 rounded-xl border-2 border-amber-200">
+                                            <div class="text-xs text-amber-700 font-bold uppercase mb-1">Shell Distribution</div>
+                                            <div class="text-sm font-mono font-semibold text-amber-900" x-text="getShellSummary(selectedElement)"></div>
+                                        </div>
+                                        <div class="bg-amber-50 p-4 rounded-xl border-2 border-amber-200">
+                                            <div class="text-xs text-amber-700 font-bold uppercase mb-1">Valence Shell</div>
+                                            <div class="text-2xl font-black text-amber-900" x-text="getValenceShellLabel(selectedElement)"></div>
+                                        </div>
+                                        <div class="bg-amber-50 p-4 rounded-xl border-2 border-amber-200">
+                                            <div class="text-xs text-amber-700 font-bold uppercase mb-1">Valence Electrons</div>
+                                            <div class="text-2xl font-black text-amber-900" x-text="getValenceElectrons(selectedElement)"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- REACTION LIBRARY -->
+                    <div x-show="labMode === 'reactions'" class="bg-white rounded-3xl shadow-2xl p-8">
+                        <h4 class="text-2xl font-bold text-amber-900 mb-6 flex items-center gap-2">
+                            <i class="fa-solid fa-book-open"></i> Reaction Library (105+ Reactions)
+                        </h4>
+
+                        <!-- Filters -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <input x-model="searchReaction" @input="filterReactions()"
+                                placeholder="Search reactions..."
+                                class="w-full px-6 py-4 rounded-xl border-2 border-amber-200 focus:border-amber-700 focus:ring-4 focus:ring-amber-700/10 transition-all outline-none font-semibold">
+
+                            <select x-model="gradeFilter" @change="filterReactions()"
+                                class="w-full px-6 py-4 rounded-xl border-2 border-amber-200 focus:border-amber-700 focus:ring-4 focus:ring-amber-700/10 transition-all outline-none font-semibold">
+                                <option value="">All Grades</option>
+                                <option value="5-7">Grades 5-7</option>
+                                <option value="7-9">Grades 7-9</option>
+                                <option value="8-10">Grades 8-10</option>
+                                <option value="9-10">Grades 9-10</option>
+                                <option value="10">Grade 10</option>
+                            </select>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <button @click="typeFilter = ''; filterReactions()"
+                                :class="typeFilter === '' ? 'bg-amber-700 text-white' : 'bg-gray-200 text-gray-700'"
+                                class="px-4 py-2 rounded-lg font-semibold text-sm hover:scale-105 transition">All Types</button>
+                            <template x-for="type in reactionTypes" :key="type">
+                                <button @click="typeFilter = type; filterReactions()"
+                                    :class="typeFilter === type ? 'bg-amber-700 text-white' : 'bg-gray-200 text-gray-700'"
+                                    class="px-4 py-2 rounded-lg font-semibold text-sm hover:scale-105 transition"
+                                    x-text="type"></button>
+                            </template>
+                        </div>
+
+                        <!-- Reactions List -->
+                        <div class="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+                            <template x-for="reaction in filteredReactions" :key="reaction.id">
+                                <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-xl shadow-md hover:shadow-lg transition-all border-2 border-amber-200">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div class="flex-1">
+                                            <h5 class="text-xl font-bold text-amber-900 mb-2" x-text="reaction.name"></h5>
+                                            <div class="flex gap-2 items-center flex-wrap">
+                                                <span class="px-3 py-1 bg-orange-600 text-white text-xs font-bold rounded-full" x-text="reaction.type"></span>
+                                                <span class="px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full" x-text="'Grade ' + reaction.grade"></span>
+                                            </div>
+                                        </div>
+                                        <button @click="tryReaction(reaction)" class="px-4 py-2 bg-amber-700 text-white rounded-lg font-bold hover:bg-amber-800 transition">
+                                            <i class="fa-solid fa-flask mr-2"></i>Try It
+                                        </button>
+                                    </div>
+
+                                    <div class="bg-white p-4 rounded-lg mb-3 font-mono text-base font-semibold text-center text-amber-900 border-2 border-amber-200" x-html="reaction.equation"></div>
+
+                                    <p class="text-gray-700" x-text="reaction.description"></p>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div x-show="filteredReactions.length === 0" class="text-center py-12">
+                            <i class="fa-solid fa-search text-6xl text-gray-300 mb-4"></i>
+                            <p class="text-gray-500 text-lg font-semibold">No reactions found</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
         <!-- LIBRARY -->
         <div x-show="mode === 'Library'" class="space-y-14">
 
+            <!-- Library Resources -->
             <template x-for="(files, grade) in libraryResources" :key="grade">
                 <section class="space-y-6">
 
@@ -1010,6 +1370,232 @@
                 }
             }
         }
+
+        // chemLabApp() function
+        function chemLabApp() {
+            return {
+                showLab: false,
+                labMode: 'experiment',
+                elements: [],
+                reactions: [],
+                filteredElements: [],
+                filteredReactions: [],
+                searchElement: '',
+                searchReaction: '',
+                categoryFilter: '',
+                typeFilter: '',
+                gradeFilter: '',
+                selectedElement: null,
+                beakerContents: [],
+                reactionResult: null,
+                isReacting: false,
+                categories: [
+                    'alkali-metal', 'alkaline-earth', 'transition', 'post-transition',
+                    'metalloid', 'nonmetal', 'halogen', 'noble-gas', 'lanthanide', 'actinide'
+                ],
+                reactionTypes: [],
+                chemicals: [
+                    { name: 'Hydrogen', formula: 'H₂', icon: '💨', color: 'bg-blue-100 border-blue-300 text-blue-900' },
+                    { name: 'Oxygen', formula: 'O₂', icon: '💨', color: 'bg-sky-100 border-sky-300 text-sky-900' },
+                    { name: 'Water', formula: 'H₂O', icon: '💧', color: 'bg-cyan-100 border-cyan-300 text-cyan-900' },
+                    { name: 'Carbon Dioxide', formula: 'CO₂', icon: '☁️', color: 'bg-gray-100 border-gray-300 text-gray-900' },
+                    { name: 'Sodium', formula: 'Na', icon: '⚛️', color: 'bg-yellow-100 border-yellow-300 text-yellow-900' },
+                    { name: 'Chlorine', formula: 'Cl₂', icon: '☣️', color: 'bg-green-100 border-green-300 text-green-900' },
+                    { name: 'Hydrochloric Acid', formula: 'HCl', icon: '🧪', color: 'bg-red-100 border-red-300 text-red-900' },
+                    { name: 'Sodium Hydroxide', formula: 'NaOH', icon: '🧫', color: 'bg-purple-100 border-purple-300 text-purple-900' },
+                    { name: 'Magnesium', formula: 'Mg', icon: '✨', color: 'bg-gray-200 border-gray-400 text-gray-900' },
+                    { name: 'Iron', formula: 'Fe', icon: '🔩', color: 'bg-orange-100 border-orange-400 text-orange-900' },
+                    { name: 'Copper Sulfate', formula: 'CuSO₄', icon: '💎', color: 'bg-blue-200 border-blue-400 text-blue-900' },
+                    { name: 'Zinc', formula: 'Zn', icon: '⚙️', color: 'bg-slate-100 border-slate-300 text-slate-900' },
+                    { name: 'Sulfuric Acid', formula: 'H₂SO₄', icon: '⚗️', color: 'bg-yellow-200 border-yellow-400 text-yellow-900' },
+                    { name: 'Calcium Carbonate', formula: 'CaCO₃', icon: '🪨', color: 'bg-stone-100 border-stone-300 text-stone-900' },
+                    { name: 'Silver Nitrate', formula: 'AgNO₃', icon: '💫', color: 'bg-gray-50 border-gray-300 text-gray-800' },
+                    { name: 'Ammonia', formula: 'NH₃', icon: '💨', color: 'bg-teal-100 border-teal-300 text-teal-900' },
+                    { name: 'Methane', formula: 'CH₄', icon: '🔥', color: 'bg-orange-50 border-orange-300 text-orange-900' },
+                    { name: 'Nitrogen', formula: 'N₂', icon: '💨', color: 'bg-indigo-100 border-indigo-300 text-indigo-900' }
+                ],
+
+                async init() {
+                    // Load periodic table data
+                    const elementsRes = await fetch('/json/periodic-table.json');
+                    this.elements = await elementsRes.json();
+                    this.filteredElements = this.elements;
+
+                    // Load reactions data
+                    const reactionsRes = await fetch('/json/chemical-reactions.json');
+                    this.reactions = await reactionsRes.json();
+                    this.filteredReactions = this.reactions;
+
+                    // Extract unique reaction types
+                    this.reactionTypes = [...new Set(this.reactions.map(r => r.type))];
+                },
+
+                addToBeaker(chemical) {
+                    if (this.beakerContents.length >= 4) {
+                        alert('Beaker is full! Clear it first.');
+                        return;
+                    }
+                    this.beakerContents.push({ ...chemical });
+                    this.reactionResult = null;
+                },
+
+                removeFromBeaker(index) {
+                    this.beakerContents.splice(index, 1);
+                    this.reactionResult = null;
+                },
+
+                clearBeaker() {
+                    this.beakerContents = [];
+                    this.reactionResult = null;
+                },
+
+                async performReaction() {
+                    if (this.beakerContents.length < 2) return;
+
+                    this.isReacting = true;
+                    this.reactionResult = null;
+
+                    // Simulate reaction time
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+
+                    const formulas = this.beakerContents.map(c => c.formula).sort().join(' + ');
+
+                    // Check for known reactions
+                    const knownReaction = this.findMatchingReaction(formulas);
+
+                    if (knownReaction) {
+                        this.reactionResult = {
+                            type: 'success',
+                            title: '✅ Reaction Successful!',
+                            equation: knownReaction.equation,
+                            description: knownReaction.description,
+                            reactionType: knownReaction.type,
+                            grade: knownReaction.grade
+                        };
+                    } else {
+                        this.reactionResult = {
+                            type: 'error',
+                            title: '❌ No Reaction Occurred',
+                            message: 'These chemicals don\'t react under normal conditions, or the reaction is not in our database. Try different combinations!'
+                        };
+                    }
+
+                    this.isReacting = false;
+                },
+
+                findMatchingReaction(formulas) {
+                    // Simplified matching - check if formulas appear in equation
+                    const parts = formulas.split(' + ');
+
+                    return this.reactions.find(r => {
+                        const equation = r.equation.toLowerCase();
+                        return parts.every(part => equation.includes(part.toLowerCase()));
+                    });
+                },
+
+                tryReaction(reaction) {
+                    // Switch to experiment mode and auto-fill relevant chemicals
+                    this.labMode = 'experiment';
+                    this.clearBeaker();
+
+                    alert(`💡 Try mixing the chemicals from this reaction: ${reaction.equation}\nExperiment mode is now ready!`);
+                },
+
+                filterElements() {
+                    this.filteredElements = this.elements.filter(el => {
+                        const searchMatch = !this.searchElement ||
+                            el.name.toLowerCase().includes(this.searchElement.toLowerCase()) ||
+                            el.symbol.toLowerCase().includes(this.searchElement.toLowerCase()) ||
+                            el.number.toString().includes(this.searchElement);
+
+                        const categoryMatch = !this.categoryFilter || el.category === this.categoryFilter;
+
+                        return searchMatch && categoryMatch;
+                    });
+                },
+
+                filterReactions() {
+                    this.filteredReactions = this.reactions.filter(r => {
+                        const searchMatch = !this.searchReaction ||
+                            r.name.toLowerCase().includes(this.searchReaction.toLowerCase()) ||
+                            r.equation.toLowerCase().includes(this.searchReaction.toLowerCase()) ||
+                            r.type.toLowerCase().includes(this.searchReaction.toLowerCase());
+
+                        const typeMatch = !this.typeFilter || r.type === this.typeFilter;
+                        const gradeMatch = !this.gradeFilter || r.grade === this.gradeFilter;
+
+                        return searchMatch && typeMatch && gradeMatch;
+                    });
+                },
+
+                selectElement(element) {
+                    this.selectedElement = element;
+                },
+
+                getElectronShells(element) {
+                    if (!element) return [];
+
+                    // Shell distribution using capacity per shell (2, 8, 18, 32, 32, 18, 8)
+                    const shells = [];
+                    let remaining = element.number;
+                    const maxElectrons = [2, 8, 18, 32, 32, 18, 8];
+                    const shellLabels = ['K', 'L', 'M', 'N', 'O', 'P', 'Q'];
+
+                    for (let n = 1; n <= 7 && remaining > 0; n++) {
+                        const electronsInShell = Math.min(remaining, maxElectrons[n - 1]);
+                        const radius = 50 + (n * 30); // Increasing radius for each shell
+
+                        shells.push({
+                            n: n,
+                            count: electronsInShell,
+                            radius: radius,
+                            label: shellLabels[n - 1],
+                            speed: (6 + n * 2) + 's',
+                            electrons: Array.from({length: electronsInShell}, (_, i) => i)
+                        });
+
+                        remaining -= electronsInShell;
+                    }
+
+                    if (shells.length > 0) {
+                        shells[shells.length - 1].isValence = true;
+                    }
+
+                    return shells;
+                },
+
+                getShellSummary(element) {
+                    const shells = this.getElectronShells(element);
+                    return shells.map(shell => `${shell.label}${shell.count}`).join(' ');
+                },
+
+                getValenceShellLabel(element) {
+                    const shells = this.getElectronShells(element);
+                    return shells.length ? shells[shells.length - 1].label : '-';
+                },
+
+                getValenceElectrons(element) {
+                    const shells = this.getElectronShells(element);
+                    return shells.length ? shells[shells.length - 1].count : 0;
+                },
+
+                getElementColor(category) {
+                    const colors = {
+                        'alkali-metal': 'bg-red-100 text-red-900 border-red-400',
+                        'alkaline-earth': 'bg-orange-100 text-orange-900 border-orange-400',
+                        'transition': 'bg-yellow-100 text-yellow-900 border-yellow-400',
+                        'post-transition': 'bg-green-100 text-green-900 border-green-400',
+                        'metalloid': 'bg-teal-100 text-teal-900 border-teal-400',
+                        'nonmetal': 'bg-blue-100 text-blue-900 border-blue-400',
+                        'halogen': 'bg-indigo-100 text-indigo-900 border-indigo-400',
+                        'noble-gas': 'bg-purple-100 text-purple-900 border-purple-400',
+                        'lanthanide': 'bg-pink-100 text-pink-900 border-pink-400',
+                        'actinide': 'bg-rose-100 text-rose-900 border-rose-400'
+                    };
+                    return colors[category] || 'bg-gray-100 text-gray-900 border-gray-400';
+                }
+            }
+        }
     </script>
 
     <style>
@@ -1049,6 +1635,168 @@
         select option {
             color: black;
             background-color: white;
+        }
+    </style>
+
+    <style>
+        /* 2D Electron Structure with Orbiting Electrons */
+        .electron-structure-container {
+            position: relative;
+            width: 340px;
+            height: 340px;
+            margin: 0 auto;
+            filter: drop-shadow(0 0 30px rgba(147, 51, 234, 0.15));
+        }
+
+        .nucleus {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+        }
+
+        .nucleus-core {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-center;
+            font-size: 20px;
+            font-weight: 900;
+            color: white;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.8),
+                        0 0 50px rgba(245, 158, 11, 0.4),
+                        inset -2px -2px 8px rgba(139, 0, 0, 0.3);
+            animation: nucleusPulseEnhanced 2.5s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        @keyframes nucleusPulseEnhanced {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 25px rgba(245, 158, 11, 0.8), 0 0 50px rgba(245, 158, 11, 0.4);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 0 40px rgba(245, 158, 11, 1), 0 0 80px rgba(245, 158, 11, 0.6);
+            }
+        }
+
+        .shell-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: calc(var(--shell-radius) * 2);
+            height: calc(var(--shell-radius) * 2);
+            transform: translate(-50%, -50%);
+        }
+
+        .shell-ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            border-radius: 50%;
+            animation: rotateRingSmooth var(--shell-speed) linear infinite;
+        }
+
+        .shell-ring-inner {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+        }
+
+        .shell-ring-valence {
+            border-color: rgba(245, 158, 11, 0.7);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.3), inset 0 0 10px rgba(245, 158, 11, 0.1);
+        }
+
+        @keyframes rotateRingSmooth {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .shell-label {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 800;
+            color: #1e40af;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(219, 234, 254, 0.98) 100%);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 2px solid rgba(59, 130, 246, 0.6);
+            white-space: nowrap;
+            z-index: 15;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        .electron-count-badge {
+            position: absolute;
+            bottom: -42px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            font-weight: 800;
+            color: #dc2626;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(254, 242, 242, 0.98) 100%);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 2px solid rgba(220, 38, 38, 0.5);
+            z-index: 15;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+            letter-spacing: 0.5px;
+        }
+
+        /* Electrons Orbiting */
+        .electrons-orbit-group {
+            position: absolute;
+            inset: 0;
+            animation: orbitGroup calc(var(--shell-speed) * 1.5) linear infinite;
+        }
+
+        @keyframes orbitGroup {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .electron-orbit-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotate(var(--orbit-angle));
+        }
+
+        .electron-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            top: 0;
+            left: 50%;
+            margin-left: -6px;
+            z-index: 10;
+            filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+        }
+
+        .electron-dot-inner {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.9),
+                        0 0 20px rgba(59, 130, 246, 0.5),
+                        inset 0 1px 3px rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .electron-dot-valence {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 1),
+                        0 0 24px rgba(245, 158, 11, 0.6),
+                        inset 0 1px 3px rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
     </style>
 

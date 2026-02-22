@@ -219,7 +219,7 @@ IMPORTANT RULES:
 
     public static function analyzeAgriLocation(string $location, string $crop): array
     {
-        $prompt = "Analyze the location '$location' for growing '$crop' in Nepal. Provide ONLY valid JSON (no markdown, no extra text). Use these keys: suitability (Excellent/Good/Fair/Poor), bestVariety, soilTips, fertilizersToBeUsed, growthProtocol, climateRisk. Make each value clear, practical, and longer (2-4 sentences each). Avoid vague statements. Include actionable steps, timing guidance, and quantities where reasonable (e.g., per ropani/hectare or per plant). Use simple Nepali-English mixed phrasing that an average Nepali farmer can understand. Keep it realistic for Nepal's climate and farming practices.";
+        $prompt = "Analyze the location '$location' for growing '$crop' in Nepal. Provide ONLY valid JSON (no markdown, no extra text). Use these keys: suitability (Excellent/Good/Fair/Poor), bestVariety, soilTips, fertilizersToBeUsed, growthProtocol, climateRisk. Make each value clear, practical, and longer (2-4 sentences each). Avoid vague statements. Include actionable steps, timing guidance, and quantities where reasonable (e.g., per ropani/hectare or per plant). Write all values in clear, simple English only. Keep it realistic for Nepal's climate and farming practices.";
 
         $client = self::getClient();
         $response = $client->chat()->create([
@@ -369,7 +369,7 @@ CRITICAL REQUIREMENTS:
     }
 
     /**
-     * Chat with context-aware responses about Nexa app only
+     * Chat with context-aware responses about Nexo app only
      */
     public static function chat(array $messages): string
     {

@@ -271,5 +271,127 @@
                 </div>
             @endif
         </div>
+
+        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-[3rem] shadow-lg p-10 animate-fade-in">
+            <h3 class="text-2xl font-bold italic text-stone-900 mb-6">Voyage Itinerary History</h3>
+
+            @if ($itineraries->isEmpty())
+                <div class="text-center py-12 text-stone-400">
+                    <i class="fa-solid fa-route text-5xl mb-4"></i>
+                    <p class="text-sm font-bold uppercase tracking-widest">No itineraries generated yet</p>
+                </div>
+            @else
+                <div class="space-y-6">
+                    @foreach ($itineraries as $itinerary)
+                        @php
+                            $planData = data_get($itinerary->itinerary_data, 'plan', []);
+                            if (is_string($planData)) {
+                                $decodedPlan = json_decode($planData, true);
+                                $planData = is_array($decodedPlan) ? $decodedPlan : [];
+                            }
+                        @endphp
+                        <div class="border-2 border-amber-200 rounded-2xl p-6 hover:border-amber-700 hover:shadow-lg hover:shadow-amber-700/20 transition-all">
+                            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+                                <div>
+                                    <h4 class="text-xl font-bold italic text-stone-900">{{ $itinerary->destination }}</h4>
+                                    <p class="text-xs font-bold italic uppercase tracking-widest text-amber-700 mt-1">
+                                        {{ $itinerary->days }} days • {{ $itinerary->budget }}
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <p class="text-sm font-bold italic text-stone-500">{{ $itinerary->created_at->format('M d, Y \a\t h:i A') }}</p>
+                                    <form action="{{ route('user.travel.itineraries.delete', $itinerary->id) }}" method="POST"
+                                        onsubmit="return confirm('Delete this itinerary?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="bg-red-600 text-white px-3 py-2 rounded-lg text-[10px] font-bold italic uppercase tracking-widest hover:bg-red-700 transition-all">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            @if (is_array($planData) && count($planData) > 0)
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    @foreach ($planData as $day)
+                                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                                            <p class="text-xs font-bold italic uppercase tracking-widest text-amber-900 mb-2">
+                                                Day {{ data_get($day, 'day', '?') }}
+                                            </p>
+                                            @php
+                                                $desc = data_get($day, 'desc', []);
+                                                if (is_string($desc)) {
+                                                    $desc = [$desc];
+                                                }
+                                            @endphp
+                                            <ul class="space-y-1">
+                                                @foreach (array_slice($desc, 0, 2) as $activity)
+                                                    <li class="text-sm text-stone-700">• {{ $activity }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
+        <div class="bg-gradient-to-br from-white to-amber-50/30 border-2 border-amber-300 rounded-[3rem] shadow-lg p-10 animate-fade-in">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                <h3 class="text-2xl font-bold italic text-stone-900">Medical Records</h3>
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('user.medical-records.index') }}"
+                        class="bg-white border border-amber-300 text-amber-900 px-4 py-2 rounded-xl text-xs font-bold italic uppercase tracking-widest hover:bg-amber-50 transition-all">
+                        View All
+                    </a>
+                    <a href="{{ route('user.medical-records.create') }}"
+                        class="bg-stone-900 text-white px-4 py-2 rounded-xl text-xs font-bold italic uppercase tracking-widest hover:bg-amber-700 transition-all">
+                        Add Record
+                    </a>
+                </div>
+            </div>
+
+            @if ($medicalRecords->isEmpty())
+                <div class="text-center py-12 text-stone-400">
+                    <i class="fa-solid fa-file-medical text-5xl mb-4"></i>
+                    <p class="text-sm font-bold uppercase tracking-widest">No medical records uploaded yet</p>
+                </div>
+            @else
+                <div class="space-y-4">
+                    @foreach ($medicalRecords as $record)
+                        <div class="border-2 border-amber-200 rounded-2xl p-6 hover:border-amber-700 transition-all">
+                            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                                <div class="space-y-2">
+                                    <h4 class="text-lg font-bold italic text-stone-900">{{ $record->title }}</h4>
+                                    <p class="text-xs font-bold italic uppercase tracking-widest text-amber-700">
+                                        {{ $record->record_date ? $record->record_date->format('M d, Y') : $record->created_at->format('M d, Y') }}
+                                    </p>
+                                    @if ($record->notes)
+                                        <p class="text-sm text-stone-600">{{ \Illuminate\Support\Str::limit($record->notes, 180) }}</p>
+                                    @endif
+                                </div>
+                                <a href="{{ asset('storage/' . $record->prescription_file_path) }}" target="_blank"
+                                    class="bg-amber-700 text-white px-4 py-2 rounded-xl text-xs font-bold italic uppercase tracking-widest hover:bg-stone-900 transition-all">
+                                    View File
+                                </a>
+                                <form action="{{ route('user.medical-records.destroy', $record->id) }}" method="POST"
+                                    onsubmit="return confirm('Delete this medical record?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold italic uppercase tracking-widest hover:bg-red-700 transition-all">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
     </div>
 @endsection
